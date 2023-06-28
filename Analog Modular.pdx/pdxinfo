@@ -1,0 +1,9 @@
+name=Analog Modular
+author=Orllewin
+description=A simple modular synth playground.
+bundleID=orllewin.playdate.analog_modular
+version=1.0.0
+buildNumber=1
+imagePath=Images/card.png
+pdxversion=20000
+buildtime=741214991
