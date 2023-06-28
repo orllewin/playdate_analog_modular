@@ -98,6 +98,10 @@ function ModuleManager:loadPatch(path)
 			local mod = ClockDoublerMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "DelayMod" then
+			local mod = DelayMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)	
 		elseif patchMod.type == "DrumMod" then
 			local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -367,6 +371,8 @@ function ModuleManager:getGhostSprite(type)
 		return ClockMod.ghostModule()
 		elseif name == "ClockDelayMod" then
 		return ClockDelayMod.ghostModule()
+	elseif name == "DelayMod" then
+		return DelayMod.ghostModule()
 	elseif name == "DrumMod" then
 		return DrumMod.ghostModule()
 	elseif name == "MicroSynthMod" then
@@ -423,6 +429,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(ClockMod(x, y))
 	elseif name == "ClockDelayMod" then
 		self:addNew(ClockDelayMod(x, y))
+	elseif name == "DelayMod" then
+		self:addNew(DelayMod(x, y))
 	elseif name == "DrumMod" then
 		self:addNew(DrumMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)

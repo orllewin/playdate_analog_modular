@@ -34,6 +34,7 @@ import 'Modules/Synth/synth_mod'
 import 'Modules/speaker_module'
 
 --Effects
+import 'Modules/Effects/Delay/delay_mod'
 import 'Modules/Effects/OnePoleFilter/one_pole_filter_mod'
 import 'Modules/Effects/RingModulator/ring_modulator_mod'
 

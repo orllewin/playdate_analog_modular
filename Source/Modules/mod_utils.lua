@@ -111,6 +111,10 @@ function getMenuModList()
 			category = "Effects",
 			mods = {
 				{
+					label = "Delay",
+					type = "DelayMod"
+				},
+				{
 					label = "One Pole Filter",
 					type = "OnePoleFilterMod"
 				},

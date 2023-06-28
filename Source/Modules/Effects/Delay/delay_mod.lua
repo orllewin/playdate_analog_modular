@@ -3,24 +3,24 @@
 
 ]]--
 import 'Modules/mod_utils.lua'
-import 'Modules/Effects/RingModulator/ring_modulator_component'
+import 'Modules/Effects/Delay/delay_component'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 import 'Coracle/math'
 import 'CoracleViews/rotary_encoder'
 
-class('RingModulatorMod').extends(playdate.graphics.sprite)
+class('DelayMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
-local moduleWidth = 70
+local moduleWidth = 105
 local moduleHeight = 96
 
-local modType = "RingModulatorMod"
+local modType = "DelayMod"
 local modSubtype = "audio_effect"
 
-function RingModulatorMod:init(xx, yy, modId)
-	RingModulatorMod.super.init(self)
+function DelayMod:init(xx, yy, modId)
+	DelayMod.super.init(self)
 	
 	if modId == nil then
 		self.modId = modType .. playdate.getSecondsSinceEpoch()
@@ -33,14 +33,15 @@ function RingModulatorMod:init(xx, yy, modId)
 		
 	local backgroundImage = generateModBackgroundWithShadow(moduleWidth, moduleHeight)
 	local bgW, bgH = backgroundImage:getSize()
+	
 	gfx.pushContext(backgroundImage)
-	gfx.drawTextAligned("RingMod", bgW/2, 19, kTextAlignment.center)
+	gfx.drawTextAligned("Delay", bgW/2, 19, kTextAlignment.center)
 	
 	local mixImage = gfx.image.new("Images/mix")
-	mixImage:draw(bgW/2 + 10, 32)
+	mixImage:draw(bgW/2 + 28, bgH/2 + 10)
 	
-	gSocketInImage:draw(20, 30)
-	gSocketOutImage:draw(58, 74)
+	gSocketInImage:draw(20, 20)
+	gSocketOutImage:draw(bgW - 40, 20)
 	
 	gfx.popContext()
 	
@@ -48,44 +49,41 @@ function RingModulatorMod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 	
-	self.ringModComponent = RingModulatorComponent(function() 
+	self.delayComponent = DelayComponent(function() 
 	
 	end)
 
-	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy - (moduleHeight/2) + 40, function(value) 
-		self.ringModComponent:setMix(value)
+	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy + 32, function(value) 
+		self.delayComponent:setMix(value)
 	end)
 	self.mixEncoder:setValue(0.5)
 
-	self.cutoffFreqLabelSprite = gfx.sprite.spriteWithText("50%", moduleWidth, moduleHeight)
-	self.cutoffFreqLabelSprite:moveTo(xx - (moduleWidth/2) +18, yy - (moduleHeight/2) + 52)
-	self.cutoffFreqLabelSprite:add()
-
-	self.frequencyEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
-		self.ringModComponent:setFrequency(value)
-		self.cutoffFreqLabelSprite:remove()
-		self.cutoffFreqLabelSprite = gfx.sprite.spriteWithText(""..round(value, 2), moduleWidth, moduleHeight)
-		self.cutoffFreqLabelSprite:moveTo(xx - (moduleWidth/2) + 18, yy + 16)
-		self.cutoffFreqLabelSprite:add()
+	self.feedbackEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
+		self.delayComponent:setFeedback(value)
 	end)
-	self.frequencyEncoder:setValue(0.0)
+	self.feedbackEncoder:setValue(0.5)
+	
+	self.tapDelayEncoder = RotaryEncoder(xx, yy + 32, function(value) 
+		self.delayComponent:setTapDelay(value)
+	end)
+	self.tapDelayEncoder:setValue(0.25)
 
 	self.encoders = {
 		self.mixEncoder,
-		self.frequencyEncoder
+		self.feedbackEncoder
 	}
 
-	self.socketInVector = Vector(xx - (moduleWidth/2) + 16, yy - (moduleHeight/2) + 32)
-	self.socketOutVector = Vector(xx + (moduleWidth/2) - 16, yy + (moduleHeight/2) - 20)
+	self.socketInVector = Vector(xx - (moduleWidth/2) + 16, yy - (moduleHeight/2) + 24)
+	self.socketOutVector = Vector	(xx + (moduleWidth/2) - 16, yy - (moduleHeight/2) + 24)
 
 end
 
-function RingModulatorMod:turn(x, y, change)
+function DelayMod:turn(x, y, change)
 	local encoder = self:findClosestEncoder(x, y)
 	encoder:turn(change)
 end
 
-function RingModulatorMod:findClosestEncoder(x, y)
+function DelayMod:findClosestEncoder(x, y)
 	local reticleVector = Vector(x, y)
 	local closestDistance = 1000
 	local closestIndex = -1
@@ -102,28 +100,28 @@ function RingModulatorMod:findClosestEncoder(x, y)
 	return self.encoders[closestIndex]
 end
 
-function RingModulatorMod:updatePosition()
+function DelayMod:updatePosition()
 	self:moveBy(globalXDrawOffset, globalYDrawOffset)
 end
 
-function RingModulatorMod:getHostAudioModId()
+function DelayMod:getHostAudioModId()
 	return self.hostAudioModId
 end
 
-function RingModulatorMod:setInCable(patchCable)
+function DelayMod:setInCable(patchCable)
 	patchCable:setEnd(self.socketInVector.x, self.socketInVector.y, self.modId)
 	self.inCable = patchCable
 	self.hostAudioModId = patchCable:getHostAudioModId()
-	self.ringModComponent:setInCable(patchCable:getCable())
+	self.delayComponent:setInCable(patchCable:getCable())
 end
 
-function RingModulatorMod:setOutCable(patchCable)
+function DelayMod:setOutCable(patchCable)
 	self.outCable = patchCable
 	patchCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
-	self.ringModComponent:setOutCable(patchCable:getCable())
+	self.delayComponent:setOutCable(patchCable:getCable())
 end
 
-function RingModulatorMod:collision(x, y)
+function DelayMod:collision(x, y)
 	if x > self.x - (moduleWidth/2) and x < self.x + (moduleWidth/2) and y > self.y - (moduleHeight/2) and y < self.y + (moduleHeight/2) then
 		return true
 	else
@@ -131,11 +129,11 @@ function RingModulatorMod:collision(x, y)
 	end
 end
 
-function RingModulatorMod:tryConnectGhostIn(x, y, ghostCable)
+function DelayMod:tryConnectGhostIn(x, y, ghostCable)
 	if ghostCable:getStartModId() == self.modId then
 		print("Can't connect a mod to itself...")
 		return false
-	elseif self.ringModComponent:inConnected() then 
+	elseif self.delayComponent:inConnected() then 
 		return false
 	else
 		ghostCable:setEnd(self.socketInVector.x, self.socketInVector.y)
@@ -144,21 +142,21 @@ function RingModulatorMod:tryConnectGhostIn(x, y, ghostCable)
 	end
 end
 
-function RingModulatorMod:tryConnectGhostOut(x, y, ghostCable)
-	if self.ringModComponent:outConnected() then 
+function DelayMod:tryConnectGhostOut(x, y, ghostCable)
+	if self.delayComponent:outConnected() then 
 		return false
 	else
-		ghostCable:setStart(self.socketOutSprite.x, self.socketOutSprite:getSocketY(), self.modId)
+		ghostCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
 		ghostCable:setGhostSendConnected()
 		return true
 	end
 end
 
-function RingModulatorMod:type()
-	return "RingModulatorMod"
+function DelayMod:type()
+	return "DelayMod"
 end
 
-function RingModulatorMod:handleModClick(tX, tY, listener)
+function DelayMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
@@ -177,30 +175,30 @@ function RingModulatorMod:handleModClick(tX, tY, listener)
 	end)
 end
 
-function RingModulatorMod:setChannel(channel)
+function DelayMod:setChannel(channel)
 	if channel == nil then
-		print("RingModulatorMod:setChannel() CHANNEL IS NIL")
+		print("DelayMod:setChannel() CHANNEL IS NIL")
 	else
-		print("RingModulatorMod:setChannel() CHANNEL EXISTS!")
+		print("DelayMod:setChannel() CHANNEL EXISTS!")
 	end
-	self.ringModComponent:setChannel(channel)
+	self.delayComponent:setChannel(channel)
 end
 
-function RingModulatorMod:removeChannel(channel)
-	self.ringModComponent:removeChannel(channel)
+function DelayMod:removeChannel(channel)
+	self.delayComponent:removeChannel(channel)
 end
 
-function RingModulatorMod:evaporate(onDetachConnected)
+function DelayMod:evaporate(onDetachConnected)
 	--first detach cables
-	if self.ringModComponent:outConnected() then
+	if self.delayComponent:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
-		self.ringModComponent:unplugOut()
+		self.delayComponent:unplugOut()
 		self.outCable:evaporate()
 	end
 	
-	if self.ringModComponent:inConnected() then
+	if self.delayComponent:inConnected() then
 		onDetachConnected(self.inCable:getEndModId(), self.inCable:getCableId())
-		self.ringModComponent:unplugIn()
+		self.delayComponent:unplugIn()
 		self.inCable:evaporate()
 	end
 	
@@ -211,11 +209,11 @@ function RingModulatorMod:evaporate(onDetachConnected)
 	self:remove()
 end
 
-function RingModulatorMod.ghostModule()
+function DelayMod.ghostModule()
 	return buildGhostModule(moduleWidth, moduleHeight)
 end
 
-function RingModulatorMod:toState()
+function DelayMod:toState()
 	local modState = {}
 	modState.modId = self.modId
 	modState.type = self:type()
@@ -228,7 +226,7 @@ function RingModulatorMod:toState()
 	return modState
 end
 
-function RingModulatorMod:fromState(modState)
+function DelayMod:fromState(modState)
 	self.mixEncoder:setValue(modState.normalisedTempoDiv)
 	self.frequencyEncoder:setValue(modState.normalisedProbability)
 end
