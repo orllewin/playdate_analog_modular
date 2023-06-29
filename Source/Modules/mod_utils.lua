@@ -138,6 +138,10 @@ function getMenuModList()
 				{
 					label = "Mix output x8",
 					type = "Mix8Mod"
+				},
+				{
+					label = "Mix output x8 v2",
+					type = "Mix8SliderMod"
 				}
 			}
 		},

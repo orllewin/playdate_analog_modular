@@ -118,6 +118,10 @@ function ModuleManager:loadPatch(path)
 			local mod = Mix8Mod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "Mix8SliderMod" then
+			local mod = Mix8SliderMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "NormalisedToMidiMod" then
 			local mod = NormalisedToMidiMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -379,6 +383,8 @@ function ModuleManager:getGhostSprite(type)
 		return MicroSynthMod.ghostModule()
 	elseif name == "Mix8Mod" then
 		return Mix8Mod.ghostModule()
+	elseif name == "Mix8SliderMod" then
+		return Mix8SliderMod.ghostModule()
 	elseif name == "Mix4Mod" then
 		return Mix4Mod.ghostModule()
 	elseif name == "OnePoleFilterMod" then
@@ -443,6 +449,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(Mix8Mod(x, y))
 	elseif name == "Mix4Mod" then
 		self:addNew(Mix4Mod(x, y))
+	elseif name == "Mix8SliderMod" then
+		self:addNew(Mix8SliderMod(x, y))
 	elseif name == "OnePoleFilterMod" then
 		self:addNew(OnePoleFilterMod(x, y))
 	elseif name == "OR606Mod" then
