@@ -122,6 +122,10 @@ function ModuleManager:loadPatch(path)
 			local mod = Mix8SliderMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "Mix4SliderMod" then
+			local mod = Mix4SliderMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "NormalisedToMidiMod" then
 			local mod = NormalisedToMidiMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -152,6 +156,10 @@ function ModuleManager:loadPatch(path)
 			self:addNew(mod)
 		elseif patchMod.type == "SeqGridMod" then
 			local mod = SeqGridMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
+		elseif patchMod.type == "TimedSwitchMod" then
+			local mod = TimedSwitchMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "SwitchMod" then
@@ -385,6 +393,8 @@ function ModuleManager:getGhostSprite(type)
 		return Mix8Mod.ghostModule()
 	elseif name == "Mix8SliderMod" then
 		return Mix8SliderMod.ghostModule()
+	elseif name == "Mix4SliderMod" then
+		return Mix4SliderMod.ghostModule()
 	elseif name == "Mix4Mod" then
 		return Mix4Mod.ghostModule()
 	elseif name == "OnePoleFilterMod" then
@@ -409,6 +419,8 @@ function ModuleManager:getGhostSprite(type)
 		return SpeakerModule.ghostModule()
 	elseif name == "SwitchMod" then
 		return SwitchMod.ghostModule()
+	elseif name == "TimedSwitchMod" then
+		return TimedSwitchMod.ghostModule()
 	elseif name == "SwitchSPDTMod" then
 		return SwitchSPDTMod.ghostModule()
 	elseif name == "SynthMod" then
@@ -451,6 +463,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(Mix4Mod(x, y))
 	elseif name == "Mix8SliderMod" then
 		self:addNew(Mix8SliderMod(x, y))
+	elseif name == "Mix4SliderMod" then
+		self:addNew(Mix4SliderMod(x, y))
 	elseif name == "OnePoleFilterMod" then
 		self:addNew(OnePoleFilterMod(x, y))
 	elseif name == "OR606Mod" then
@@ -473,6 +487,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(SpeakerModule(x, y))
 	elseif name == "SwitchMod" then
 		self:addNew(SwitchMod(x, y))
+	elseif name == "TimedSwitchMod" then
+		self:addNew(TimedSwitchMod(x, y))
 	elseif name == "SwitchSPDTMod" then
 		self:addNew(SwitchSPDTMod(x, y))
 	elseif name == "SynthMod" then

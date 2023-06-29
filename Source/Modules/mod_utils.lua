@@ -76,6 +76,10 @@ function getMenuModList()
 					type = "SwitchMod"
 				},
 				{
+					label = "SPST Timed",
+					type = "TimedSwitchMod"
+				},
+				{
 					label = "SPDT Switch",
 					type = "SwitchSPDTMod"
 				},
@@ -134,6 +138,10 @@ function getMenuModList()
 				{
 					label = "Mix output x4",
 					type = "Mix4Mod"
+				},
+				{
+					label = "Mix output x4 v2",
+					type = "Mix4SliderMod"
 				},
 				{
 					label = "Mix output x8",
