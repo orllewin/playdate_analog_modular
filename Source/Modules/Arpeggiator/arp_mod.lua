@@ -12,11 +12,13 @@ class('ArpMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
-local moduleWidth = 350
-local moduleHeight = 158
+local moduleWidth = 295
+local moduleHeight = 225
 
 local modType = "ArpMod"
 local modSubtype = "clock_router"
+
+local patternLengthSelector = gfx.image.new("Images/pattern_length_selector")
 
 function ArpMod:init(xx, yy, modId)
 	ArpMod.super.init(self)
@@ -35,24 +37,33 @@ function ArpMod:init(xx, yy, modId)
 	
 	gfx.pushContext(backgroundImage)		
 	
-	gSocketInImage:draw(23, 19)
-	gSocketOutImage:draw(bgW - 43, 19)
-	
+	gSocketInImage:draw(23, bgH - 53)
+	gSocketOutImage:draw(bgW - 43, bgH - 53)
+	patternLengthSelector:draw(200, 180)
 	gfx.popContext()
 	
 	self:setImage(backgroundImage)
 	self:moveTo(xx, yy)
 	self:add()
 	
-	self.grid = SequencerGrid(xx, yy)
+	self.grid = SequencerGrid(xx, yy-30)
 	
+	local prevImage = gfx.image.new("Images/sq_pattern_prev_inactive")
+	self.prevSprite = gfx.sprite.new(prevImage)
+	self.prevSprite:moveTo(xx - 136, yy-31)
+	self.prevSprite:add()
+	
+	local nextImage = gfx.image.new("Images/sq_pattern_next_inactive")
+	self.nextSprite = gfx.sprite.new(nextImage)
+	self.nextSprite:moveTo(xx + 134, yy-31)
+	self.nextSprite:add()
 
-	self.socketInVector = Vector(xx+1, yy - (bgH/2) + 38)
-	self.socketOutVector = Vector(xx+1, yy - (bgH/2) + 130)
+	self.socketInVector = Vector(xx+1, yy + (bgH/2) - 38)
+	self.socketOutVector = Vector(xx+1, yy + (bgH/2)- 38)
 	
 	self.arpComponent = ArpComponent()
 	
-	self.rateEncoder = RotaryEncoder(xx - (moduleWidth/2) + 20, yy, function(value)
+	self.rateEncoder = RotaryEncoder(xx + (moduleWidth/2) - 75, yy + 80, function(value)
 		--1/1, 1/2, 1/4, etc take logic from Clock Delay
 		--self.arpComponent:setRate(value)
 	end)
