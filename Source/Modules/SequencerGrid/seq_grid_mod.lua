@@ -400,20 +400,7 @@ function SeqGridMod:evaporate(onDetachConnected)
 end
 
 function SeqGridMod.ghostModule()
-	local templateImage = playdate.graphics.image.new(moduleWidth, moduleHeight)
-	gfx.pushContext(templateImage)
-	gfx.setLineWidth(6)
-	gfx.setColor(playdate.graphics.kColorBlack)
-	gfx.drawRoundRect(3, 3, moduleWidth-6, moduleHeight-6, 8)
-	gfx.setLineWidth(1)
-	gfx.popContext()
-	
-	local ghostImage = playdate.graphics.image.new(moduleWidth, moduleHeight)
-	gfx.pushContext(ghostImage)
-	templateImage:drawFaded(0, 0, 0.3, playdate.graphics.image.kDitherTypeDiagonalLine)
-	gfx.popContext()
-	
-	return playdate.graphics.sprite.new(ghostImage)
+	return buildGhostModule(moduleWidth, moduleHeight)
 end
 
 function SeqGridMod:toState()

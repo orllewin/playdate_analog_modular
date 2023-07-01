@@ -198,10 +198,10 @@ self.insocketSprites = {
 	self.inSocketSprite,
 	self.param1InSocket,
 	self.param2InSocket,
-	self.releaseInSocket,
-	self.sustainInSocket,
-	self.decayInSocket,
-	self.attackInSocket,
+	-- self.releaseInSocket,
+	-- self.sustainInSocket,
+	-- self.decayInSocket,
+	-- self.attackInSocket,
 	self.outSocketSprite
 }
 

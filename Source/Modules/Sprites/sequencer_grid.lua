@@ -11,7 +11,7 @@ local nextPatternInactiveImage = gfx.image.new("Images/dm_pattern_next_inactive"
 
 local stepOnImage = gfx.image.new("Images/sq_grid_08")
 
-local midiNotes = {24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35}
+local midiNotes = {35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24}
 
 function SequencerGrid:init(xx, yy, onPatternChange)
 	SequencerGrid.super.init(self)
@@ -28,6 +28,11 @@ function SequencerGrid:init(xx, yy, onPatternChange)
 	self:redraw()
 	self:moveTo(xx, yy)
 	self:add()
+end
+
+function SequencerGrid:setPattern(pattern, patternLength)
+		self.pattern = pattern
+		self:redraw()
 end
 
 function SequencerGrid:redraw()
@@ -59,15 +64,17 @@ function SequencerGrid:onClick(x, y)
 	
 	print(" xIndex: " .. xIndex .. " yIndex: " .. yIndex)
 	
-	local midiNote = midiNotes[yIndex]
+	local midiNote = midiNotes[13 - yIndex]
 	
-	if self.pattern[xIndex] == midiNote then
+	if self.pattern[xIndex] == midiNote  then
 		self.pattern[xIndex] = 0
 	else
 		self.pattern[xIndex] = midiNote
 	end
 	
 	self:redraw()
+	
+	if self.onPatternChange~= nil then self.onPatternChange(self.pattern) end
 end
 
 function SequencerGrid:collision(x, y)
