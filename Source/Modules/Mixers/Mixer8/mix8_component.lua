@@ -144,7 +144,7 @@ function MixerComponent:unplugIn7()
 	self.in7Socket:setCable(nil)
 end
 
-function MixerComponent:unplugOut8()
+function MixerComponent:unplugIn8()
 	self.in8Socket:setCable(nil)
 end
 -- --- -----

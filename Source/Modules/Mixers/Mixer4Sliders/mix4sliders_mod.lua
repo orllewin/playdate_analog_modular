@@ -50,8 +50,6 @@ function Mix4SliderMod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 	
-
-	self.value = 0.0
 	local inSocketX = xx - (moduleWidth/2) + 15
 	local inSocketY = yy - (moduleHeight/2) + 10
 	self.in1SocketVector = Vector(inSocketX, inSocketY)
@@ -61,22 +59,18 @@ function Mix4SliderMod:init(xx, yy, modId)
 	
 	local sliderXInc = 22
 	self.slider1 = VerticalSlider(xx - (moduleWidth/2) + 15, yy + 10, 0.0, function(value) 
-		print("Slider1 value: " .. value)
 		self.mixer:trySetVolume(1, value)
 	end)
 	
 	self.slider2 = VerticalSlider(xx - (moduleWidth/2) + 15 + sliderXInc, yy + 10, 0.0, function(value) 
-		print("Slider2 value: " .. value)
 		self.mixer:trySetVolume(2, value)
 	end)
 	
 	self.slider3 = VerticalSlider(xx - (moduleWidth/2) + 15 + (sliderXInc * 2), yy + 10, 0.0, function(value) 
-		print("Slider3 value: " .. value)
 		self.mixer:trySetVolume(3, value)
 	end)
 	
 	self.slider4 = VerticalSlider(xx - (moduleWidth/2) + 15 + (sliderXInc * 3), yy + 10, 0.0, function(value) 
-		print("Slider4 value: " .. value)
 		self.mixer:trySetVolume(4, value)
 	end)
 			
@@ -129,27 +123,19 @@ function Mix4SliderMod:setInCable(patchCable)
 		print("setInCable() self.mixer:in1Free()...")
 		patchCable:setEnd(self.in1SocketVector.x, self.in1SocketVector.y, self.modId)
 		self.mixer:setIn1Cable(patchCable:getCable())
+		self.in1Cable = patchCable
 	elseif self.mixer:in2Free() then
 		patchCable:setEnd(self.in2SocketVector.x, self.in2SocketVector.y, self.modId)
 		self.mixer:setIn2Cable(patchCable:getCable())
+		self.in2Cable = patchCable
 	elseif self.mixer:in3Free() then
 		patchCable:setEnd(self.in3SocketVector.x, self.in3SocketVector.y, self.modId)
 		self.mixer:setIn3Cable(patchCable:getCable())
+		self.in3Cable = patchCable
 	elseif self.mixer:in4Free() then
 		patchCable:setEnd(self.in4SocketVector.x, self.in4SocketVector.y, self.modId)
 		self.mixer:setIn4Cable(patchCable:getCable())
-	elseif self.mixer:in5Free() then
-		patchCable:setEnd(self.in5SocketVector.x, self.in5SocketVector.y, self.modId)
-		self.mixer:setIn5Cable(patchCable:getCable())
-	elseif self.mixer:in6Free() then
-		patchCable:setEnd(self.in6SocketVector.x, self.in6SocketVector.y, self.modId)
-		self.mixer:setIn6Cable(patchCable:getCable())
-	elseif self.mixer:in7Free() then
-		patchCable:setEnd(self.in7SocketVector.x, self.in7SocketVector.y, self.modId)
-		self.mixer:setIn7Cable(patchCable:getCable())
-	elseif self.mixer:in8Free() then
-		patchCable:setEnd(self.in8SocketVector.x, self.in8SocketVector.y, self.modId)
-		self.mixer:setIn8Cable(patchCable:getCable())
+		self.in4Cable = patchCable
 	end
 end
 
@@ -160,7 +146,6 @@ function Mix4SliderMod:setChannel(channel)
 		print("Mix4SliderMod:setChannel() CHANNEL EXISTS!")
 	end
 	if self.mixer:in1Free() then
-		print("IN 1 is FREE - setting channel")
 		self.mixer:setChannel(1, channel)
 	elseif self.mixer:in2Free() then
 		self.mixer:setChannel(2, channel)
@@ -168,14 +153,6 @@ function Mix4SliderMod:setChannel(channel)
 		self.mixer:setChannel(3, channel)
 	elseif self.mixer:in4Free() then
 		self.mixer:setChannel(4, channel)
-	elseif self.mixer:in5Free() then
-		self.mixer:setChannel(5, channel)
-	elseif self.mixer:in6Free() then
-		self.mixer:setChannel(6, channel)
-	elseif self.mixer:in7Free() then
-		self.mixer:setChannel(7, channel)
-	elseif self.mixer:in8Free() then
-		self.mixer:setChannel(8, channel)
 	end
 end
 
@@ -226,7 +203,7 @@ function Mix4SliderMod:handleModClick(tX, tY, listener)
 	contextMenu:show(function(action, index) 
 		self.menuIndex = index
 		if action == "About" then
-			local aboutPopup = ModAboutPopup("A mixer with 8 channels")
+			local aboutPopup = ModAboutPopup("A mixer with 4 channels")
 			aboutPopup:show()
 		else
 			if self.menuListener ~= nil then 
@@ -262,35 +239,11 @@ function Mix4SliderMod:evaporate(onDetachConnected)
 		self.in4Cable:evaporate()
 	end
 	
-	if self.mixer:in5Connected() then
-		onDetachConnected(self.in5Cable:getEndModId(), self.in5Cable:getCableId())
-		self.mixer:unplugIn5()
-		self.in5Cable:evaporate()
+	for i=1,#self.sliders do
+		self.sliders[i]:evaporate()
 	end
 	
-	if self.mixer:in6Connected() then
-		onDetachConnected(self.in6Cable:getEndModId(), self.in6Cable:getCableId())
-		self.mixer:unplugIn6()
-		self.in6Cable:evaporate()
-	end
-	
-	if self.mixer:in7Connected() then
-		onDetachConnected(self.in7Cable:getEndModId(), self.in7Cable:getCableId())
-		self.mixer:unplugIn7()
-		self.in7Cable:evaporate()
-	end
-	
-	if self.mixer:in8Connected() then
-		onDetachConnected(self.in8Cable:getEndModId(), self.in8Cable:getCableId())
-		self.mixer:unplugIn8()
-		self.in8Cable:evaporate()
-	end
-	
-	for i=1,#self.encoders do
-		self.encoders[i]:evaporate()
-	end
-	
-	self.encoders = nil
+	self.sliders = nil
 	
 	self:remove()
 end

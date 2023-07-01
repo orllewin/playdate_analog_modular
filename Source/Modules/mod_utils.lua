@@ -32,8 +32,12 @@ end
 function getMenuModList()
 	return {
 		{
-			category = "Clock Signal",
+			category = "Clock",
 			mods = {
+				{
+					label = "Clock",
+					type = "ClockMod"
+				},
 				{
 					label = "Bifurcate x2",
 					type = "Bifurcate2Mod"
@@ -47,28 +51,28 @@ function getMenuModList()
 					type = "BlackholeMod"
 				},
 				{
-					label = "Clock",
-					type = "ClockMod"
-				},
-				{
-					label = "Clock Delay",
+					label = "Delay",
 					type = "ClockDelayMod"
 				},
 				{
-					label = "Clock Divider",
+					label = "Divider",
 					type = "ClockDividerMod"
 				},
 				{
-					label = "Clock Doubler",
+					label = "Doubler",
 					type = "ClockDoublerMod"
 				}
 			}
 		},
 		{
-			category = "Composition",
+			category = "Sequencing",
 			mods = {
 				{
-					label = "Step Sequencer",
+					label = "Sequencer",
+					type = "ArpMod"
+				},
+				{
+					label = "Smol Sequencer",
 					type = "SeqGridMod"
 				},
 				{
@@ -129,6 +133,19 @@ function getMenuModList()
 			}
 		},
 		{
+			category = "Notes/Midi",
+			mods = {
+				{
+					label = "MidiGen",
+					type = "MidiGenMod"
+				},
+				{
+					label = "Value2Midi",
+					type = "NormalisedToMidiMod"
+				}
+			}
+		},
+		{
 			category = "Output",
 			mods = {
 				{
@@ -163,10 +180,6 @@ function getMenuModList()
 				{
 					label = "RNG",
 					type = "RandomMod"
-				},
-				{
-					label = "Value2Midi",
-					type = "NormalisedToMidiMod"
 				},
 				{
 					label = "Label",

@@ -8,7 +8,6 @@ local gfx <const> = playdate.graphics
 
 local moduleWidth = 130
 local moduleHeight = 190
-local grillDiam = 140
 
 local modType = "Mix8Mod"
 local modSubtype = "audio_effect"
@@ -144,27 +143,35 @@ function Mix8Mod:setInCable(patchCable)
 		print("setInCable() self.mixer:in1Free()...")
 		patchCable:setEnd(self.in1SocketVector.x, self.in1SocketVector.y, self.modId)
 		self.mixer:setIn1Cable(patchCable:getCable())
+		self.in1Cable = patchCable
 	elseif self.mixer:in2Free() then
 		patchCable:setEnd(self.in2SocketVector.x, self.in2SocketVector.y, self.modId)
 		self.mixer:setIn2Cable(patchCable:getCable())
+		self.in2Cable = patchCable
 	elseif self.mixer:in3Free() then
 		patchCable:setEnd(self.in3SocketVector.x, self.in3SocketVector.y, self.modId)
 		self.mixer:setIn3Cable(patchCable:getCable())
+		self.in3Cable = patchCable
 	elseif self.mixer:in4Free() then
 		patchCable:setEnd(self.in4SocketVector.x, self.in4SocketVector.y, self.modId)
 		self.mixer:setIn4Cable(patchCable:getCable())
+		self.in4Cable = patchCable
 	elseif self.mixer:in5Free() then
 		patchCable:setEnd(self.in5SocketVector.x, self.in5SocketVector.y, self.modId)
 		self.mixer:setIn5Cable(patchCable:getCable())
+		self.in5Cable = patchCable
 	elseif self.mixer:in6Free() then
 		patchCable:setEnd(self.in6SocketVector.x, self.in6SocketVector.y, self.modId)
 		self.mixer:setIn6Cable(patchCable:getCable())
+		self.in6Cable = patchCable
 	elseif self.mixer:in7Free() then
 		patchCable:setEnd(self.in7SocketVector.x, self.in7SocketVector.y, self.modId)
 		self.mixer:setIn7Cable(patchCable:getCable())
+		self.in7Cable = patchCable
 	elseif self.mixer:in8Free() then
 		patchCable:setEnd(self.in8SocketVector.x, self.in8SocketVector.y, self.modId)
 		self.mixer:setIn8Cable(patchCable:getCable())
+		self.in8Cable = patchCable
 	end
 end
 
@@ -175,7 +182,6 @@ function Mix8Mod:setChannel(channel)
 		print("Mix8Mod:setChannel() CHANNEL EXISTS!")
 	end
 	if self.mixer:in1Free() then
-		print("IN 1 is FREE - setting channel")
 		self.mixer:setChannel(1, channel)
 	elseif self.mixer:in2Free() then
 		self.mixer:setChannel(2, channel)

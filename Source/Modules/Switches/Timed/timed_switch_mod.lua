@@ -89,9 +89,6 @@ function TimedSwitchMod:init(xx, yy, modId)
 	self.insocketSprites = {
 		self.inSocketSprite
 	}
-	
-
-
 end
 
 function TimedSwitchMod:turn(x, y, change)

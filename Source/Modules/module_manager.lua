@@ -70,7 +70,11 @@ function ModuleManager:loadPatch(path)
 	
 	for i=1,#patchModules do
 		local patchMod = patchModules[i]
-		if patchMod.type == "ClockMod" then
+		if patchMod.type == "ArpMod" then
+			local mod = ArpMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
+		elseif patchMod.type == "ClockMod" then
 			local mod = ClockMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
@@ -108,6 +112,10 @@ function ModuleManager:loadPatch(path)
 			self:addNew(mod)	
 		elseif patchMod.type == "MicroSynthMod" then
 			local mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)	
+		elseif patchMod.type == "MidiGenMod" then
+			local mod = MidiGenMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "Mix4Mod" then
@@ -373,7 +381,9 @@ end
 
 function ModuleManager:getGhostSprite(type)
 	local name = type
-	if name == "Bifurcate2Mod" then
+	if name == "ArpMod" then
+		return ArpMod.ghostModule()
+	elseif name == "Bifurcate2Mod" then
 		return Bifurcate2Mod.ghostModule()
 	elseif name == "Bifurcate4Mod" then
 		return Bifurcate4Mod.ghostModule()
@@ -389,6 +399,8 @@ function ModuleManager:getGhostSprite(type)
 		return DrumMod.ghostModule()
 	elseif name == "MicroSynthMod" then
 		return MicroSynthMod.ghostModule()
+	elseif name == "MidiGenMod" then
+		return MidiGenMod.ghostModule()
 	elseif name == "Mix8Mod" then
 		return Mix8Mod.ghostModule()
 	elseif name == "Mix8SliderMod" then
@@ -436,8 +448,11 @@ function ModuleManager:addNewLabelAt(type, label, x, y)
 end
 
 function ModuleManager:addNewAt(type, x, y)
+	print("ADD NEW " .. type)
 	local name = type
-	if name == "Bifurcate2Mod" then
+	if name == "ArpMod" then
+		self:addNew(ArpMod(x, y))
+	elseif name == "Bifurcate2Mod" then
 		self:addNew(Bifurcate2Mod(x, y))
 	elseif name == "Bifurcate4Mod" then
 		self:addNew(Bifurcate4Mod(x, y))
@@ -457,6 +472,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(MicroSynthMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)
 		end))
+	elseif name == "MidiGenMod" then
+		self:addNew(MidiGenMod(x, y))
 	elseif name == "Mix8Mod" then
 		self:addNew(Mix8Mod(x, y))
 	elseif name == "Mix4Mod" then

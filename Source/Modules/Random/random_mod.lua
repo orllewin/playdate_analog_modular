@@ -1,8 +1,6 @@
 --[[
 
 	This will have an in and an out, 
-	todo - emit a random MIDI NOTE
-	todo - have ui to set key/chords
 
 ]]--
 import 'Modules/mod_utils.lua'

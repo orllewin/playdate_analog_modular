@@ -11,6 +11,7 @@ import 'Modules/patch_cable'
 import 'Modules/Sprites/bang_sprite'
 import 'Modules/Sprites/socket_sprite'
 
+import 'Modules/Arpeggiator/arp_mod'
 import 'Modules/Bifurcate2/bifurcate2_mod'
 import 'Modules/Bifurcate4/bifurcate4_mod'
 import 'Modules/Blackhole/blackhole_mod'
@@ -21,6 +22,7 @@ import 'Modules/ClockDoubler/clock_doubler_mod'
 import 'Modules/DrumMachine/drum_mod'
 import 'Modules/Label/label_mod'
 import 'Modules/MicroSynth/micro_synth_mod'
+import 'Modules/MidiGen/midi_gen_mod'
 import 'Modules/Mixers/Mixer4/mix4_mod'
 import 'Modules/Mixers/Mixer8/mix8_mod'
 import 'Modules/Mixers/Mixer8Sliders/mix8sliders_mod'
@@ -48,7 +50,7 @@ class('ModularScreen').extends()
 
 local gfx <const> = playdate.graphics
 
-globalXDrawOffset = 700
+globalXDrawOffset = 0
 globalYDrawOffset = 0
 
 local modeStandard = 1
@@ -76,8 +78,8 @@ function ModularScreen:init(value)
 	self.tilemap:setImageTable(backgroundTable)
 	self.tilemap:setSize(30,20)
 	
-	for y = 0,20 do
-		for x = 0,30 do
+	for y = 0,40 do
+		for x = 0,50 do
 			self.tilemap:setTileAtPosition(x,y,1)
 		end
 	end	

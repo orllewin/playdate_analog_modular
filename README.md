@@ -227,8 +227,21 @@ A very small synth module. You can only change the waveform type by opening the 
 * Remove volume encoder - Complete ✓
 
 <hr>
+
+### 13. Mixers: 4 Outputs - sliders
+
+#### Status - Done
+
+* Replace Socket Sprites - Complete, -4 Sprites! ✓
+* Optimisation - todo: still needs same audio routing update as all synths
+* Socket full handling - Complete ✓
+* Prevent attaching cable to self - Complete ✓
+* State management - Complete ✓
+
+<hr>
+
  
-### 13. Mixers: 4 Outputs
+### 14. Mixers: 4 Outputs - encoders
 
 #### Status - In Progress 
 
@@ -240,7 +253,7 @@ A very small synth module. You can only change the waveform type by opening the 
 
 <hr>
 
-### 14. Mixers: 8 Outputs
+### 15. Mixers: 8 Outputs - encoder
 
 #### Status - In Progress
 
@@ -252,7 +265,19 @@ A very small synth module. You can only change the waveform type by opening the 
 
 <hr>
 
-### 15. Normalised-to-Midi
+### 16. Mixers: 8 Outputs - sliders
+
+#### Status - In Progress
+
+* Replace Socket Sprites - TODO
+* Optimisation - TODO
+* Socket full handling - TODO
+* Prevent attaching cable to self - TODO
+* State management - TODO
+
+<hr>
+
+### 17. Normalised-to-Midi
 
 Presented as Value2Midi, needs a rethink on name. Takes an input in range 0.0 to 1.0 and outputs a valie midi note value. Currently hard-coded to C Major. Eventually should have different keys available. 
 
@@ -266,7 +291,7 @@ Presented as Value2Midi, needs a rethink on name. Takes an input in range 0.0 to
 
 <hr>
 
-### 16. OR-606
+### 18. OR-606
 
 A clone fo the Roland TR-606 drum machine. Supports variable pattern lengths per drum type. Best used with a clean clock signal (not clock delay or Blackhole).
 
@@ -280,7 +305,7 @@ A clone fo the Roland TR-606 drum machine. Supports variable pattern lengths per
 
 <hr>
 
-### 17. OR-808
+### 19. OR-808
 
 A clone of the Roland TR-808. Not available yet, will be a copy of the OR-606 with different samples and a tweaked UI.
 
@@ -294,7 +319,7 @@ A clone of the Roland TR-808. Not available yet, will be a copy of the OR-606 wi
 
 <hr>
 
-### 18. Print
+### 20. Print
 
 Displays input values to screen, then emits the event at the ouput. Meant for debug/dev purposes.
 
@@ -308,7 +333,7 @@ Displays input values to screen, then emits the event at the ouput. Meant for de
 
 <hr>
 
-### 19. Sequencer Grid
+### 21. Sequencer Grid
 
 A 16 step sequencer, an early module, needs a lot of work. Doesn't support keys yet, just raw midi note values 0-127.
 
@@ -322,7 +347,7 @@ A 16 step sequencer, an early module, needs a lot of work. Doesn't support keys 
 
 <hr>
 
-### 20. Switch
+### 22. Switch
 
 A SPST switch, used to disable parts of a patch.
 
@@ -336,7 +361,7 @@ A SPST switch, used to disable parts of a patch.
 
 <hr>
 
-### 21. SPDT Switch
+### 23. SPDT Switch
 
 A SPDT switch, used to swap between two different routes in a patch. 
 
@@ -350,7 +375,7 @@ A SPDT switch, used to swap between two different routes in a patch.
 
 <hr>
 
-### 22. Synth
+### 24. Synth
 
 The primary synth with full controls and automation (for the ADSR Envelope and the two Teenage Engineering swaveform types).
 
@@ -364,7 +389,7 @@ The primary synth with full controls and automation (for the ADSR Envelope and t
 
 <hr>
 
-### 23. Speaker Module
+### 25. Speaker Module
 
 Actually a 1X Mixer, needs moving to the Mixers directory.
 
