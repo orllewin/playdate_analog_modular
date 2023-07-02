@@ -29,7 +29,7 @@ function ArpComponent:init()
 			self.seqStep  = 1
 		end
 		
-		self.outSocket:emit(Event(event_value, self.pattern[self.step] + 24))
+		self.outSocket:emit(Event(event_value, self.pattern[self.step] + 36))
 	end)
 end
 
