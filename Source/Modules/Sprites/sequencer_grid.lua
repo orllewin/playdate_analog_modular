@@ -46,7 +46,7 @@ function SequencerGrid:redraw()
 		local note = self.pattern[i]
 		if note ~= 0 then
 			local stepX = (i - 1) * 16
-			local stepY = (note - 24) * 12
+			local stepY = self.h - 14 - ((note - 24) * 12)
 			stepOnImage:draw(stepX, stepY)
 		end
 	end
