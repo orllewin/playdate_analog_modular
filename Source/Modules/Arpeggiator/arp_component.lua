@@ -16,6 +16,7 @@ function ArpComponent:init()
 	self.seqStep = 1
 	
 	self.octave = 0
+	self.rate = 0
 	
 	self.outSocket = Socket("arp_out", socket_send)
 	
@@ -26,16 +27,40 @@ function ArpComponent:init()
 			self.step = 1
 		end
 	
-		self.seqStep += 1
-		if self.seqStep > self.stepLength then
-			self.seqStep  = 1
-		end
+		if self.rate == 0 then
+			self.seqStep += 1
+			if self.seqStep > self.stepLength then
+				self.seqStep  = 1
+			end
 		
-		self.outSocket:emit(Event(event_value, self.pattern[self.step] + (self.octave * 12)))
+			self.outSocket:emit(Event(event_value, self.pattern[self.seqStep] + (self.octave * 12)))
+		elseif self.rate == -1 and math.fmod(self.step, 2) == 0 then
+			self.seqStep += 1
+			if self.seqStep > self.stepLength then
+				self.seqStep  = 1
+			end
+			
+			self.outSocket:emit(Event(event_value, self.pattern[self.seqStep] + (self.octave * 12)))
+			
+		elseif self.rate == -2 and math.fmod(self.step, 4) == 0 then
+			self.seqStep += 1
+			if self.seqStep > self.stepLength then
+				self.seqStep  = 1
+			end
+					
+			self.outSocket:emit(Event(event_value, self.pattern[self.seqStep] + (self.octave * 12)))
+		end	
 	end)
 end
 
+function ArpComponent:setRate(rate)
+	if rate == self.rate then return end
+	print("Setting rate to: " .. rate)
+	self.rate = rate
+end
+
 function ArpComponent:setOctave(octave)
+	if octave == self.octave then return end
 	print("Setting octave to " .. octave)
 	self.octave = octave
 end

@@ -70,7 +70,9 @@ function ArpMod:init(xx, yy, modId)
 
 	self.rateEncoder = RotaryEncoder(xx - (moduleWidth/2) + 75, yy + 80, function(value)
 		--1/1, 1/2, 1/4, etc take logic from Clock Delay
-		--self.arpComponent:setRate(value)
+		local degrees = map(value, 0.0, 1.0, 0, 300)
+		local rateIndex = math.max(1, math.floor((degrees/(300/3) + 0.5)))
+		self.arpComponent:setRate(rateIndex - 3)
 	end)
 	self.rateEncoder:setValue(1.0)
 	
