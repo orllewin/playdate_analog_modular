@@ -11,8 +11,7 @@ local nextPatternInactiveImage = gfx.image.new("Images/dm_pattern_next_inactive"
 
 local stepOnImage = gfx.image.new("Images/sq_grid_08")
 
---local midiNotes = {35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24}
-local midiNotes = {24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35}
+local midiNotes = {60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71}
 
 function SequencerGrid:init(xx, yy, onPatternChange)
 	SequencerGrid.super.init(self)
@@ -46,7 +45,7 @@ function SequencerGrid:redraw()
 		local note = self.pattern[i]
 		if note ~= 0 then
 			local stepX = (i - 1) * 16
-			local stepY = self.h - 14 - ((note - 24) * 12)
+			local stepY = self.h - 14 - ((note - 60) * 12)
 			stepOnImage:draw(stepX, stepY)
 		end
 	end

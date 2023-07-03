@@ -75,8 +75,9 @@ function ArpMod:init(xx, yy, modId)
 	self.rateEncoder:setValue(1.0)
 	
 	self.octaveEncoder = RotaryEncoder(xx, yy + 80, function(value)
-		--1/1, 1/2, 1/4, etc take logic from Clock Delay
-		--self.arpComponent:setRate(value)
+		local degrees = map(value, 0.0, 1.0, 0, 300)
+		local octaveIndex = math.max(1, math.floor((degrees/(300/5) + 0.5)))
+		self.arpComponent:setOctave(math.floor(map(octaveIndex, 1, 5, -2, 2)))
 	end)
 	self.octaveEncoder:setValue(0.5)
 	
@@ -87,6 +88,12 @@ function ArpMod:init(xx, yy, modId)
 		self.grid:setPattern(self.arpComponent:getPattern(), self.arpComponent:getPatternLength())
 	end)
 	self.stepCountEncoder:setValue(0.0)
+	
+	self.encoders = {
+		self.rateEncoder,
+		self.octaveEncoder,
+		self.stepCountEncoder 
+	}
 end
 
 function ArpMod:collision(x, y)
@@ -95,6 +102,28 @@ function ArpMod:collision(x, y)
 	else
 		return false
 	end
+end
+
+function ArpMod:findClosestEncoder(x, y)
+	local reticleVector = Vector(x, y)
+	local closestDistance = 1000
+	local closestIndex = -1
+	for i=1,#self.encoders do
+		local anEncoder = self.encoders[i]
+		local encoderVector = Vector(anEncoder.x, anEncoder.y)
+		local distance = reticleVector:distance(encoderVector)
+		if distance < closestDistance then
+			closestDistance = distance
+			closestIndex = i
+		end
+	end
+	
+	return self.encoders[closestIndex]
+end
+
+function ArpMod:turn(x, y, change)
+	local encoder = self:findClosestEncoder(x, y)
+	encoder:turn(change)
 end
 
 function ArpMod:type()

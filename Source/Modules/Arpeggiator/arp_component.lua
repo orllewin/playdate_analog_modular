@@ -15,6 +15,8 @@ function ArpComponent:init()
 	self.step = 1
 	self.seqStep = 1
 	
+	self.octave = 0
+	
 	self.outSocket = Socket("arp_out", socket_send)
 	
 	self.inSocket = Socket("arp_in", socket_receive, function(event) 
@@ -29,8 +31,13 @@ function ArpComponent:init()
 			self.seqStep  = 1
 		end
 		
-		self.outSocket:emit(Event(event_value, self.pattern[self.step] + 36))
+		self.outSocket:emit(Event(event_value, self.pattern[self.step] + (self.octave * 12)))
 	end)
+end
+
+function ArpComponent:setOctave(octave)
+	print("Setting octave to " .. octave)
+	self.octave = octave
 end
 
 function ArpComponent:setPattern(pattern)
