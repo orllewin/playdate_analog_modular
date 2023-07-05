@@ -3,24 +3,24 @@
 
 ]]--
 import 'Modules/mod_utils.lua'
-import 'Modules/Effects/Delay/delay_component'
+import 'Modules/Effects/Overdrive/overdrive_component'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 import 'Coracle/math'
 import 'CoracleViews/rotary_encoder'
 
-class('DelayMod').extends(playdate.graphics.sprite)
+class('OverdriveMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
 local moduleWidth = 105
 local moduleHeight = 96
 
-local modType = "DelayMod"
+local modType = "OverdriveMod"
 local modSubtype = "audio_effect"
 
-function DelayMod:init(xx, yy, modId)
-	DelayMod.super.init(self)
+function OverdriveMod:init(xx, yy, modId)
+	OverdriveMod.super.init(self)
 	
 	if modId == nil then
 		self.modId = modType .. playdate.getSecondsSinceEpoch()
@@ -35,7 +35,7 @@ function DelayMod:init(xx, yy, modId)
 	local bgW, bgH = backgroundImage:getSize()
 	
 	gfx.pushContext(backgroundImage)
-	gfx.drawTextAligned("Delay", bgW/2, 19, kTextAlignment.center)
+	gfx.drawTextAligned("ODrive", bgW/2, 19, kTextAlignment.center)
 	
 	local mixImage = gfx.image.new("Images/mix")
 	mixImage:draw(bgW/2 + 28, bgH/2 + 10)
@@ -49,27 +49,27 @@ function DelayMod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 	
-	self.delayComponent = DelayComponent()
+	self.component = OverdriveComponent()
 
 	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy + 32, function(value) 
-		self.delayComponent:setMix(value)
+		self.component:setMix(value)
 	end)
 	self.mixEncoder:setValue(0.5)
 
-	self.feedbackEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
-		self.delayComponent:setFeedback(value)
+	self.gainEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
+		self.component:setGain(value)
 	end)
-	self.feedbackEncoder:setValue(0.5)
+	self.gainEncoder:setValue(0.5)
 	
-	self.tapDelayEncoder = RotaryEncoder(xx, yy + 32, function(value) 
-		self.delayComponent:setTapDelay(value)
+	self.limimtEncoder = RotaryEncoder(xx, yy + 32, function(value) 
+		self.component:setLimit(value)
 	end)
-	self.tapDelayEncoder:setValue(0.25)
+	self.limimtEncoder:setValue(0.5)
 
 	self.encoders = {
 		self.mixEncoder,
-		self.feedbackEncoder,
-		self.tapDelayEncoder
+		self.gainEncoder,
+		self.limimtEncoder
 	}
 
 	self.socketInVector = Vector(xx - (moduleWidth/2) + 16, yy - (moduleHeight/2) + 24)
@@ -77,12 +77,12 @@ function DelayMod:init(xx, yy, modId)
 
 end
 
-function DelayMod:turn(x, y, change)
+function OverdriveMod:turn(x, y, change)
 	local encoder = self:findClosestEncoder(x, y)
 	encoder:turn(change)
 end
 
-function DelayMod:findClosestEncoder(x, y)
+function OverdriveMod:findClosestEncoder(x, y)
 	local reticleVector = Vector(x, y)
 	local closestDistance = 1000
 	local closestIndex = -1
@@ -99,28 +99,28 @@ function DelayMod:findClosestEncoder(x, y)
 	return self.encoders[closestIndex]
 end
 
-function DelayMod:updatePosition()
+function OverdriveMod:updatePosition()
 	self:moveBy(globalXDrawOffset, globalYDrawOffset)
 end
 
-function DelayMod:getHostAudioModId()
+function OverdriveMod:getHostAudioModId()
 	return self.hostAudioModId
 end
 
-function DelayMod:setInCable(patchCable)
+function OverdriveMod:setInCable(patchCable)
 	patchCable:setEnd(self.socketInVector.x, self.socketInVector.y, self.modId)
 	self.inCable = patchCable
 	self.hostAudioModId = patchCable:getHostAudioModId()
-	self.delayComponent:setInCable(patchCable:getCable())
+	self.component:setInCable(patchCable:getCable())
 end
 
-function DelayMod:setOutCable(patchCable)
+function OverdriveMod:setOutCable(patchCable)
 	self.outCable = patchCable
 	patchCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
-	self.delayComponent:setOutCable(patchCable:getCable())
+	self.component:setOutCable(patchCable:getCable())
 end
 
-function DelayMod:collision(x, y)
+function OverdriveMod:collision(x, y)
 	if x > self.x - (moduleWidth/2) and x < self.x + (moduleWidth/2) and y > self.y - (moduleHeight/2) and y < self.y + (moduleHeight/2) then
 		return true
 	else
@@ -128,11 +128,11 @@ function DelayMod:collision(x, y)
 	end
 end
 
-function DelayMod:tryConnectGhostIn(x, y, ghostCable)
+function OverdriveMod:tryConnectGhostIn(x, y, ghostCable)
 	if ghostCable:getStartModId() == self.modId then
 		print("Can't connect a mod to itself...")
 		return false
-	elseif self.delayComponent:inConnected() then 
+	elseif self.component:inConnected() then 
 		return false
 	else
 		ghostCable:setEnd(self.socketInVector.x, self.socketInVector.y)
@@ -141,8 +141,8 @@ function DelayMod:tryConnectGhostIn(x, y, ghostCable)
 	end
 end
 
-function DelayMod:tryConnectGhostOut(x, y, ghostCable)
-	if self.delayComponent:outConnected() then 
+function OverdriveMod:tryConnectGhostOut(x, y, ghostCable)
+	if self.component:outConnected() then 
 		return false
 	else
 		ghostCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
@@ -151,11 +151,11 @@ function DelayMod:tryConnectGhostOut(x, y, ghostCable)
 	end
 end
 
-function DelayMod:type()
+function OverdriveMod:type()
 	return modType
 end
 
-function DelayMod:handleModClick(tX, tY, listener)
+function OverdriveMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
@@ -174,20 +174,20 @@ function DelayMod:handleModClick(tX, tY, listener)
 	end)
 end
 
-function DelayMod:setChannel(channel)
+function OverdriveMod:setChannel(channel)
 	if channel == nil then
-		print("DelayMod:setChannel() CHANNEL IS NIL")
+		print("OverdriveMod:setChannel() CHANNEL IS NIL")
 	else
-		print("DelayMod:setChannel() CHANNEL EXISTS!")
+		print("OverdriveMod:setChannel() CHANNEL EXISTS!")
 	end
-	self.delayComponent:setChannel(channel)
+	self.component:setChannel(channel)
 end
 
-function DelayMod:removeChannel(channel)
+function OverdriveMod:removeChannel(channel)
 	self.delayComponent:removeChannel(channel)
 end
 
-function DelayMod:evaporate(onDetachConnected)
+function OverdriveMod:evaporate(onDetachConnected)
 	--first detach cables
 	if self.delayComponent:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
@@ -208,11 +208,11 @@ function DelayMod:evaporate(onDetachConnected)
 	self:remove()
 end
 
-function DelayMod.ghostModule()
+function OverdriveMod.ghostModule()
 	return buildGhostModule(moduleWidth, moduleHeight)
 end
 
-function DelayMod:toState()
+function OverdriveMod:toState()
 	local modState = {}
 	modState.modId = self.modId
 	modState.type = self:type()
@@ -225,7 +225,7 @@ function DelayMod:toState()
 	return modState
 end
 
-function DelayMod:fromState(modState)
+function OverdriveMod:fromState(modState)
 	self.mixEncoder:setValue(modState.normalisedTempoDiv)
 	self.frequencyEncoder:setValue(modState.normalisedProbability)
 end

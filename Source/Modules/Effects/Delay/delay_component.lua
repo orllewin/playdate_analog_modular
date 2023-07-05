@@ -7,23 +7,17 @@ class('DelayComponent').extends()
 
 local maxSeconds = 2.0
 
-function DelayComponent:init(id, listener)
+function DelayComponent:init()
 	DelayComponent.super.init(self)
 	
-	self.id = id
-	self.listener = listener
-	
+
 	self.filter = playdate.sound.delayline.new(maxSeconds)
 	self.filter:setFeedback(0.5)
 	self.tap = self.filter:addTap(0.5)
 	
 	self.outSocket = Socket("delay_mod_out", socket_send)
 	
-	self.inSocket = Socket("delay_mod_in", socket_receive, function(event) 
-		if event ~= nil then
-			
-		end
-	end)
+	self.inSocket = Socket("delay_mod_in", socket_receive)
 end
 
 function DelayComponent:setChannel(channel)

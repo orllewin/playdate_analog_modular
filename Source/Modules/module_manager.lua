@@ -146,6 +146,10 @@ function ModuleManager:loadPatch(path)
 			local mod = OR606Mod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "OverdriveMod" then
+			local mod = OverdriveMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "PrintMod" then
 			local mod = PrintModule(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -413,6 +417,8 @@ function ModuleManager:getGhostSprite(type)
 		return OnePoleFilterMod.ghostModule()
 	elseif name == "OR606Mod" then
 		return OR606Mod.ghostModule()
+	elseif name == "OverdriveMod" then
+		return OverdriveMod.ghostModule()
 	elseif name == "RingModulatorMod" then
 		return RingModulatorMod.ghostModule()
 	elseif name == "NormalisedToMidiMod" then
@@ -486,6 +492,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(OnePoleFilterMod(x, y))
 	elseif name == "OR606Mod" then
 		self:addNew(OR606Mod(x, y))
+	elseif name == "OverdriveMod" then
+		self:addNew(OverdriveMod(x, y))
 	elseif name == "RingModulatorMod" then
 		self:addNew(RingModulatorMod(x, y))
 	elseif name == "NormalisedToMidiMod" then

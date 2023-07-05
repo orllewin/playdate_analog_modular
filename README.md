@@ -2,9 +2,9 @@
 
 A pluggable modular-style music making system with cables.
 
-## todo/ideas
+## Playdate SDK
 
-* Add `reset` option to clock module that iterates all modules and resets any timing counters to 0. If you have timed switches set to trip after n bars this would allow syncing of different timed areas of a patch.
+[sdk.play.date/](https://sdk.play.date/)
 
 ## Modules
 

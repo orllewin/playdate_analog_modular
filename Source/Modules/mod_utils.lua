@@ -127,6 +127,10 @@ function getMenuModList()
 					type = "OnePoleFilterMod"
 				},
 				{
+					label = "Overdrive",
+					type = "OverdriveMod"
+				},
+				{
 					label = "Ring Modulator",
 					type = "RingModulatorMod"
 				},
