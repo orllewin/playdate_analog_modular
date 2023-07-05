@@ -114,6 +114,10 @@ function ModuleManager:loadPatch(path)
 			local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)	
+		elseif patchMod.type == "HighpassMod" then
+			local mod = HighpassMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "LowpassMod" then
 			local mod = LowpassMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -411,6 +415,8 @@ function ModuleManager:getGhostSprite(type)
 		return DelayMod.ghostModule()
 	elseif name == "DrumMod" then
 		return DrumMod.ghostModule()
+	elseif name == "HighpassMod" then
+		return HighpassMod.ghostModule()
 	elseif name == "LowpassMod" then
 		return LowpassMod.ghostModule()
 	elseif name == "MicroSynthMod" then
@@ -488,6 +494,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(DrumMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)
 		end))
+	elseif name == "HighpassMod" then
+		self:addNew(HighpassMod(x, y))
 	elseif name == "LowpassMod" then
 		self:addNew(LowpassMod(x, y))
 	elseif name == "MicroSynthMod" then

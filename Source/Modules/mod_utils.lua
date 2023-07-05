@@ -119,7 +119,7 @@ function getMenuModList()
 			category = "Effects",
 			mods = {
 				{
-					label = "Bitcrusher",
+					label = "Krush",
 					type = "BitcrusherMod"
 				},
 				{
@@ -127,8 +127,12 @@ function getMenuModList()
 					type = "DelayMod"
 				},
 				{
-					label = "Low-pass Filter",
+					label = "Lo-pass",
 					type = "LowpassMod"
+				},
+				{
+					label = "Hi-pass",
+					type = "HighpassMod"
 				},
 				{
 					label = "One Pole Filter",

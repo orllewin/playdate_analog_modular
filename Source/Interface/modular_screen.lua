@@ -41,6 +41,7 @@ import 'Modules/speaker_module'
 --Effects
 import 'Modules/Effects/Bitcrusher/bitcrusher_mod'
 import 'Modules/Effects/Delay/delay_mod'
+import 'Modules/Effects/Highpass/highpass_mod'
 import 'Modules/Effects/Lowpass/lowpass_mod'
 import 'Modules/Effects/OnePoleFilter/one_pole_filter_mod'
 import 'Modules/Effects/Overdrive/overdrive_mod'

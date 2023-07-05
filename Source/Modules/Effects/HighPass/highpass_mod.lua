@@ -3,24 +3,24 @@
 
 ]]--
 import 'Modules/mod_utils.lua'
-import 'Modules/Effects/Lowpass/lowpass_component'
+import 'Modules/Effects/Highpass/highpass_component'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 import 'Coracle/math'
 import 'CoracleViews/rotary_encoder'
 
-class('LowpassMod').extends(playdate.graphics.sprite)
+class('HighpassMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
 local moduleWidth = 105
 local moduleHeight = 96
 
-local modType = "LowpassMod"
+local modType = "HighpassMod"
 local modSubtype = "audio_effect"
 
-function LowpassMod:init(xx, yy, modId)
-	LowpassMod.super.init(self)
+function HighpassMod:init(xx, yy, modId)
+	HighpassMod.super.init(self)
 	
 	if modId == nil then
 		self.modId = modType .. playdate.getSecondsSinceEpoch()
@@ -35,7 +35,7 @@ function LowpassMod:init(xx, yy, modId)
 	local bgW, bgH = backgroundImage:getSize()
 	
 	gfx.pushContext(backgroundImage)
-	gfx.drawTextAligned("Lo-pass", bgW/2, 19, kTextAlignment.center)
+	gfx.drawTextAligned("Hi-pass", bgW/2, 19, kTextAlignment.center)
 	
 	local mixImage = gfx.image.new("Images/mix")
 	mixImage:draw(bgW/2 + 28, bgH/2 + 10)
@@ -49,7 +49,7 @@ function LowpassMod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 	
-	self.component = LowpassComponent()
+	self.component = HighpassComponent()
 
 	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy + 32, function(value) 
 		self.component:setMix(value)
@@ -57,7 +57,7 @@ function LowpassMod:init(xx, yy, modId)
 	self.mixEncoder:setValue(0.5)
 
 	self.freqEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
-		self.component:setFrequency(map(value, 0.0, 1.0, 0.0, 5000.0))
+		self.component:setFrequency(map(value, 0.0, 1.0, 0.0, 7500.0))
 	end)
 	self.freqEncoder:setValue(0.25)
 	
@@ -77,12 +77,12 @@ function LowpassMod:init(xx, yy, modId)
 
 end
 
-function LowpassMod:turn(x, y, change)
+function HighpassMod:turn(x, y, change)
 	local encoder = self:findClosestEncoder(x, y)
 	encoder:turn(change)
 end
 
-function LowpassMod:findClosestEncoder(x, y)
+function HighpassMod:findClosestEncoder(x, y)
 	local reticleVector = Vector(x, y)
 	local closestDistance = 1000
 	local closestIndex = -1
@@ -99,28 +99,28 @@ function LowpassMod:findClosestEncoder(x, y)
 	return self.encoders[closestIndex]
 end
 
-function LowpassMod:updatePosition()
+function HighpassMod:updatePosition()
 	self:moveBy(globalXDrawOffset, globalYDrawOffset)
 end
 
-function LowpassMod:getHostAudioModId()
+function HighpassMod:getHostAudioModId()
 	return self.hostAudioModId
 end
 
-function LowpassMod:setInCable(patchCable)
+function HighpassMod:setInCable(patchCable)
 	patchCable:setEnd(self.socketInVector.x, self.socketInVector.y, self.modId)
 	self.inCable = patchCable
 	self.hostAudioModId = patchCable:getHostAudioModId()
 	self.component:setInCable(patchCable:getCable())
 end
 
-function LowpassMod:setOutCable(patchCable)
+function HighpassMod:setOutCable(patchCable)
 	self.outCable = patchCable
 	patchCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
 	self.component:setOutCable(patchCable:getCable())
 end
 
-function LowpassMod:collision(x, y)
+function HighpassMod:collision(x, y)
 	if x > self.x - (moduleWidth/2) and x < self.x + (moduleWidth/2) and y > self.y - (moduleHeight/2) and y < self.y + (moduleHeight/2) then
 		return true
 	else
@@ -128,7 +128,7 @@ function LowpassMod:collision(x, y)
 	end
 end
 
-function LowpassMod:tryConnectGhostIn(x, y, ghostCable)
+function HighpassMod:tryConnectGhostIn(x, y, ghostCable)
 	if ghostCable:getStartModId() == self.modId then
 		print("Can't connect a mod to itself...")
 		return false
@@ -141,7 +141,7 @@ function LowpassMod:tryConnectGhostIn(x, y, ghostCable)
 	end
 end
 
-function LowpassMod:tryConnectGhostOut(x, y, ghostCable)
+function HighpassMod:tryConnectGhostOut(x, y, ghostCable)
 	if self.component:outConnected() then 
 		return false
 	else
@@ -151,11 +151,11 @@ function LowpassMod:tryConnectGhostOut(x, y, ghostCable)
 	end
 end
 
-function LowpassMod:type()
+function HighpassMod:type()
 	return modType
 end
 
-function LowpassMod:handleModClick(tX, tY, listener)
+function HighpassMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
@@ -174,20 +174,20 @@ function LowpassMod:handleModClick(tX, tY, listener)
 	end)
 end
 
-function LowpassMod:setChannel(channel)
+function HighpassMod:setChannel(channel)
 	if channel == nil then
-		print("LowpassMod:setChannel() CHANNEL IS NIL")
+		print("HighpassMod:setChannel() CHANNEL IS NIL")
 	else
-		print("LowpassMod:setChannel() CHANNEL EXISTS!")
+		print("HighpassMod:setChannel() CHANNEL EXISTS!")
 	end
 	self.component:setChannel(channel)
 end
 
-function LowpassMod:removeChannel(channel)
+function HighpassMod:removeChannel(channel)
 	self.delayComponent:removeChannel(channel)
 end
 
-function LowpassMod:evaporate(onDetachConnected)
+function HighpassMod:evaporate(onDetachConnected)
 	--first detach cables
 	if self.delayComponent:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
@@ -208,11 +208,11 @@ function LowpassMod:evaporate(onDetachConnected)
 	self:remove()
 end
 
-function LowpassMod.ghostModule()
+function HighpassMod.ghostModule()
 	return buildGhostModule(moduleWidth, moduleHeight)
 end
 
-function LowpassMod:toState()
+function HighpassMod:toState()
 	local modState = {}
 	modState.modId = self.modId
 	modState.type = self:type()
@@ -225,7 +225,7 @@ function LowpassMod:toState()
 	return modState
 end
 
-function LowpassMod:fromState(modState)
+function HighpassMod:fromState(modState)
 	self.mixEncoder:setValue(modState.normalisedTempoDiv)
 	self.frequencyEncoder:setValue(modState.normalisedProbability)
 end
