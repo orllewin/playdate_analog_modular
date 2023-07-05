@@ -39,7 +39,9 @@ import 'Modules/Synth/synth_mod'
 import 'Modules/speaker_module'
 
 --Effects
+import 'Modules/Effects/Bitcrusher/bitcrusher_mod'
 import 'Modules/Effects/Delay/delay_mod'
+import 'Modules/Effects/Lowpass/lowpass_mod'
 import 'Modules/Effects/OnePoleFilter/one_pole_filter_mod'
 import 'Modules/Effects/Overdrive/overdrive_mod'
 import 'Modules/Effects/RingModulator/ring_modulator_mod'
@@ -51,7 +53,7 @@ class('ModularScreen').extends()
 
 local gfx <const> = playdate.graphics
 
-globalXDrawOffset = 0
+globalXDrawOffset = 800
 globalYDrawOffset = 0
 
 local modeStandard = 1

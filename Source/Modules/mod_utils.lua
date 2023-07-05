@@ -119,8 +119,16 @@ function getMenuModList()
 			category = "Effects",
 			mods = {
 				{
+					label = "Bitcrusher",
+					type = "BitcrusherMod"
+				},
+				{
 					label = "Delay",
 					type = "DelayMod"
+				},
+				{
+					label = "Low-pass Filter",
+					type = "LowpassMod"
 				},
 				{
 					label = "One Pole Filter",

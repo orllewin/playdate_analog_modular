@@ -86,6 +86,10 @@ function ModuleManager:loadPatch(path)
 			local mod = Bifurcate4Mod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "BitcrusherMod" then
+			local mod = BitcrusherMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "BlackholeMod" then
 			local mod = BlackholeMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -108,6 +112,10 @@ function ModuleManager:loadPatch(path)
 			self:addNew(mod)	
 		elseif patchMod.type == "DrumMod" then
 			local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)	
+		elseif patchMod.type == "LowpassMod" then
+			local mod = LowpassMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)	
 		elseif patchMod.type == "MicroSynthMod" then
@@ -391,6 +399,8 @@ function ModuleManager:getGhostSprite(type)
 		return Bifurcate2Mod.ghostModule()
 	elseif name == "Bifurcate4Mod" then
 		return Bifurcate4Mod.ghostModule()
+	elseif name == "BitcrusherMod" then
+		return BitcrusherMod.ghostModule()
 	elseif name == "BlackholeMod" then
 		return BlackholeMod.ghostModule()
 	elseif name == "ClockMod" then
@@ -401,6 +411,8 @@ function ModuleManager:getGhostSprite(type)
 		return DelayMod.ghostModule()
 	elseif name == "DrumMod" then
 		return DrumMod.ghostModule()
+	elseif name == "LowpassMod" then
+		return LowpassMod.ghostModule()
 	elseif name == "MicroSynthMod" then
 		return MicroSynthMod.ghostModule()
 	elseif name == "MidiGenMod" then
@@ -462,6 +474,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(Bifurcate2Mod(x, y))
 	elseif name == "Bifurcate4Mod" then
 		self:addNew(Bifurcate4Mod(x, y))
+	elseif name == "BitcrusherMod" then
+		self:addNew(BitcrusherMod(x, y))
 	elseif name == "BlackholeMod" then
 		self:addNew(BlackholeMod(x, y))
 	elseif name == "ClockMod" then
@@ -474,6 +488,8 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(DrumMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)
 		end))
+	elseif name == "LowpassMod" then
+		self:addNew(LowpassMod(x, y))
 	elseif name == "MicroSynthMod" then
 		self:addNew(MicroSynthMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)

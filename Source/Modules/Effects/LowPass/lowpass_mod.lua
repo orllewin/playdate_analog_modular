@@ -3,24 +3,24 @@
 
 ]]--
 import 'Modules/mod_utils.lua'
-import 'Modules/Effects/Overdrive/overdrive_component'
+import 'Modules/Effects/Lowpass/lowpass_component'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 import 'Coracle/math'
 import 'CoracleViews/rotary_encoder'
 
-class('OverdriveMod').extends(playdate.graphics.sprite)
+class('LowpassMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
 local moduleWidth = 105
 local moduleHeight = 96
 
-local modType = "OverdriveMod"
+local modType = "LowpassMod"
 local modSubtype = "audio_effect"
 
-function OverdriveMod:init(xx, yy, modId)
-	OverdriveMod.super.init(self)
+function LowpassMod:init(xx, yy, modId)
+	LowpassMod.super.init(self)
 	
 	if modId == nil then
 		self.modId = modType .. playdate.getSecondsSinceEpoch()
@@ -35,7 +35,7 @@ function OverdriveMod:init(xx, yy, modId)
 	local bgW, bgH = backgroundImage:getSize()
 	
 	gfx.pushContext(backgroundImage)
-	gfx.drawTextAligned("ODrive", bgW/2, 19, kTextAlignment.center)
+	gfx.drawTextAligned("Low-pass", bgW/2, 19, kTextAlignment.center)
 	
 	local mixImage = gfx.image.new("Images/mix")
 	mixImage:draw(bgW/2 + 28, bgH/2 + 10)
@@ -49,27 +49,27 @@ function OverdriveMod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 	
-	self.component = OverdriveComponent()
+	self.component = LowpassComponent()
 
 	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy + 32, function(value) 
 		self.component:setMix(value)
 	end)
 	self.mixEncoder:setValue(0.5)
 
-	self.gainEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
-		self.component:setGain(map(value, 0.0, 1.0, 0.0, 3.0))
+	self.freqEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
+		self.component:setFrequency(map(value, 0.0, 1.0, 0.0, 5000.0))
 	end)
-	self.gainEncoder:setValue(0.5)
+	self.freqEncoder:setValue(0.25)
 	
-	self.limimtEncoder = RotaryEncoder(xx, yy + 32, function(value) 
-		self.component:setLimit(value)
+	self.resonanceEncoder = RotaryEncoder(xx, yy + 32, function(value) 
+		self.component:setResonance(value)
 	end)
-	self.limimtEncoder:setValue(0.5)
+	self.resonanceEncoder:setValue(0.5)
 
 	self.encoders = {
 		self.mixEncoder,
-		self.gainEncoder,
-		self.limimtEncoder
+		self.freqEncoder,
+		self.resonanceEncoder
 	}
 
 	self.socketInVector = Vector(xx - (moduleWidth/2) + 16, yy - (moduleHeight/2) + 24)
@@ -77,12 +77,12 @@ function OverdriveMod:init(xx, yy, modId)
 
 end
 
-function OverdriveMod:turn(x, y, change)
+function LowpassMod:turn(x, y, change)
 	local encoder = self:findClosestEncoder(x, y)
 	encoder:turn(change)
 end
 
-function OverdriveMod:findClosestEncoder(x, y)
+function LowpassMod:findClosestEncoder(x, y)
 	local reticleVector = Vector(x, y)
 	local closestDistance = 1000
 	local closestIndex = -1
@@ -99,28 +99,28 @@ function OverdriveMod:findClosestEncoder(x, y)
 	return self.encoders[closestIndex]
 end
 
-function OverdriveMod:updatePosition()
+function LowpassMod:updatePosition()
 	self:moveBy(globalXDrawOffset, globalYDrawOffset)
 end
 
-function OverdriveMod:getHostAudioModId()
+function LowpassMod:getHostAudioModId()
 	return self.hostAudioModId
 end
 
-function OverdriveMod:setInCable(patchCable)
+function LowpassMod:setInCable(patchCable)
 	patchCable:setEnd(self.socketInVector.x, self.socketInVector.y, self.modId)
 	self.inCable = patchCable
 	self.hostAudioModId = patchCable:getHostAudioModId()
 	self.component:setInCable(patchCable:getCable())
 end
 
-function OverdriveMod:setOutCable(patchCable)
+function LowpassMod:setOutCable(patchCable)
 	self.outCable = patchCable
 	patchCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
 	self.component:setOutCable(patchCable:getCable())
 end
 
-function OverdriveMod:collision(x, y)
+function LowpassMod:collision(x, y)
 	if x > self.x - (moduleWidth/2) and x < self.x + (moduleWidth/2) and y > self.y - (moduleHeight/2) and y < self.y + (moduleHeight/2) then
 		return true
 	else
@@ -128,7 +128,7 @@ function OverdriveMod:collision(x, y)
 	end
 end
 
-function OverdriveMod:tryConnectGhostIn(x, y, ghostCable)
+function LowpassMod:tryConnectGhostIn(x, y, ghostCable)
 	if ghostCable:getStartModId() == self.modId then
 		print("Can't connect a mod to itself...")
 		return false
@@ -141,7 +141,7 @@ function OverdriveMod:tryConnectGhostIn(x, y, ghostCable)
 	end
 end
 
-function OverdriveMod:tryConnectGhostOut(x, y, ghostCable)
+function LowpassMod:tryConnectGhostOut(x, y, ghostCable)
 	if self.component:outConnected() then 
 		return false
 	else
@@ -151,11 +151,11 @@ function OverdriveMod:tryConnectGhostOut(x, y, ghostCable)
 	end
 end
 
-function OverdriveMod:type()
+function LowpassMod:type()
 	return modType
 end
 
-function OverdriveMod:handleModClick(tX, tY, listener)
+function LowpassMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
@@ -174,20 +174,20 @@ function OverdriveMod:handleModClick(tX, tY, listener)
 	end)
 end
 
-function OverdriveMod:setChannel(channel)
+function LowpassMod:setChannel(channel)
 	if channel == nil then
-		print("OverdriveMod:setChannel() CHANNEL IS NIL")
+		print("LowpassMod:setChannel() CHANNEL IS NIL")
 	else
-		print("OverdriveMod:setChannel() CHANNEL EXISTS!")
+		print("LowpassMod:setChannel() CHANNEL EXISTS!")
 	end
 	self.component:setChannel(channel)
 end
 
-function OverdriveMod:removeChannel(channel)
+function LowpassMod:removeChannel(channel)
 	self.delayComponent:removeChannel(channel)
 end
 
-function OverdriveMod:evaporate(onDetachConnected)
+function LowpassMod:evaporate(onDetachConnected)
 	--first detach cables
 	if self.delayComponent:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
@@ -208,11 +208,11 @@ function OverdriveMod:evaporate(onDetachConnected)
 	self:remove()
 end
 
-function OverdriveMod.ghostModule()
+function LowpassMod.ghostModule()
 	return buildGhostModule(moduleWidth, moduleHeight)
 end
 
-function OverdriveMod:toState()
+function LowpassMod:toState()
 	local modState = {}
 	modState.modId = self.modId
 	modState.type = self:type()
@@ -225,7 +225,7 @@ function OverdriveMod:toState()
 	return modState
 end
 
-function OverdriveMod:fromState(modState)
+function LowpassMod:fromState(modState)
 	self.mixEncoder:setValue(modState.normalisedTempoDiv)
 	self.frequencyEncoder:setValue(modState.normalisedProbability)
 end

@@ -26,14 +26,17 @@ function OverdriveComponent:removeChannel(channel)
 end
 
 function OverdriveComponent:setMix(value)
+	print("OverdriveComponent:setMix: " .. value)
 	self.filter:setMix(value)
 end
 
 function OverdriveComponent:setGain(value)
+	print("OverdriveComponent:setGain: " .. value)
 	self.filter:setGain(value)
 end
 
 function OverdriveComponent:setLimit(value)
+	print("OverdriveComponent:setLimit: " .. value)
 	self.filter:setLimit(value)
 end
 
