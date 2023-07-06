@@ -139,8 +139,8 @@ end
 local patchMenuItem, error = menu:addMenuItem("Patch", function() 
 	--todo - new popup with options: load, save, delete (if opened from load)	
 	
-	local y = 48
-	local h = 105
+	local y = 50
+	local h = 87
 	local options = {
 		{ label="New"},
 		{ label="Load"},
@@ -149,8 +149,8 @@ local patchMenuItem, error = menu:addMenuItem("Patch", function()
 	}
 	
 	if gPatchPath ~= nil then
-		y = 58
-		h = 105
+		y = 67
+		h = 123
 		options = {
 			{ label="New"},
 			{ label="Load"},
@@ -191,6 +191,12 @@ local invertMenuItem, error = menu:addMenuItem("Invert screen", function()
 		inverted = not inverted
 		playdate.display.setInverted(inverted)
 end)
+
+if playdate.datastore.read("prefs") == nil then
+	--first run, show tutorial
+else
+	
+end
 
 function playdate.update()	
 	playdate.timer.updateTimers()

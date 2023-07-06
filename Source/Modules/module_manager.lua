@@ -114,7 +114,9 @@ function ModuleManager:loadPatch(path)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)	
 		elseif patchMod.type == "DrumMod" then
-			local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId)
+			local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+						self:addToAudioManager(modId, channel)
+			end)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)	
 		elseif patchMod.type == "HighpassMod" then
@@ -126,7 +128,9 @@ function ModuleManager:loadPatch(path)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)	
 		elseif patchMod.type == "MicroSynthMod" then
-			local mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId)
+			local mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+				self:addToAudioManager(modId, channel)
+			end)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)	
 		elseif patchMod.type == "MidiGenMod" then
@@ -158,7 +162,9 @@ function ModuleManager:loadPatch(path)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "OR606Mod" then
-			local mod = OR606Mod(patchMod.x, patchMod.y, patchMod.modId)
+			local mod = OR606Mod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+						self:addToAudioManager(modId, channel)
+			end)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "OverdriveMod" then
@@ -198,7 +204,9 @@ function ModuleManager:loadPatch(path)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "SynthMod" then
-			local mod = SynthMod(patchMod.x, patchMod.y, patchMod.modId)
+			local mod = SynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+					self:addToAudioManager(modId, channel)
+			end)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "LabelMod" then

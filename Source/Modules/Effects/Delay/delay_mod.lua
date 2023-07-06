@@ -202,9 +202,13 @@ function DelayMod:evaporate(onDetachConnected)
 	end
 	
 	--then remove sprites
-	self.mixEncoder:evaporate()
-	self.frequencyEncoder:evaporate()
 	playdate.graphics.sprite.removeSprites({self.cutoffFreqLabelSprite})
+	self.mixEncoder:evaporate()
+	self.feedbackEncoderValue:evaporate()
+	self.tapDelayEncoderValue:evaporate()
+	self.mixEncoder = nil
+	self.feedbackEncoderValue = nil
+	self.tapDelayEncoderValue = nil
 	self:remove()
 end
 
@@ -219,13 +223,15 @@ function DelayMod:toState()
 	modState.x = self.x
 	modState.y = self.y
 	
-	modState.normalisedTempoDiv = self.mixEncoder:getValue()
-	modState.normalisedProbability = self.frequencyEncoder:getValue()
-	
+	modState.mixEncoderValue = self.mixEncoder:getValue()
+	modState.feedbackEncoderValue = self.feedbackEncoder:getValue()
+	modState.tapDelayEncoderValue = self.tapDelayEncoder:getValue()
+		
 	return modState
 end
 
 function DelayMod:fromState(modState)
-	self.mixEncoder:setValue(modState.normalisedTempoDiv)
-	self.frequencyEncoder:setValue(modState.normalisedProbability)
+	self.mixEncoder:setValue(modState.mixEncoderValue)
+	self.feedbackEncoder:setValue(modState.feedbackEncoderValue)
+	self.tapDelayEncoder:setValue(modState.tapDelayEncoderValue)
 end

@@ -11,7 +11,7 @@ local volumes = {1.0, 0.8, 0.6, 0.4}
 
 local blank16 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
 
-function OR606Component:init(onStep)
+function OR606Component:init(onChannel)
 	OR606Component.super.init(self)
 	
 	self.channel = snd.channel.new()
@@ -37,6 +37,8 @@ function OR606Component:init(onStep)
 	
 	self.CH = snd.sampleplayer.new("Samples/OR606/ch")
 	self.channel:addSource(self.CH)
+	
+	onChannel(self.channel)
 	
 	self.onStep = onStep
 	

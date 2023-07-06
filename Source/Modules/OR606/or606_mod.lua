@@ -19,7 +19,7 @@ local drumSelector = gfx.image.new("Images/drum_selector")
 local patternLengthSelector = gfx.image.new("Images/pattern_length_selector")
 local drumLabels = {"Base Drum", "Snare Drum", "Low Tom", "High Tom", "Cymbal", "Open Hat", "Closed Hat"}
 
-function OR606Mod:init(xx, yy, modId)
+function OR606Mod:init(xx, yy, modId, onInit)
 	OR606Mod.super.init(self)
 	
 	if modId == nil then
@@ -28,11 +28,15 @@ function OR606Mod:init(xx, yy, modId)
 		self.modId = modId
 	end
 	
+	self.onInit = onInit
+	
 	self.modType = modType
 	self.modSubtype = modSubtype
 	self.selectedDrumIndex = 1
 	
-	self.or606Component = OR606Component()
+	self.or606Component = OR606Component(function(channel)
+		if self.onInit ~= nil then self.onInit(self.modId, channel) end
+	end)
 	
 	local backgroundImage = generateModBackgroundWithShadow(moduleWidth, moduleHeight)
 	local bgW, bgH = backgroundImage:getSize()
