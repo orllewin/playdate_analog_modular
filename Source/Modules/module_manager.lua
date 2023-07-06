@@ -70,6 +70,9 @@ function ModuleManager:loadPatch(path)
 	
 	for i=1,#patchModules do
 		local patchMod = patchModules[i]
+		
+		print(">>> Loading module " .. i .. " of " .. #patchModules .. ": " .. patchMod.modId)
+		
 		if patchMod.type == "ArpMod" then
 			local mod = ArpMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -208,9 +211,12 @@ function ModuleManager:loadPatch(path)
 	local patchCables = patch.cables
 	
 	for i=1,#patchCables do
+		
 		local cableState = patchCables[i]
 		local reifiedCable = PatchCable(false, cableState.cableId)
 		reifiedCable:fromState(cableState)
+		
+		print(">>> Loading cable: " .. i .. " of " .. #patchCables .. ": startModId: " .. reifiedCable.startModId .. " endModId: " .. reifiedCable.endModId)
 		
 		for i=1,#self.modules do
 			local module = self.modules[i]
@@ -221,6 +227,8 @@ function ModuleManager:loadPatch(path)
 				module:setInCable(reifiedCable)
 			end
 		end
+		
+		table.insert(self.cables, reifiedCable)
 	end
 end
 
@@ -340,9 +348,10 @@ function ModuleManager:handleCableAt(x, y)
 					local channel = self.audioManager:getChannel(self.cableStartModule.modId)
 					if module.setChannel ~= nil then module:setChannel(channel) end
 				elseif self.cableStartModule.modSubtype == "audio_effect" then 
-					print("... found audio_effect, setting setStartAudioModId to " .. self.cableStartModule.modId)
-					reifiedCable:setStartAudioModId(self.cableStartModule:getHostAudioModId())
-					local channel = self.audioManager:getChannel(self.cableStartModule:getHostAudioModId())
+					local hostModId = self.cableStartModule:getHostAudioModId()
+					print("... found audio_effect: " .. self.cableStartModule.modId .. ", origin audio gen mod: " .. hostModId)
+					local channel = self.audioManager:getChannel(hostModId)
+					reifiedCable:setStartAudioModId(hostModId)
 					if module.setChannel ~= nil then module:setChannel(channel) end
 				else
 					print("... found OTHER")

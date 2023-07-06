@@ -21,6 +21,7 @@ function DelayComponent:init()
 end
 
 function DelayComponent:setChannel(channel)
+	self.channel = channel
 	channel:addEffect(self.filter)
 end
 
