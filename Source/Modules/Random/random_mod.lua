@@ -11,7 +11,7 @@ class('RandomMod').extends(playdate.graphics.sprite)
 local gfx <const> = playdate.graphics
 
 local moduleWidth = 32
-local moduleHeight = 120
+local moduleHeight = 80
 
 local modType = "RandomMod"
 local modSubtype = "clock_router"
@@ -31,8 +31,14 @@ function RandomMod:init(xx, yy, modId)
 	local backgroundImage = generateModBackgroundWithShadow(moduleWidth, moduleHeight)	
 	local bgW, bgH = backgroundImage:getSize()
 	gfx.pushContext(backgroundImage)
-	local rand = playdate.graphics.image.new("Images/random")
-	rand:drawCentered(bgW/2, 75)
+	
+	gSmallSocketImage:draw(bgW/2 - 8, bgH/2 - 35)
+	gfx.drawTextAligned("<", bgW/2, bgH/2 - 15, kTextAlignment.center)
+	
+	gfx.drawTextAligned("rng", bgW/2, bgH/2 - 2, kTextAlignment.center)
+	
+	gfx.drawTextAligned(">", bgW/2, bgH/2 + 8, kTextAlignment.center)
+	gSmallSocketImage:draw(bgW/2 - 8, bgH/2 + 18)
 	
 	gfx.popContext()
 	
@@ -40,21 +46,21 @@ function RandomMod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 
-	self.inSocketSprite = SocketSprite(xx, yy  - (bgH/2) + 37, socket_in)
-	self.outSocketSprite = SocketSprite(xx, yy	+ (moduleHeight/2) - 22, socket_out)
+	self.inSocketVector = Vector(xx, yy - (moduleHeight/2) + 10)
+	self.outSocketVector = Vector(xx, yy + (moduleHeight/2) - 10)
 	
 	self.randomComponent = RandomComponent()
 	--todo
 end
 
 function RandomMod:setInCable(patchCable)
-	patchCable:setEnd(self.inSocketSprite.x, self.inSocketSprite:getSocketY(), self.modId)
+	patchCable:setEnd(self.inSocketVector.x, self.inSocketVector.y, self.modId)
 	self.inCable = patchCable
 	self.randomComponent:setInCable(patchCable:getCable())
 end
 
 function RandomMod:setOutCable(patchCable)
-	patchCable:setStart(self.outSocketSprite.x, self.outSocketSprite:getSocketY(), self.modId)
+	patchCable:setStart(self.outSocketVector.x, self.outSocketVector.y, self.modId)
 	self.outCable = patchCable
 	self.randomComponent:setOutCable(patchCable:getCable())
 end
@@ -68,13 +74,13 @@ function RandomMod:collision(x, y)
 end
 
 function RandomMod:tryConnectGhostIn(x, y, ghostCable)
-	ghostCable:setEnd(self.inSocketSprite.x, self.inSocketSprite:getSocketY())
+	ghostCable:setEnd(self.inSocketVector.x, self.inSocketVector.y)
 	ghostCable:setGhostReceiveConnected()
 	return true
 end
 
 function RandomMod:tryConnectGhostOut(x, y, ghostCable)
-	ghostCable:setStart(self.outSocketSprite.x, self.outSocketSprite:getSocketY())
+	ghostCable:setStart(self.outSocketVector.x, self.outSocketVector.y)
 	ghostCable:setGhostSendConnected()
 	return true
 end

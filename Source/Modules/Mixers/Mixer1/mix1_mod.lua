@@ -5,18 +5,29 @@
 ]]--
 import 'Modules/mod_utils.lua'
 import 'Modules/sprites/small_socket_sprite'
-class('SpeakerModule').extends(playdate.graphics.sprite)
+class('Mix1Mod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
 local moduleWidth = 60
-local moduleHeight = 100
+local moduleHeight = 70
 
 local modType = "SpeakerMod"
 local modSubtype = "audio_effect"
 
-function SpeakerModule:init(xx, yy)
-	SpeakerModule.super.init(self)
+function Mix1Mod:init(xx, yy, modId)
+	Mix1Mod.super.init(self)
+	
+	if modId == nil then
+		self.modId = modType .. playdate.getSecondsSinceEpoch()
+	else
+		self.modId = modId
+	end
+	
+	self.modType = modType
+	self.modSubtype = modSubtype
+	
+	self.channel = nil
 	
 	local backgroundImage = generateModBackgroundWithShadow(moduleWidth, moduleHeight)	
 	local bgW, bgH = backgroundImage:getSize()
@@ -24,7 +35,7 @@ function SpeakerModule:init(xx, yy)
 	
 	gfx.setColor(playdate.graphics.kColorBlack)
 	for x = 1,4 do
-		for y = 1,6 do
+		for y = 1,3 do
 			gfx.fillCircleAtPoint((bgW - moduleWidth)/2 + (x * 12), (bgH - moduleHeight)/2 + y * 11, 4) 
 		end
 	end
@@ -39,32 +50,21 @@ function SpeakerModule:init(xx, yy)
 	local socketSprite = SmallSocketSprite(xx - (bgW/2) + 28, yy + (bgH/2) - 28, socket_in)
 	
 	self.inEncoder = RotaryEncoder(xx + (bgW/2) - 30, yy + (bgH/2)- 30, function(value) 
-		
+		if self.channel ~= nil then self.channel:setVolume(value) end
 	end)
-	self.inEncoder:setValue(1.0)
-	
-	
-	self.value = 0.0
-	
-	local valueImage = playdate.graphics.image.new(moduleWidth, 30)
-	gfx.pushContext(valueImage)
-	gfx.drawText("" .. self.value, 5, 10)
-	gfx.popContext()
-
-	
-
+	self.inEncoder:setValue(0.0)
 end
 
-function SpeakerModule:updatePosition()
-	self:moveBy(globalXDrawOffset, globalYDrawOffset)
+function Mix1Mod:turn(x, y, change)
+	self.inEncoder:turn(change)
 end
 
-function SpeakerModule:setInCable(patchCable)
+function Mix1Mod:setInCable(patchCable)
 	patchCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
 	--self.printComponent:setInCable(patchCable:getCable())
 end
 
-function SpeakerModule:collision(x, y)
+function Mix1Mod:collision(x, y)
 	if x > self.x - (moduleWidth/2) and x < self.x + (moduleWidth/2) and y > self.y - (moduleHeight/2) and y < self.y + (moduleHeight/2) then
 		return true
 	else
@@ -72,17 +72,26 @@ function SpeakerModule:collision(x, y)
 	end
 end
 
-function SpeakerModule:tryConnectGhostIn(x, y, ghostCable)
+function Mix1Mod:tryConnectGhostIn(x, y, ghostCable)
 	--todo check distance
 	ghostCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
 	return true
 end
 
-function SpeakerModule:type()
+function Mix1Mod:type()
 	return modType
 end
 
-function SpeakerModule.ghostModule()
+function Mix1Mod:setChannel(channel)
+	if channel == nil then
+		print("Mix1Mod:setChannel() CHANNEL IS NIL")
+	else
+		print("Mix1Mod:setChannel() CHANNEL EXISTS!")
+	end
+	self.channel = channel
+end
+
+function Mix1Mod.ghostModule()
 	local templateImage = playdate.graphics.image.new(moduleWidth, moduleHeight)
 	gfx.pushContext(templateImage)
 	gfx.setLineWidth(6)

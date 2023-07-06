@@ -137,6 +137,10 @@ function ModuleManager:loadPatch(path)
 			local mod = MidiGenMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "Mix1Mod" then
+			local mod = Mix1Mod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "Mix4Mod" then
 			local mod = Mix4Mod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -440,6 +444,8 @@ function ModuleManager:getGhostSprite(type)
 		return MicroSynthMod.ghostModule()
 	elseif name == "MidiGenMod" then
 		return MidiGenMod.ghostModule()
+	elseif name == "Mix1Mod" then
+		return Mix1Mod.ghostModule()
 	elseif name == "Mix8Mod" then
 		return Mix8Mod.ghostModule()
 	elseif name == "Mix8SliderMod" then
@@ -468,8 +474,6 @@ function ModuleManager:getGhostSprite(type)
 		return RandomMod.ghostModule()
 	elseif name == "SeqGridMod" then
 		return SeqGridMod.ghostModule()
-	elseif name == "SpeakerMod" then
-		return SpeakerModule.ghostModule()
 	elseif name == "SwitchMod" then
 		return SwitchMod.ghostModule()
 	elseif name == "TimedSwitchMod" then
@@ -521,6 +525,8 @@ function ModuleManager:addNewAt(type, x, y)
 		end))
 	elseif name == "MidiGenMod" then
 		self:addNew(MidiGenMod(x, y))
+	elseif name == "Mix1Mod" then
+		self:addNew(Mix1Mod(x, y))
 	elseif name == "Mix8Mod" then
 		self:addNew(Mix8Mod(x, y))
 	elseif name == "Mix4Mod" then
@@ -549,8 +555,6 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(RandomMod(x, y))
 	elseif name == "SeqGridMod" then
 		self:addNew(SeqGridMod(x, y))
-	elseif name == "SpeakerMod" then
-		self:addNew(SpeakerModule(x, y))
 	elseif name == "SwitchMod" then
 		self:addNew(SwitchMod(x, y))
 	elseif name == "TimedSwitchMod" then

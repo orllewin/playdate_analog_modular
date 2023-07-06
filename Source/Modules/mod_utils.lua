@@ -166,7 +166,7 @@ function getMenuModList()
 			mods = {
 				{
 					label = "Mix output x1",
-					type = "SpeakerMod"
+					type = "Mix1Mod"
 				},
 				{
 					label = "Mix output x4",
