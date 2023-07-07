@@ -40,6 +40,9 @@ function Mix1Mod:init(xx, yy, modId)
 		end
 	end
 	gfx.setLineWidth(1)
+	
+	gSmallSocketImage:draw(20, 62)
+	
 	gfx.popContext()
 	
 	self:setImage(backgroundImage)
@@ -47,7 +50,7 @@ function Mix1Mod:init(xx, yy, modId)
 	self:add()
 	
 	self.hasCable = false
-	local socketSprite = SmallSocketSprite(xx - (bgW/2) + 28, yy + (bgH/2) - 28, socket_in)
+	self.inVector = Vector(xx - (moduleWidth/2) + 18, yy + (moduleHeight/2) - 14)
 	
 	self.inEncoder = RotaryEncoder(xx + (bgW/2) - 30, yy + (bgH/2)- 30, function(value) 
 		if self.channel ~= nil then self.channel:setVolume(value) end
@@ -60,7 +63,7 @@ function Mix1Mod:turn(x, y, change)
 end
 
 function Mix1Mod:setInCable(patchCable)
-	patchCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
+	patchCable:setEnd(self.inVector.x, self.inVector.y)
 	self.inCable = patchCable
 	self.hasCable = true
 end
@@ -75,11 +78,15 @@ end
 
 function Mix1Mod:tryConnectGhostIn(x, y, ghostCable)
 	if self.hasCable == false then
-		ghostCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
+		ghostCable:setEnd(self.inVector.x, self.inVector.y)
 		return true
 	else
 		return false
 	end
+end
+
+function Mix1Mod:tryConnectGhostOut(x, y, ghostCable)
+	return false
 end
 
 function Mix1Mod:type()

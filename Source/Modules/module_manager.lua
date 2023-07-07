@@ -543,6 +543,14 @@ if name == "SimplexSineMod" then
 		--todo
 	end
 	
+	--Drum machines
+	if name == "OR606Mod" then
+		self:addNew(OR606Mod(x, y, nil, function(modId, channel) 
+			self:addToAudioManager(modId, channel)
+		end))
+		return
+	end
+	
 	if name == "ArpMod" then
 		self:addNew(ArpMod(x, y))
 	elseif name == "Bifurcate2Mod" then
@@ -581,8 +589,6 @@ if name == "SimplexSineMod" then
 		self:addNew(Mix4SliderMod(x, y))
 	elseif name == "OnePoleFilterMod" then
 		self:addNew(OnePoleFilterMod(x, y))
-	elseif name == "OR606Mod" then
-		self:addNew(OR606Mod(x, y))
 	elseif name == "OverdriveMod" then
 		self:addNew(OverdriveMod(x, y))
 	elseif name == "RingModulatorMod" then

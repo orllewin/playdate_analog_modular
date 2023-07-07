@@ -148,7 +148,7 @@ function RingModulatorMod:tryConnectGhostOut(x, y, ghostCable)
 	if self.ringModComponent:outConnected() then 
 		return false
 	else
-		ghostCable:setStart(self.socketOutSprite.x, self.socketOutSprite:getSocketY(), self.modId)
+		ghostCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
 		ghostCable:setGhostSendConnected()
 		return true
 	end
