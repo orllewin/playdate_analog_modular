@@ -1,3 +1,7 @@
+--[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
+
 import 'Modules/mod_utils'
 
 class('ModAboutPopup').extends(playdate.graphics.sprite)

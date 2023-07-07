@@ -1,7 +1,6 @@
 --[[
-0 to 20000
-	
-]]--
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
 class('HighpassComponent').extends()
 

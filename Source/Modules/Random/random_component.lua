@@ -1,6 +1,6 @@
 --[[
-	Emits a random number when it receives a bang
-]]--
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
 class('RandomComponent').extends()
 

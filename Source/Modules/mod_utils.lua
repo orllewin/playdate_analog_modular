@@ -1,3 +1,7 @@
+--[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
+
 function buildGhostModule(w, h)
 	local gfx <const> = playdate.graphics
 	local templateImage = gfx.image.new(w, h)

@@ -1,8 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-	Prints a received value
-
-]]--
 import 'Modules/mod_utils.lua'
 import 'Modules/Print/print_component'
 import 'Coracle/math'

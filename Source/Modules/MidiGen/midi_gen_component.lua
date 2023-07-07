@@ -1,6 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-]]--
 import 'midi'
 
 class('MidiGenComponent').extends()

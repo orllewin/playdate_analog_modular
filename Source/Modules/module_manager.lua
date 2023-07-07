@@ -1,7 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-
-]]--
 import 'global'
 import 'Coracle/string_utils'
 import 'Audio/audio_manager'

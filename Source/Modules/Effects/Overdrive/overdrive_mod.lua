@@ -1,7 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-
-]]--
 import 'Modules/mod_utils.lua'
 import 'Modules/Effects/Overdrive/overdrive_component'
 import 'Modules/mod_about_popup'

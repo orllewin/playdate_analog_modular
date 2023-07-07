@@ -1,8 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-
-
-]]--
 import 'Modules/mod_utils.lua'
 import 'Modules/NormalisedToMidi/normalised_to_midi_component'
 

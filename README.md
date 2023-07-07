@@ -228,6 +228,18 @@ A very small synth module. You can only change the waveform type by opening the 
 
 <hr>
 
+### 25. Mixers: 1 Output
+
+#### Status - In Progress
+
+* Replace Socket Sprites - Complete ✓
+* Optimisation - Complete ✓
+* Socket full handling - Complete ✓
+* Prevent attaching cable to self - Complete ✓
+* State management - TODO
+
+<hr>
+
 ### 13. Mixers: 4 Outputs - sliders
 
 #### Status - Done
@@ -388,21 +400,6 @@ The primary synth with full controls and automation (for the ADSR Envelope and t
 * State management - TODO
 
 <hr>
-
-### 25. Speaker Module
-
-Actually a 1X Mixer, needs moving to the Mixers directory.
-
-#### Status - In Progress
-
-* Replace Socket Sprites - TODO
-* Optimisation - TODO
-* Socket full handling - TODO
-* Prevent attaching cable to self - TODO
-* State management - TODO
-
-<hr>
-
 
 
 

@@ -1,8 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-
-
-]]--
 import 'Modules/mod_utils.lua'
 import 'Modules/sprites/small_socket_sprite'
 class('Mix1Mod').extends(playdate.graphics.sprite)
@@ -52,14 +51,14 @@ function Mix1Mod:init(xx, yy, modId)
 	self.hasCable = false
 	self.inVector = Vector(xx - (moduleWidth/2) + 18, yy + (moduleHeight/2) - 14)
 	
-	self.inEncoder = RotaryEncoder(xx + (bgW/2) - 30, yy + (bgH/2)- 30, function(value) 
+	self.volumeEncoder = RotaryEncoder(xx + (bgW/2) - 30, yy + (bgH/2)- 30, function(value) 
 		if self.channel ~= nil then self.channel:setVolume(value) end
 	end)
-	self.inEncoder:setValue(0.0)
+	self.volumeEncoder:setValue(0.0)
 end
 
 function Mix1Mod:turn(x, y, change)
-	self.inEncoder:turn(change)
+	self.volumeEncoder:turn(change)
 end
 
 function Mix1Mod:setInCable(patchCable)
@@ -108,9 +107,29 @@ function Mix1Mod:evaporate(onDetachConnected)
 		self.inCable:evaporate()
 		self.inCable = nil
 	end
-	--todo - socket sprite, replace with image and vector
-	self.inEncoder:evaporate()
+
+	self.volumeEncoder:evaporate()
 	self:remove()
+end
+
+function Mix1Mod:unplug(cableId)
+	if self.inCable ~= nil and self.inCable:getCableId() == cabelId then
+		self.hasCable = false
+	end
+end
+
+function Mix1Mod:toState()
+	local modState = {}
+	modState.modId = self.modId
+	modState.type = self:type()
+	modState.x = self.x
+	modState.y = self.y
+	modState.volumeEncoderValue = self.volumeEncoder:getValue()
+	return modState
+end
+
+function Mix1Mod:fromState(modState)
+	self.volumeEncoder:setValue(modState.volumeEncoderValue)
 end
 
 function Mix1Mod.ghostModule()

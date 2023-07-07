@@ -1,8 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-	This will have an in and an out, 
-
-]]--
 import 'Modules/mod_utils.lua'
 import 'Modules/Random/random_component'
 

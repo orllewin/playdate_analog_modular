@@ -1,9 +1,6 @@
 --[[
-
-	A printer just displays (and logs) events.
-	It only has an in-socket.
-	
-]]--
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
 class('PrintComponent').extends()
 

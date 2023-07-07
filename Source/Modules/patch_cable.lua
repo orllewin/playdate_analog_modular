@@ -1,8 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-	A ui wrapper around the cable obj
-
-]]--
 import 'Coracle/vector'
 
 class('PatchCable').extends(playdate.graphics.sprite)

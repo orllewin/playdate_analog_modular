@@ -1,6 +1,6 @@
 --[[
-
-]]--
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
 class('MicroSynthComponent').extends()
 

@@ -1,7 +1,6 @@
 --[[
-
-	
-]]--
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
 class('BitcrusherComponent').extends()
 

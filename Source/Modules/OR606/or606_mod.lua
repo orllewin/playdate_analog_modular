@@ -1,6 +1,10 @@
+
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+
 	https://www.musicradar.com/reviews/cyclone-analogic-tt-606
---]]
+]]
+
 import 'Modules/Sprites/sequencer_steps'
 import 'Modules/OR606/or606_component'
 

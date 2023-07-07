@@ -1,7 +1,7 @@
 --[[
+	© 2023 Orllewin - All Rights Reserved.
+]]
 
-
-]]--
 import 'Coracle/tables'
 class('OR606Component').extends()
 
