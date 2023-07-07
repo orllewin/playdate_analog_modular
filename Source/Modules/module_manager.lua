@@ -81,7 +81,9 @@ function ModuleManager:loadPatch(path)
 					self:addToAudioManager(modId, channel)
 			end)
 		elseif patchMod.type == "StochasticTriMod" then
-			--todo
+			mod = StochasticTriMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+					self:addToAudioManager(modId, channel)
+			end)
 		elseif patchMod.type == "MicroSynthMod" then
 			mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
 				self:addToAudioManager(modId, channel)
@@ -446,7 +448,7 @@ function ModuleManager:getGhostSprite(type)
 	elseif name == "MicroSynthMod" then
 		return MicroSynthMod.ghostModule()
 	elseif name == "StochasticTriMod" then
-		--todo
+		return StochasticTriMod.ghostModule()
 	end
 	
 	if name == "ArpMod" then
@@ -540,7 +542,10 @@ if name == "SimplexSineMod" then
 		end))
 		return
 	elseif name == "StochasticTriMod" then
-		--todo
+		self:addNew(StochasticTriMod(x, y, nil, function(modId, channel) 
+			self:addToAudioManager(modId, channel)
+		end))
+		return
 	end
 	
 	--Drum machines

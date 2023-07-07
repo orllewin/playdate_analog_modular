@@ -123,7 +123,7 @@ function getMenuModList()
 				},
 				{
 					label = "Stochastic Tri",
-					type = "MicroSynthMod"
+					type = "StochasticTriMod"
 				}
 			}
 		},
