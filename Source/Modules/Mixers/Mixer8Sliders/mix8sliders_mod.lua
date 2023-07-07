@@ -109,41 +109,40 @@ function Mix8SliderMod:init(xx, yy, modId)
 		self.mixer:trySetVolume(8, value)
 	end)
 	
-	-- self.encoders = {
-	-- 	self.in1Encoder,
-	-- 	self.in2Encoder,
-	-- 	self.in3Encoder,
-	-- 	self.in4Encoder,
-	-- 	self.in5Encoder,
-	-- 	self.in6Encoder,
-	-- 	self.in7Encoder,
-	-- 	self.in8Encoder
-	-- }
+	self.sliders = {
+		self.slider1,
+		self.slider2,
+		self.slider3,
+		self.slider4,
+		self.slider4,
+		self.slider4,
+		self.slider7,
+		self.slider8
+	}
 	
 	self.mixer = Mixer8SlidersComponent()
 end
 
-function Mix8SliderMod:findClosestEncoder(x, y)
+function Mix8SliderMod:findClosestSlider(x, y)
 	local reticleVector = Vector(x, y)
 	local closestDistance = 1000
 	local closestIndex = -1
-	for i=1,#self.encoders do
-		local anEncoder = self.encoders[i]
-		local encoderVector = Vector(anEncoder.x, anEncoder.y)
-		local distance = reticleVector:distance(encoderVector)
+	for i=1,#self.sliders do
+		local aSlider = self.sliders[i]
+		local sliderVector = Vector(aSlider.x, aSlider.y)
+		local distance = reticleVector:distance(sliderVector)
 		if distance < closestDistance then
 			closestDistance = distance
 			closestIndex = i
 		end
 	end
 	
-	return self.encoders[closestIndex]
+	return self.sliders[closestIndex]
 end
 
 function Mix8SliderMod:turn(x, y, change)
-	--local encoder = self:findClosestEncoder(x, y)
-	--encoder:turn(change)
-	self.slider1:turn(change)
+	local slider = self:findClosestSlider(x, y)
+	slider:turn(change)
 end
 
 function Mix8SliderMod:collision(x, y)

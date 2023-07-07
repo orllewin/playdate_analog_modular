@@ -61,3 +61,11 @@ function Socket:connected()
 		return true
 	end
 end
+
+function Socket:getCableId()
+	if self.cable == nil then
+		return nil
+	else
+		return self.cable:getCableId()
+	end
+end

@@ -26,6 +26,34 @@ function Mixer4Component:trySetVolume(index, value)
 	end
 end
 
+function Mixer4Component:getCableId(index)
+	if index == 1 then
+		return self.in1Socket:getCableId()
+	elseif index == 2 then
+		return self.in2Socket:getCableId()
+	elseif index == 3 then
+		return self.in3Socket:getCableId()
+	elseif index == 4 then
+		return self.in4Socket:getCableId()
+	end
+end
+
+function Mixer4Component:unplug(index)
+	if index == 1 then
+		self.in1Socket:setCable(nil)
+		self.channel1 = nil
+	elseif index == 2 then
+		self.in2Socket:setCable(nil)
+		self.channel2 = nil
+	elseif index == 3 then
+		self.in3Socket:setCable(nil)
+		self.channel3 = nil
+	elseif index == 4 then
+		self.in4Socket:setCable(nil)
+		self.channel4 = nil
+	end
+end
+
 function Mixer4Component:setChannel(index, channel)
 	if index == 1 then
 		self.channel1 = channel

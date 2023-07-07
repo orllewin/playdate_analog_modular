@@ -202,6 +202,18 @@ function Mix4Mod:handleModClick(tX, tY, listener)
 	end, self.menuIndex)
 end
 
+function Mix4Mod:unplug(cableId)
+	if self.mixer:in1Connected() and self.mixer:getCableId(1) == cableId then
+		self.mixer::unplug(1)
+	elseif self.mixer:in2Connected() and self.mixer:getCableId(2) == cableId then
+		self.mixer::unplug(2)
+	elseif self.mixer:in3Connected() and self.mixer:getCableId(3) == cableId then
+		self.mixer::unplug(3)
+	elseif self.mixer:in4Connected() and self.mixer:getCableId(4) == cableId then
+		self.mixer::unplug(4)
+	end
+end
+
 function Mix4Mod:evaporate(onDetachConnected)
 	--first detach cables
 	if self.mixer:in1Connected() then
