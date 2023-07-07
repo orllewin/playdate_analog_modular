@@ -73,6 +73,31 @@ function ModuleManager:loadPatch(path)
 		
 		print(">>> Loading module " .. i .. " of " .. #patchModules .. ": " .. patchMod.modId)
 		
+		local mod = nil
+		
+		--synths
+		if patchMod.type == "SimplexSineMod" then
+			mod = SimplexSineMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+					self:addToAudioManager(modId, channel)
+			end)
+		elseif patchMod.type == "StochasticTriMod" then
+			--todo
+		elseif patchMod.type == "MicroSynthMod" then
+			mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+				self:addToAudioManager(modId, channel)
+			end)
+		elseif patchMod.type == "SynthMod" then
+			mod = SynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+				self:addToAudioManager(modId, channel)
+			end)			
+		end
+		
+		if mod ~= nil then
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
+			return
+		end
+		
 		if patchMod.type == "ArpMod" then
 			local mod = ArpMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -205,12 +230,6 @@ function ModuleManager:loadPatch(path)
 			self:addNew(mod)
 		elseif patchMod.type == "SwitchSPDTMod" then
 			local mod = SwitchSPDTMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "SynthMod" then
-			local mod = SynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
-					self:addToAudioManager(modId, channel)
-			end)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "LabelMod" then
@@ -418,6 +437,18 @@ end
 
 function ModuleManager:getGhostSprite(type)
 	local name = type
+	
+	--synths
+	if name == "SimplexSineMod" then
+		return SimplexSineMod.ghostModule()
+	elseif name == "SynthMod" then
+		return SynthMod.ghostModule()
+	elseif name == "MicroSynthMod" then
+		return MicroSynthMod.ghostModule()
+	elseif name == "StochasticTriMod" then
+		--todo
+	end
+	
 	if name == "ArpMod" then
 		return ArpMod.ghostModule()
 	elseif name == "Bifurcate2Mod" then
@@ -440,8 +471,6 @@ function ModuleManager:getGhostSprite(type)
 		return HighpassMod.ghostModule()
 	elseif name == "LowpassMod" then
 		return LowpassMod.ghostModule()
-	elseif name == "MicroSynthMod" then
-		return MicroSynthMod.ghostModule()
 	elseif name == "MidiGenMod" then
 		return MidiGenMod.ghostModule()
 	elseif name == "Mix1Mod" then
@@ -480,8 +509,6 @@ function ModuleManager:getGhostSprite(type)
 		return TimedSwitchMod.ghostModule()
 	elseif name == "SwitchSPDTMod" then
 		return SwitchSPDTMod.ghostModule()
-	elseif name == "SynthMod" then
-		return SynthMod.ghostModule()
 	elseif name == "LabelMod" then
 		return LabelMod.ghostModule()
 	end
@@ -495,6 +522,27 @@ end
 function ModuleManager:addNewAt(type, x, y)
 	print("ADD NEW " .. type)
 	local name = type
+	
+	--synths
+if name == "SimplexSineMod" then
+		self:addNew(SimplexSineMod(x, y, nil, function(modId, channel) 
+				self:addToAudioManager(modId, channel)
+			end))
+		return
+	elseif name == "SynthMod" then
+		self:addNew(SynthMod(x, y, nil, function(modId, channel) 
+			self:addToAudioManager(modId, channel)
+		end))
+		return
+	elseif name == "MicroSynthMod" then
+		self:addNew(MicroSynthMod(x, y, nil, function(modId, channel) 
+			self:addToAudioManager(modId, channel)
+		end))
+		return
+	elseif name == "StochasticTriMod" then
+		--todo
+	end
+	
 	if name == "ArpMod" then
 		self:addNew(ArpMod(x, y))
 	elseif name == "Bifurcate2Mod" then
@@ -519,10 +567,6 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(HighpassMod(x, y))
 	elseif name == "LowpassMod" then
 		self:addNew(LowpassMod(x, y))
-	elseif name == "MicroSynthMod" then
-		self:addNew(MicroSynthMod(x, y, nil, function(modId, channel) 
-			self:addToAudioManager(modId, channel)
-		end))
 	elseif name == "MidiGenMod" then
 		self:addNew(MidiGenMod(x, y))
 	elseif name == "Mix1Mod" then
@@ -561,10 +605,6 @@ function ModuleManager:addNewAt(type, x, y)
 		self:addNew(TimedSwitchMod(x, y))
 	elseif name == "SwitchSPDTMod" then
 		self:addNew(SwitchSPDTMod(x, y))
-	elseif name == "SynthMod" then
-		self:addNew(SynthMod(x, y, nil, function(modId, channel) 
-			self:addToAudioManager(modId, channel)
-		end))
 	elseif name == "LabelMod" then
 		local labelMod = LabelMod(x, y)
 		labelMod:setLabel(self.label)

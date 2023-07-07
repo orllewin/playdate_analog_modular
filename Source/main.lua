@@ -93,6 +93,11 @@ function initialiseImages()
 	
 	gSmallSocketImage = smallSocketImage
 	
+	--Side sockets
+	gSideSocketLeft = gfx.image.new("Images/side_socket_left")
+	gSideSocketRight = gfx.image.new("Images/side_socket_right")
+	gMixImage = gfx.image.new("Images/mix")
+	
 end
 
 initialiseImages()

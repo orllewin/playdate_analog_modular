@@ -48,7 +48,7 @@ function PatchCable:init(ghost, cableId)
 	self.endX = -10
 	self.endY = -10
 	
-	self.length = 200
+	self.length = 125
 	
 	self:redraw()
 	self:setZIndex(gCableZ)

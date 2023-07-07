@@ -7,7 +7,6 @@ import 'Modules/module_manager'
 -- Modules
 import 'Modules/patch_cable'
 
-
 import 'Modules/Sprites/bang_sprite'
 import 'Modules/Sprites/socket_sprite'
 
@@ -21,7 +20,7 @@ import 'Modules/ClockDivider/clock_divider_mod'
 import 'Modules/ClockDoubler/clock_doubler_mod'
 import 'Modules/DrumMachine/drum_mod'
 import 'Modules/Label/label_mod'
-import 'Modules/MicroSynth/micro_synth_mod'
+
 import 'Modules/MidiGen/midi_gen_mod'
 import 'Modules/Mixers/Mixer1/mix1_mod'
 import 'Modules/Mixers/Mixer4/mix4_mod'
@@ -36,6 +35,11 @@ import 'Modules/SequencerGrid/seq_grid_mod'
 import 'Modules/Switches/Timed/timed_switch_mod'
 import 'Modules/Switch/switch_mod'
 import 'Modules/SwitchSPDT/switch_spdt_mod'
+
+--Synths
+import 'Modules/MicroSynth/micro_synth_mod'
+import 'Modules/Synths/Sine/simplex_sine_mod'
+import 'Modules/Synths/Triangle/stochastic_triangle_mod'
 import 'Modules/Synth/synth_mod'
 
 --Effects
@@ -76,8 +80,8 @@ function ModularScreen:init(value)
 	
 	self.ghostSprite = nil--used when adding new modules
 
-	local backgroundTable = gfx.imagetable.new("Images/background-table-64-64")
-	--local backgroundTable = gfx.imagetable.new("Images/background_lite-table-64-64")
+	--local backgroundTable = gfx.imagetable.new("Images/background-table-64-64")
+	local backgroundTable = gfx.imagetable.new("Images/background_lite-table-64-64")
 	self.tilemap = gfx.tilemap.new()
 	self.tilemap:setImageTable(backgroundTable)
 	self.tilemap:setSize(30,20)

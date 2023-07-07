@@ -18,3 +18,6 @@ gSocketInImage = nil
 gSocketOutImage = nil
 gSocketImage = nil
 gSmallSocketImage = nil
+gSideSocketleft = nil
+gSideSocketRight = nil
+gMixImage = nil

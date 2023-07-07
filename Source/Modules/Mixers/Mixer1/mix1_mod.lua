@@ -46,7 +46,7 @@ function Mix1Mod:init(xx, yy, modId)
 	self:moveTo(xx, yy)
 	self:add()
 	
-	
+	self.hasCable = false
 	local socketSprite = SmallSocketSprite(xx - (bgW/2) + 28, yy + (bgH/2) - 28, socket_in)
 	
 	self.inEncoder = RotaryEncoder(xx + (bgW/2) - 30, yy + (bgH/2)- 30, function(value) 
@@ -61,7 +61,8 @@ end
 
 function Mix1Mod:setInCable(patchCable)
 	patchCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
-	--self.printComponent:setInCable(patchCable:getCable())
+	self.inCable = patchCable
+	self.hasCable = true
 end
 
 function Mix1Mod:collision(x, y)
@@ -73,9 +74,12 @@ function Mix1Mod:collision(x, y)
 end
 
 function Mix1Mod:tryConnectGhostIn(x, y, ghostCable)
-	--todo check distance
-	ghostCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
-	return true
+	if self.hasCable == false then
+		ghostCable:setEnd(self.x - (moduleWidth/2) + 18, self.y + (moduleHeight/2) - 14)
+		return true
+	else
+		return false
+	end
 end
 
 function Mix1Mod:type()
@@ -89,6 +93,17 @@ function Mix1Mod:setChannel(channel)
 		print("Mix1Mod:setChannel() CHANNEL EXISTS!")
 	end
 	self.channel = channel
+end
+
+function Mix1Mod:evaporate(onDetachConnected)
+	if self.hasCable then
+		onDetachConnected(self.inCable:getStartModId(), self.inCable:getCableId())
+		self.inCable:evaporate()
+		self.inCable = nil
+	end
+	--todo - socket sprite, replace with image and vector
+	self.inEncoder:evaporate()
+	self:remove()
 end
 
 function Mix1Mod.ghostModule()

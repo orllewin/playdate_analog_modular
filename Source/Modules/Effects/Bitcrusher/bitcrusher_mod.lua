@@ -13,8 +13,8 @@ class('BitcrusherMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
-local moduleWidth = 105
-local moduleHeight = 96
+local moduleWidth = 85
+local moduleHeight = 120
 
 local modType = "BitcrusherMod"
 local modSubtype = "audio_effect"
@@ -35,13 +35,21 @@ function BitcrusherMod:init(xx, yy, modId)
 	local bgW, bgH = backgroundImage:getSize()
 	
 	gfx.pushContext(backgroundImage)
-	gfx.drawTextAligned("Krush", bgW/2, 19, kTextAlignment.center)
 	
-	local mixImage = gfx.image.new("Images/mix")
-	mixImage:draw(bgW/2 + 28, bgH/2 + 10)
+	gfx.drawLine((bgW/2) - (moduleWidth/2) + 7, 60, (bgW/2) + (moduleWidth/2) - 7, 60)
+	gfx.drawTextAligned("Krush", bgW/2, 68, kTextAlignment.center)
 	
-	gSocketInImage:draw(20, 20)
-	gSocketOutImage:draw(bgW - 40, 20)
+	gMixImage:draw(bgW - 38, 20)
+	
+	
+	
+	
+	
+	gSideSocketLeft:draw(10, 25)
+	gSideSocketRight:draw(97, 25)
+	
+	generateHalftoneRoundedRect(71, 43, 0.3):draw(20, 83)
+
 	
 	gfx.popContext()
 	
@@ -51,18 +59,19 @@ function BitcrusherMod:init(xx, yy, modId)
 	
 	self.component = BitcrusherComponent()
 
-	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy + 32, function(value) 
+	local encoderY = yy - 30
+	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18,encoderY , function(value) 
 		self.component:setMix(value)
 	end)
 	self.mixEncoder:setValue(0.5)
 
-	self.amountEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
+	self.amountEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, encoderY, function(value) 
 		self.component:setAmount(value)
 	end)
 	self.amountEncoder:setValue(0.5)
 	
-	self.undersampleEncoder = RotaryEncoder(xx, yy + 32, function(value) 
-		self.component:setUndersampling(value)
+	self.undersampleEncoder = RotaryEncoder(xx, encoderY, function(value) 
+		self.component:setUndersampling(math.min(0.99, value))
 	end)
 	self.undersampleEncoder:setValue(0.5)
 
@@ -72,8 +81,8 @@ function BitcrusherMod:init(xx, yy, modId)
 		self.undersampleEncoder
 	}
 
-	self.socketInVector = Vector(xx - (moduleWidth/2) + 16, yy - (moduleHeight/2) + 24)
-	self.socketOutVector = Vector	(xx + (moduleWidth/2) - 16, yy - (moduleHeight/2) + 24)
+	self.socketInVector = Vector(xx - (moduleWidth/2)-2, yy - (moduleHeight/2) + 24)
+	self.socketOutVector = Vector	(xx + (moduleWidth/2)+2, yy - (moduleHeight/2) + 24)
 
 end
 
