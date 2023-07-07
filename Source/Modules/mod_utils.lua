@@ -39,8 +39,12 @@ function getMenuModList()
 			category = "Clock",
 			mods = {
 				{
-					label = "Clock",
+					label = "Clock (1 Out)",
 					type = "ClockMod"
+				},
+				{
+					label = "Clock (3 Out)",
+					type = "Clock2Mod"
 				},
 				{
 					label = "Bifurcate x2",
@@ -179,6 +183,10 @@ function getMenuModList()
 				{
 					label = "Mix output x1",
 					type = "Mix1Mod"
+				},
+				{
+					label = "Mix output x1 v2",
+					type = "Mix1v2Mod"
 				},
 				{
 					label = "Mix output x4",

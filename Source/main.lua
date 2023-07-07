@@ -29,6 +29,8 @@ modularScreen:push()
 local inverted = false
 local menu = playdate.getSystemMenu()
 
+playdate.setCrankSoundsDisabled(true)
+
 function initialiseImages()
 	local socket_width = 20
 	local socket_height = 32
@@ -96,6 +98,7 @@ function initialiseImages()
 	--Side sockets
 	gSideSocketLeft = gfx.image.new("Images/side_socket_left")
 	gSideSocketRight = gfx.image.new("Images/side_socket_right")
+	gSideSocketBottom = gfx.image.new("Images/side_socket_bottom")
 	gMixImage = gfx.image.new("Images/mix")
 	
 end

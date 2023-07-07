@@ -108,6 +108,10 @@ function ModuleManager:loadPatch(path)
 			local mod = ClockMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
+		elseif patchMod.type == "Clock2Mod" then
+			local mod = Clock2Mod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
 		elseif patchMod.type == "Bifurcate2Mod" then
 			local mod = Bifurcate2Mod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
@@ -166,6 +170,10 @@ function ModuleManager:loadPatch(path)
 			self:addNew(mod)
 		elseif patchMod.type == "Mix1Mod" then
 			local mod = Mix1Mod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
+		elseif patchMod.type == "Mix1v2Mod" then
+			local mod = Mix1v2Mod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		elseif patchMod.type == "Mix4Mod" then
@@ -463,7 +471,9 @@ function ModuleManager:getGhostSprite(type)
 		return BlackholeMod.ghostModule()
 	elseif name == "ClockMod" then
 		return ClockMod.ghostModule()
-		elseif name == "ClockDelayMod" then
+	elseif name == "Clock2Mod" then
+		return Clock2Mod.ghostModule()
+	elseif name == "ClockDelayMod" then
 		return ClockDelayMod.ghostModule()
 	elseif name == "DelayMod" then
 		return DelayMod.ghostModule()
@@ -477,6 +487,8 @@ function ModuleManager:getGhostSprite(type)
 		return MidiGenMod.ghostModule()
 	elseif name == "Mix1Mod" then
 		return Mix1Mod.ghostModule()
+	elseif name == "Mix1v2Mod" then
+		return Mix1v2Mod.ghostModule()
 	elseif name == "Mix8Mod" then
 		return Mix8Mod.ghostModule()
 	elseif name == "Mix8SliderMod" then
@@ -568,6 +580,8 @@ if name == "SimplexSineMod" then
 		self:addNew(BlackholeMod(x, y))
 	elseif name == "ClockMod" then
 		self:addNew(ClockMod(x, y))
+	elseif name == "Clock2Mod" then
+		self:addNew(Clock2Mod(x, y))
 	elseif name == "ClockDelayMod" then
 		self:addNew(ClockDelayMod(x, y))
 	elseif name == "DelayMod" then
@@ -584,6 +598,8 @@ if name == "SimplexSineMod" then
 		self:addNew(MidiGenMod(x, y))
 	elseif name == "Mix1Mod" then
 		self:addNew(Mix1Mod(x, y))
+	elseif name == "Mix1v2Mod" then
+		self:addNew(Mix1v2Mod(x, y))
 	elseif name == "Mix8Mod" then
 		self:addNew(Mix8Mod(x, y))
 	elseif name == "Mix4Mod" then
