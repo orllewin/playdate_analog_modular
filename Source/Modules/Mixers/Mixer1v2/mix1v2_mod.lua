@@ -12,7 +12,7 @@ local gfx <const> = playdate.graphics
 local moduleWidth = 50
 local moduleHeight = 50
 
-local modType = "SpeakerMod"
+local modType = "Mix1v2Mod"
 local modSubtype = "audio_effect"
 
 function Mix1v2Mod:init(xx, yy, modId)
@@ -123,12 +123,11 @@ function Mix1v2Mod:toState()
 	modState.type = self:type()
 	modState.x = self.x
 	modState.y = self.y
-	modState.volumeEncoderValue = self.volumeEncoder:getValue()
 	return modState
 end
 
 function Mix1v2Mod:fromState(modState)
-	self.volumeEncoder:setValue(modState.volumeEncoderValue)
+	--noop
 end
 
 function Mix1v2Mod.ghostModule()

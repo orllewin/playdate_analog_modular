@@ -101,159 +101,158 @@ function ModuleManager:loadPatch(path)
 		if mod ~= nil then
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
-			return
-		end
-		
-		if patchMod.type == "ArpMod" then
-			local mod = ArpMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "ClockMod" then
-			local mod = ClockMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Clock2Mod" then
-			local mod = Clock2Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Bifurcate2Mod" then
-			local mod = Bifurcate2Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Bifurcate4Mod" then
-			local mod = Bifurcate4Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "BitcrusherMod" then
-			local mod = BitcrusherMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "BlackholeMod" then
-			local mod = BlackholeMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "ClockDelayMod" then
-			local mod = ClockDelayMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "ClockDividerMod" then
-			local mod = ClockDividerMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "ClockDoublerMod" then
-			local mod = ClockDoublerMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "DelayMod" then
-			local mod = DelayMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)	
-		elseif patchMod.type == "DrumMod" then
-			local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
-						self:addToAudioManager(modId, channel)
-			end)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)	
-		elseif patchMod.type == "HighpassMod" then
-			local mod = HighpassMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "LowpassMod" then
-			local mod = LowpassMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)	
-		elseif patchMod.type == "MicroSynthMod" then
-			local mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
-				self:addToAudioManager(modId, channel)
-			end)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)	
-		elseif patchMod.type == "MidiGenMod" then
-			local mod = MidiGenMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Mix1Mod" then
-			local mod = Mix1Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Mix1v2Mod" then
-			local mod = Mix1v2Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Mix4Mod" then
-			local mod = Mix4Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Mix8Mod" then
-			local mod = Mix8Mod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Mix8SliderMod" then
-			local mod = Mix8SliderMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Mix4SliderMod" then
-			local mod = Mix4SliderMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "NormalisedToMidiMod" then
-			local mod = NormalisedToMidiMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "OnePoleFilterMod" then
-			local mod = OnePoleFilterMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "OR606Mod" then
-			local mod = OR606Mod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
-						self:addToAudioManager(modId, channel)
-			end)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "OverdriveMod" then
-			local mod = OverdriveMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "PrintMod" then
-			local mod = PrintModule(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "RandomMod" then
-			local mod = RandomMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "Ring Modulator" then
-			local mod = RingModulatorMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "SequencerMod" then
-			local mod = SequencerMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "SeqGridMod" then
-			local mod = SeqGridMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "TimedSwitchMod" then
-			local mod = TimedSwitchMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "SwitchMod" then
-			local mod = SwitchMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "SwitchSPDTMod" then
-			local mod = SwitchSPDTMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "LabelMod" then
-			local mod = LabelMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
-		elseif patchMod.type == "LargeLabelMod" then
-			local mod = LargeLabelMod(patchMod.x, patchMod.y, patchMod.modId)
-			if mod.fromState ~= nil then mod:fromState(patchMod) end
-			self:addNew(mod)
+		else
+			if patchMod.type == "ArpMod" then
+				local mod = ArpMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "ClockMod" then
+				local mod = ClockMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Clock2Mod" then
+				local mod = Clock2Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Bifurcate2Mod" then
+				local mod = Bifurcate2Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Bifurcate4Mod" then
+				local mod = Bifurcate4Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "BitcrusherMod" then
+				local mod = BitcrusherMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "BlackholeMod" then
+				local mod = BlackholeMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "ClockDelayMod" then
+				local mod = ClockDelayMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "ClockDividerMod" then
+				local mod = ClockDividerMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "ClockDoublerMod" then
+				local mod = ClockDoublerMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "DelayMod" then
+				local mod = DelayMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)	
+			elseif patchMod.type == "DrumMod" then
+				local mod = DrumMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+							self:addToAudioManager(modId, channel)
+				end)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)	
+			elseif patchMod.type == "HighpassMod" then
+				local mod = HighpassMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "LowpassMod" then
+				local mod = LowpassMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)	
+			elseif patchMod.type == "MicroSynthMod" then
+				local mod = MicroSynthMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+					self:addToAudioManager(modId, channel)
+				end)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)	
+			elseif patchMod.type == "MidiGenMod" then
+				local mod = MidiGenMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Mix1Mod" then
+				local mod = Mix1Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Mix1v2Mod" then
+				local mod = Mix1v2Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Mix4Mod" then
+				local mod = Mix4Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Mix8Mod" then
+				local mod = Mix8Mod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Mix8SliderMod" then
+				local mod = Mix8SliderMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Mix4SliderMod" then
+				local mod = Mix4SliderMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "NormalisedToMidiMod" then
+				local mod = NormalisedToMidiMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "OnePoleFilterMod" then
+				local mod = OnePoleFilterMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "OR606Mod" then
+				local mod = OR606Mod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+							self:addToAudioManager(modId, channel)
+				end)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "OverdriveMod" then
+				local mod = OverdriveMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "PrintMod" then
+				local mod = PrintModule(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "RandomMod" then
+				local mod = RandomMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "Ring Modulator" then
+				local mod = RingModulatorMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "SequencerMod" then
+				local mod = SequencerMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "SeqGridMod" then
+				local mod = SeqGridMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "TimedSwitchMod" then
+				local mod = TimedSwitchMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "SwitchMod" then
+				local mod = SwitchMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "SwitchSPDTMod" then
+				local mod = SwitchSPDTMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "LabelMod" then
+				local mod = LabelMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			elseif patchMod.type == "LargeLabelMod" then
+				local mod = LargeLabelMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
+			end
 		end
 	end
 	
@@ -267,13 +266,28 @@ function ModuleManager:loadPatch(path)
 		
 		print(">>> Loading cable: " .. i .. " of " .. #patchCables .. ": startModId: " .. reifiedCable.startModId .. " endModId: " .. reifiedCable.endModId)
 		
+		local channel = nil
 		for i=1,#self.modules do
 			local module = self.modules[i]
 			if module.modId == reifiedCable.startModId then
 				module:setOutCable(reifiedCable)
+				
+				if module.modSubtype == "audio_gen" then
+					channel = self.audioManager:getChannel(reifiedCable.startModId)
+				elseif module.modSubtype == "audio_effect" then 
+					local hostModId = module:getHostAudioModId()
+					channel = self.audioManager:getChannel(hostModId)
+				end
+					
+				break
 			end
-			if module.modId == reifiedCable.endModId then
-				module:setInCable(reifiedCable)
+		end
+		
+		for i=1,#self.modules do
+			local endMod = self.modules[i]
+			if endMod.modId == reifiedCable.endModId then
+				endMod:setInCable(reifiedCable)
+				if endMod.setChannel ~= nil and channel ~= nil then endMod:setChannel(channel) end
 			end
 		end
 		
