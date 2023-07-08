@@ -110,13 +110,8 @@ function StochasticTriMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
-		{label = "Sine"},
-		{label = "Square"},
-		{label = "Triangle"},
-		{label = "Sawtooth"},
-		{label = "PO Phase"},
-		{label = "PO Digital"},
-		{label = "PO Vosim"},
+		{label = "Pitch Up"},
+		{label = "Pitch Down"},
 		{label = "Remove"}
 	}
 	local contextMenu = ModuleMenu(actions)
@@ -125,27 +120,10 @@ function StochasticTriMod:handleModClick(tX, tY, listener)
 		if action == "About" then
 			local aboutPopup = ModAboutPopup("todo")
 			aboutPopup:show()
-		elseif action == "Sine" then
-			self.waveformSprite:setImage(sineImage)
-			self.component:setWaveform(1)
-		elseif action == "Square" then
-			self.waveformSprite:setImage(squareImage)
-			self.component:setWaveform(2)
-		elseif action == "Triangle" then
-			self.waveformSprite:setImage(triangleImage)
-			self.component:setWaveform(4)
-		elseif action == "Sawtooth" then
-			self.waveformSprite:setImage(sawtoothImage)
-			self.component:setWaveform(3)
-		elseif action == "PO Phase" then
-			self.waveformSprite:setImage(poImage1)
-			self.component:setWaveform(5)
-		elseif action == "PO Digital" then
-			self.waveformSprite:setImage(poImage2)
-			self.component:setWaveform(6)
-		elseif action == "PO Vosim" then
-			self.waveformSprite:setImage(poImage3)
-			self.component:setWaveform(7)
+		elseif action == "Pitch Up" then
+			self.component:pitchUp()
+		elseif action == "Pitch Down" then
+			self.component:pitchDown()
 		else
 			if self.menuListener ~= nil then 
 				self.menuListener(action) 

@@ -28,9 +28,11 @@ function StochasticTriangleComponent:init(onChannel)
 	--blackhole
 	self.gravity = 0.50
 	self.notes = self.midi:CMajor()
+	
 	self.normalisedMin = 0.175
-	self.normalisedMax = 0.4
 	self.minNoteIndex = math.floor(map(self.normalisedMin, 0.0, 1.0, 1, #self.notes))
+	
+	self.normalisedMax = 0.4
 	self.maxNoteIndex = math.floor(map(0.4, 0.0, 1.0, 1, #self.notes))
 	
 	self.synth = playdate.sound.synth.new(playdate.sound.kWaveTriangle)
@@ -62,11 +64,19 @@ function StochasticTriangleComponent:init(onChannel)
 end
 
 function StochasticTriangleComponent:pitchUp()
+	self.normalisedMin = math.min(0.75, self.normalisedMin + 0.05)
+	self.minNoteIndex = math.floor(map(self.normalisedMin, 0.0, 1.0, 1, #self.notes))
 	
+	self.normalisedMax = math.min(1.0, self.normalisedMax + 0.05)
+	self.maxNoteIndex = math.floor(map(self.normalisedMax, 0.0, 1.0, 1, #self.notes))
 end
 
 function StochasticTriangleComponent:pitchDown()
+	self.normalisedMin = math.max(0.01, self.normalisedMin -  0.05)
+	self.minNoteIndex = math.floor(map(self.normalisedMin, 0.0, 1.0, 1, #self.notes))
 	
+	self.normalisedMax = math.max(0.2, self.normalisedMax -  0.05)
+	self.maxNoteIndex = math.floor(map(self.normalisedMax, 0.0, 1.0, 1, #self.notes))
 end
 
 function StochasticTriangleComponent:maybeDelay(event)
