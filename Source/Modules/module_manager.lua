@@ -318,6 +318,8 @@ function ModuleManager:savePatch(name)
 	assert(name ~= nil, "Patch name cannot be nil")
 	
 	patch.name = name
+	patch.globalX = globalXDrawOffset
+	patch.globalY = globalYDrawOffset
 	
 	-- Modules ---------------------------
 	
