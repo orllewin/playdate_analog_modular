@@ -31,6 +31,8 @@ local menu = playdate.getSystemMenu()
 
 playdate.setCrankSoundsDisabled(true)
 
+gBigFont = playdate.graphics.font.new("Fonts/pixarlmed")
+
 function initialiseImages()
 	local socket_width = 20
 	local socket_height = 32

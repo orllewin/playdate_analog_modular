@@ -2,26 +2,26 @@
 
 ]]--
 import 'Modules/mod_utils.lua'
-import 'Modules/Synths/Sine/simplex_sine_component'
+import 'Modules/Synths/StochasticSquare/stochastic_square_component'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 import 'Coracle/math'
 import 'Modules/Sprites/small_socket_sprite'
 
-class('SimplexSineMod').extends(playdate.graphics.sprite)
+class('StochasticSquareMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
-local moduleWidth = 40
+local moduleWidth = 50
 local moduleHeight = 50
 
-local sineImage = playdate.graphics.image.new("Images/wf_sine")
+local squareImage = playdate.graphics.image.new("Images/square")
 
-local modType = "SimplexSineMod"
+local modType = "StochasticSquareMod"
 local modSubtype = "audio_gen"
 
-function SimplexSineMod:init(xx, yy, modId, onInit)
-	SimplexSineMod.super.init(self)
+function StochasticSquareMod:init(xx, yy, modId, onInit)
+	StochasticSquareMod.super.init(self)
 	
 	if modId == nil then
 		self.modId = modType .. playdate.getSecondsSinceEpoch()
@@ -40,11 +40,10 @@ function SimplexSineMod:init(xx, yy, modId, onInit)
 	local bgW, bgH = backgroundImage:getSize()
 	gfx.pushContext(backgroundImage)
 	
-	gfx.drawText("<", 21, bgH - 43)
-	gfx.drawText(">", 39, bgH - 43)
-	sineImage:draw(27, 20)
-	gSmallSocketImage:draw(17, bgH - 35)
-	gSmallSocketImage:draw(35, bgH - 35)
+	squareImage:draw(26, 27)
+	
+	gSideSocketLeft:draw(10, 32)
+	gSideSocketRight:draw(62, 32)
 	
 	gfx.popContext()
 	
@@ -52,27 +51,27 @@ function SimplexSineMod:init(xx, yy, modId, onInit)
 	self:moveTo(xx, yy)
 	self:add()
 		
-	self.component = SimplexSineComponent(function(channel)
+	self.component = StochasticSquareComponent(function(channel)
 			self.onInit(self.modId, channel)
 		end)
 		
-	self.socketInVector = Vector(xx - 10, yy + 8)
-	self.socketOutVector = Vector(xx + 10, yy + 8)
+	self.socketInVector = Vector(xx - 25, yy + 8)
+	self.socketOutVector = Vector(xx + 25, yy + 8)
 end
 
-function SimplexSineMod:setInCable(patchCable)
+function StochasticSquareMod:setInCable(patchCable)
 	patchCable:setEnd(self.socketInVector.x, self.socketInVector.y, self.modId)
 	self.inCable = patchCable
 	self.component:setInCable(patchCable:getCable())
 end
 
-function SimplexSineMod:setOutCable(patchCable)
+function StochasticSquareMod:setOutCable(patchCable)
 	self.outCable = patchCable
 	patchCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
 	self.component:setOutCable(patchCable:getCable())
 end
 
-function SimplexSineMod:collision(x, y)
+function StochasticSquareMod:collision(x, y)
 	if x > self.x - (moduleWidth/2) and x < self.x + (moduleWidth/2) and y > self.y - (moduleHeight/2) and y < self.y + (moduleHeight/2) then
 		return true
 	else
@@ -80,7 +79,7 @@ function SimplexSineMod:collision(x, y)
 	end
 end
 
-function SimplexSineMod:tryConnectGhostIn(x, y, ghostCable)
+function StochasticSquareMod:tryConnectGhostIn(x, y, ghostCable)
 	if ghostCable:getStartModId() == self.modId then
 		print("Can't connect a mod to itself...")
 		return false
@@ -93,7 +92,7 @@ function SimplexSineMod:tryConnectGhostIn(x, y, ghostCable)
 	end
 end
 
-function SimplexSineMod:tryConnectGhostOut(x, y, ghostCable)
+function StochasticSquareMod:tryConnectGhostOut(x, y, ghostCable)
 	if self.component:outConnected() then
 		return false
 	else
@@ -103,14 +102,16 @@ function SimplexSineMod:tryConnectGhostOut(x, y, ghostCable)
 	end
 end
 
-function SimplexSineMod:type()
+function StochasticSquareMod:type()
 	return modType
 end
 
-function SimplexSineMod:handleModClick(tX, tY, listener)
+function StochasticSquareMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
+		{label = "Pitch Up"},
+		{label = "Pitch Down"},
 		{label = "Remove"}
 	}
 	local contextMenu = ModuleMenu(actions)
@@ -119,6 +120,10 @@ function SimplexSineMod:handleModClick(tX, tY, listener)
 		if action == "About" then
 			local aboutPopup = ModAboutPopup("todo")
 			aboutPopup:show()
+		elseif action == "Pitch Up" then
+			self.component:pitchUp()
+		elseif action == "Pitch Down" then
+			self.component:pitchDown()
 		else
 			if self.menuListener ~= nil then 
 				self.menuListener(action) 
@@ -127,11 +132,11 @@ function SimplexSineMod:handleModClick(tX, tY, listener)
 	end, self.menuIndex)
 end
 
-function SimplexSineMod:unplug(cableId)
+function StochasticSquareMod:unplug(cableId)
 	self.component:unplug(cableId)
 end
 
-function SimplexSineMod:evaporate(onDetachConnected)
+function StochasticSquareMod:evaporate(onDetachConnected)
 	--first detach cables
 	if self.component:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
@@ -150,11 +155,11 @@ function SimplexSineMod:evaporate(onDetachConnected)
 	self:remove()
 end
 
-function SimplexSineMod.ghostModule()
+function StochasticSquareMod.ghostModule()
 	return buildGhostModule(moduleWidth, moduleHeight)
 end
 
-function SimplexSineMod:toState()
+function StochasticSquareMod:toState()
 	local modState = {}
 	modState.modId = self.modId
 	modState.type = self:type()
@@ -163,6 +168,6 @@ function SimplexSineMod:toState()
 	return modState
 end
 
-function SimplexSineMod:fromState(modState)
+function StochasticSquareMod:fromState(modState)
 	--noop
 end

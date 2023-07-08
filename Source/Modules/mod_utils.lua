@@ -126,6 +126,10 @@ function getMenuModList()
 					type = "SimplexSineMod"
 				},
 				{
+					label = "Stochastic Sq",
+					type = "StochasticSquareMod"
+				},
+				{
 					label = "Stochastic Tri",
 					type = "StochasticTriMod"
 				}
@@ -218,8 +222,12 @@ function getMenuModList()
 					type = "RandomMod"
 				},
 				{
-					label = "Label",
+					label = "Label (Regular)",
 					type = "LabelMod"
+				},
+				{
+					label = "Label (Large)",
+					type = "LargeLabelMod"
 				}
 			}
 		}

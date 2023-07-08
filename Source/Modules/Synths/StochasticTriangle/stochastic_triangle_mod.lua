@@ -2,7 +2,7 @@
 
 ]]--
 import 'Modules/mod_utils.lua'
-import 'Modules/Synths/Triangle/stochastic_triangle_component'
+import 'Modules/Synths/StochasticTriangle/stochastic_triangle_component'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 import 'Coracle/math'

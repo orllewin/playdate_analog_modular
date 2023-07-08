@@ -80,6 +80,10 @@ function ModuleManager:loadPatch(path)
 			mod = SimplexSineMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
 					self:addToAudioManager(modId, channel)
 			end)
+		elseif patchMod.type == "StochasticSquareMod" then
+			mod = StochasticSquareMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+					self:addToAudioManager(modId, channel)
+			end)
 		elseif patchMod.type == "StochasticTriMod" then
 			mod = StochasticTriMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
 					self:addToAudioManager(modId, channel)
@@ -244,6 +248,10 @@ function ModuleManager:loadPatch(path)
 			self:addNew(mod)
 		elseif patchMod.type == "LabelMod" then
 			local mod = LabelMod(patchMod.x, patchMod.y, patchMod.modId)
+			if mod.fromState ~= nil then mod:fromState(patchMod) end
+			self:addNew(mod)
+		elseif patchMod.type == "LargeLabelMod" then
+			local mod = LargeLabelMod(patchMod.x, patchMod.y, patchMod.modId)
 			if mod.fromState ~= nil then mod:fromState(patchMod) end
 			self:addNew(mod)
 		end
@@ -455,6 +463,8 @@ function ModuleManager:getGhostSprite(type)
 		return SynthMod.ghostModule()
 	elseif name == "MicroSynthMod" then
 		return MicroSynthMod.ghostModule()
+	elseif name == "StochasticSquareMod" then
+		return StochasticSquareMod.ghostModule()
 	elseif name == "StochasticTriMod" then
 		return StochasticTriMod.ghostModule()
 	end
@@ -525,6 +535,8 @@ function ModuleManager:getGhostSprite(type)
 		return SwitchSPDTMod.ghostModule()
 	elseif name == "LabelMod" then
 		return LabelMod.ghostModule()
+	elseif name == "LargeLabelMod" then
+		return LargeLabelMod.ghostModule()
 	end
 end
 
@@ -550,6 +562,11 @@ if name == "SimplexSineMod" then
 		return
 	elseif name == "MicroSynthMod" then
 		self:addNew(MicroSynthMod(x, y, nil, function(modId, channel) 
+			self:addToAudioManager(modId, channel)
+		end))
+		return
+	elseif name == "StochasticSquareMod" then
+		self:addNew(StochasticSquareMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)
 		end))
 		return
@@ -636,6 +653,10 @@ if name == "SimplexSineMod" then
 		local labelMod = LabelMod(x, y)
 		labelMod:setLabel(self.label)
 		self:addNew(labelMod)
+	elseif name == "LargeLabelMod" then
+		local largeLabelMod = LargeLabelMod(x, y)
+		largeLabelMod:setLabel(self.label)
+		self:addNew(largeLabelMod)
 	end
 end
 

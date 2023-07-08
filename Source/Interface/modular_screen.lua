@@ -20,7 +20,8 @@ import 'Modules/ClockDelay/clock_delay_mod'
 import 'Modules/ClockDivider/clock_divider_mod'
 import 'Modules/ClockDoubler/clock_doubler_mod'
 import 'Modules/DrumMachine/drum_mod'
-import 'Modules/Label/label_mod'
+import 'Modules/Labels/Regular/label_mod'
+import 'Modules/Labels/Large/large_label_mod'
 
 import 'Modules/MidiGen/midi_gen_mod'
 import 'Modules/Mixers/Mixer1/mix1_mod'
@@ -41,7 +42,8 @@ import 'Modules/SwitchSPDT/switch_spdt_mod'
 --Synths
 import 'Modules/MicroSynth/micro_synth_mod'
 import 'Modules/Synths/Sine/simplex_sine_mod'
-import 'Modules/Synths/Triangle/stochastic_triangle_mod'
+import 'Modules/Synths/StochasticTriangle/stochastic_triangle_mod'
+import 'Modules/Synths/StochasticSquare/stochastic_square_mod'
 import 'Modules/Synth/synth_mod'
 
 --Effects
@@ -219,7 +221,7 @@ function ModularScreen:push()
 				end
 			elseif self.mode == modeGhostModule then
 				print("GHOST MOD TYPE " .. self.ghostModuleType)
-				if self.ghostModuleType == "LabelMod" then
+				if self.ghostModuleType == "LabelMod" or self.ghostModuleType == "LargeLabelMod" then
 					self.textInputScreen = TextInputScreen()
 					gModularRunning = false
 					self.textInputScreen:push("Enter label:", function(name)

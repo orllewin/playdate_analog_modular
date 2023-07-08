@@ -22,3 +22,5 @@ gSideSocketLeft = nil
 gSideSocketRight = nil
 gSideSocketBottom = nil
 gMixImage = nil
+
+gBigFont = nil
