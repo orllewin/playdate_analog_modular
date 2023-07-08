@@ -45,7 +45,7 @@ function ModuleManager:removeEvaporatedModule(index)
 	table.remove(self.modules, index)
 end
 
-function ModuleManager:loadPatch(path)
+function ModuleManager:loadPatch(path, onLoaded)
 	
 	print("ModuleManager:loadPatch(): " .. path)
 	
@@ -293,6 +293,15 @@ function ModuleManager:loadPatch(path)
 		
 		table.insert(self.cables, reifiedCable)
 	end
+	
+	globalXDrawOffset = patch.globalX
+	globalYDrawOffset = patch.globalY
+	
+	local xLocation = (-1 * globalXDrawOffset) + 200
+	local yLocation = (-1 * globalYDrawOffset) + 120
+	self:move(xLocation, yLocation)
+	
+	if onLoaded ~= nil then onLoaded() end
 end
 
 function ModuleManager:saveCurrent()

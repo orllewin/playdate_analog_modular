@@ -123,7 +123,9 @@ function ModularScreen:loadPatch(path)
 	newDialog:show(function(confirm) 
 		if confirm == true then
 			gPatchPath = path
-			self.modules:loadPatch(path)
+		self.modules:loadPatch(path, function() 
+			self:move()
+		end)
 		end
 	end)
 end
