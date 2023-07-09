@@ -22,6 +22,7 @@ import 'Modules/ClockDoubler/clock_doubler_mod'
 import 'Modules/DrumMachine/drum_mod'
 import 'Modules/Labels/Regular/label_mod'
 import 'Modules/Labels/Large/large_label_mod'
+import 'Modules/Labels/Arrow/arrow_mod'
 
 import 'Modules/MidiGen/midi_gen_mod'
 import 'Modules/Mixers/Mixer1/mix1_mod'

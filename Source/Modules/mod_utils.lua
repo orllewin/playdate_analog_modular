@@ -228,6 +228,10 @@ function getMenuModList()
 				{
 					label = "Label (Large)",
 					type = "LargeLabelMod"
+				},
+				{
+					label = "Arrow Label",
+					type = "ArrowMod"
 				}
 			}
 		}

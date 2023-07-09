@@ -252,6 +252,10 @@ function ModuleManager:loadPatch(path, onLoaded)
 				local mod = LargeLabelMod(patchMod.x, patchMod.y, patchMod.modId)
 				if mod.fromState ~= nil then mod:fromState(patchMod) end
 				self:addNew(mod)
+			elseif patchMod.type == "ArrowMod" then
+				local mod = ArrowMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
 			end
 		end
 	end
@@ -562,6 +566,8 @@ function ModuleManager:getGhostSprite(type)
 		return LabelMod.ghostModule()
 	elseif name == "LargeLabelMod" then
 		return LargeLabelMod.ghostModule()
+	elseif name == "ArrowMod" then
+		return ArrowMod.ghostModule()
 	end
 end
 
@@ -682,6 +688,8 @@ if name == "SimplexSineMod" then
 		local largeLabelMod = LargeLabelMod(x, y)
 		largeLabelMod:setLabel(self.label)
 		self:addNew(largeLabelMod)
+	elseif name == "ArrowMod" then
+		self:addNew(ArrowMod(x, y))
 	end
 end
 

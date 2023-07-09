@@ -3,8 +3,6 @@
 ]]
 
 import 'Modules/mod_utils.lua'
-import 'Modules/ClockDoubler/clock_doubler_component'
-import 'Modules/Sprites/bang_sprite'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 
