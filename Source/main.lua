@@ -4,6 +4,7 @@ import 'CoreLibs/frameTimer'
 import 'CoreLibs/graphics'
 import 'CoreLibs/sprites'
 import 'CoreLibs/timer'
+import 'CoreLibs/animator'
 
 import 'Coracle/vector'
 
@@ -115,7 +116,7 @@ function load()
 	for f=1, #files do
 		local file = files[f]	
 		print("Load: inspecting file: " .. file)
-		if endswith(file, ".orlam") and not startswith(file, "Intro") then
+		if endswith(file, ".orlam") and not startswith(file, "_") then
 			local patchFile = {
 				label="".. replace(file, ".orlam", ""),
 				file=file
@@ -139,14 +140,21 @@ function load()
 	local intro1Patch = {
 		--todo - maybe get json and use the proper name the user entered instead of mangling the filename:
 		label="Introduction 1",
-		file="Introduction_1.orlam"
+		file="_Introduction_1.orlam"
 	}
 	table.insert(patchFiles, intro1Patch)
+	
 	local intro2Patch = {
 		label="Introduction 2",
-		file="Introduction_2.orlam"
+		file="_Introduction_2.orlam"
 	}
 	table.insert(patchFiles, intro2Patch)
+	
+	local bedtimePatch = {
+		label="Bedtime noise",
+		file="_Bedtime.orlam"
+	}
+	table.insert(patchFiles, bedtimePatch)
 	
 	local loadPatchMenu = ModuleMenu(patchFiles, 320, 60, 150, 110)
 	loadPatchMenu:show(function(selected, index) 

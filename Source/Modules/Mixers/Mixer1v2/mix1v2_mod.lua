@@ -54,6 +54,18 @@ function Mix1v2Mod:init(xx, yy, modId)
 	--self.channel:setVolume(value)
 end
 
+function Mix1v2Mod:volumeUp()
+	if self.channel ~= nil then 
+		self.channel:setVolume(math.min(1.0, self.channel:getVolume() + 0.05))
+	end
+end
+
+function Mix1v2Mod:volumeDown()
+	if self.channel ~= nil then 
+		self.channel:setVolume(math.max(0.0, self.channel:getVolume() - 0.05))
+	end
+end
+
 function Mix1v2Mod:turn(x, y, change)
 	print("Mix1v2Mod: turn change: " .. change)
 	-- todo: self.channel:setVolume(value)
@@ -97,7 +109,7 @@ function Mix1v2Mod:setChannel(channel)
 		print("Mix1v2Mod:setChannel() CHANNEL EXISTS!")
 	end
 	self.channel = channel
-	self.channel:setVolume(0.3)
+	self.channel:setVolume(0.7)
 end
 
 function Mix1v2Mod:evaporate(onDetachConnected)
@@ -116,6 +128,32 @@ function Mix1v2Mod:unplug(cableId)
 	end
 end
 
+function Mix1v2Mod:handleModClick(tX, tY, listener)
+	self.menuListener = listener
+	local actions = {
+		{label = "About"},
+		{label = "Volume Up"},
+		{label = "Volume Down"},
+		{label = "Remove"}
+	}
+	local contextMenu = ModuleMenu(actions)
+	contextMenu:show(function(action, index) 
+		self.menuIndex = index
+		if action == "About" then
+			local aboutPopup = ModAboutPopup("A single source speaker module.")
+			aboutPopup:show()
+		elseif action == "Volume Up" then
+			self:volumeUp()
+		elseif action == "Volume Down" then
+			self:volumeDown()
+		else
+			if self.menuListener ~= nil then 
+				self.menuListener(action) 
+			end
+		end
+	end, self.menuIndex)
+end
+
 function Mix1v2Mod:toState()
 	local modState = {}
 	modState.modId = self.modId
@@ -130,18 +168,5 @@ function Mix1v2Mod:fromState(modState)
 end
 
 function Mix1v2Mod.ghostModule()
-	local templateImage = playdate.graphics.image.new(moduleWidth, moduleHeight)
-	gfx.pushContext(templateImage)
-	gfx.setLineWidth(6)
-	gfx.setColor(playdate.graphics.kColorBlack)
-	gfx.drawRoundRect(3, 3, moduleWidth-6, moduleHeight-6, 8)
-	gfx.setLineWidth(1)
-	gfx.popContext()
-	
-	local ghostImage = playdate.graphics.image.new(moduleWidth, moduleHeight)
-	gfx.pushContext(ghostImage)
-	templateImage:drawFaded(0, 0, 0.3, playdate.graphics.image.kDitherTypeDiagonalLine)
-	gfx.popContext()
-	
-	return playdate.graphics.sprite.new(ghostImage)
+	return buildGhostModule(moduleWidth, moduleHeight)
 end

@@ -1,0 +1,32 @@
+{
+	"cables": [
+		 {
+			"cableId":"PatchCable--701700000_0.3214806",
+			"endX":-500,
+			"endY":148,
+			"hostAudioModId":"NoiseBoxMod742327634",
+			"length":133.33332824707,
+			"startModId":"NoiseBoxMod742327634",
+			"endModId": "Mix1v2Mod742327639",
+			"startX":-600,
+			"startY":148
+		}
+	],
+	"globalX":748,
+	"globalY":-36,
+	"modules": [
+		 {
+			"modId":"NoiseBoxMod742327634",
+			"type":"NoiseBoxMod",
+			"x":-600,
+			"y":120
+		},
+		 {
+			"modId":"Mix1v2Mod742327639",
+			"type":"Mix1v2Mod",
+			"x":-500,
+			"y":120
+		}
+	],
+	"name":"bedtime"
+}

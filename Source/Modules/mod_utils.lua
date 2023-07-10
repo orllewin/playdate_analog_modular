@@ -260,6 +260,23 @@ function generateModBackground(w, h)
 	return backgroundImage
 end
 
+
+function generateHalftoneRoundedRect(w, h, o)
+	local gfx <const> = playdate.graphics
+	local blackImage = gfx.image.new(w, h)
+	gfx.pushContext(blackImage)
+		playdate.graphics.setColor(playdate.graphics.kColorBlack)
+		gfx.fillRoundRect(1, 1, w, h, gCornerRad)
+	gfx.popContext()
+	
+	local halftoneImage = gfx.image.new(w, h)
+	gfx.pushContext(halftoneImage)
+	blackImage:drawFaded(1, 1, o, playdate.graphics.image.kDitherTypeDiagonalLine)
+	gfx.popContext()
+	
+	return halftoneImage
+end
+
 function generateModBackgroundBold(w, h)
 	local gfx <const> = playdate.graphics
 	local backgroundImage = gfx.image.new(w, h)

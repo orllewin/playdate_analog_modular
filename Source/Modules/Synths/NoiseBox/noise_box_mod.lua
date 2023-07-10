@@ -107,7 +107,7 @@ function NoiseBoxMod:handleModClick(tX, tY, listener)
 	contextMenu:show(function(action, index) 
 		self.menuIndex = index
 		if action == "About" then
-			local aboutPopup = ModAboutPopup("todo")
+			local aboutPopup = ModAboutPopup("A noise generator and low-pass filter with wandering frequency")
 			aboutPopup:show()
 		elseif action == "Pitch Up" then
 			self.component:pitchUp()

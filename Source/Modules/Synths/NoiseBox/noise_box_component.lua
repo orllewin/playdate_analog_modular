@@ -7,8 +7,8 @@ class('NoiseBoxComponent').extends()
 local synthFilterResonance = 0.1
 local synthFilterFrequency = 220
 
-local minFreq = 45
-local maxFreq = 1200
+local minFreq = 100
+local maxFreq = 300
 
 function NoiseBoxComponent:init(onChannel)
 	NoiseBoxComponent.super.init(self)
@@ -23,13 +23,18 @@ function NoiseBoxComponent:init(onChannel)
 	self.filter:setFrequency(synthFilterFrequency)
 	synthChannel:addEffect(self.filter)
 	
-	-- automatic mode, limit freq range to something that won't disturb someone trying to fall asleep:
-	-- local waveAnimator = animator.new(30000, map(1, 0, 10, minFreq, maxFreq), map(4, 0, 10, minFreq, maxFreq), playdate.easingFunctions.outInSine)
-	-- waveAnimator.reverses = true
-	-- waveAnimator.repeatCount = -1
-	
 	self.synth:playNote(330)
 	
+	-- automatic mode, limit freq range to something that won't disturb someone trying to fall asleep:
+	local waveAnimator = playdate.graphics.animator.new(30000, minFreq, maxFreq, playdate.easingFunctions.outInSine)
+	waveAnimator.reverses = true
+	waveAnimator.repeatCount = -1
+	
+	self.timer = playdate.timer.new(100, function()
+		local synthFilterFrequency = waveAnimator:currentValue()
+		self.filter:setFrequency(synthFilterFrequency)
+	end)
+	self.timer.repeats = true
 	
 	if onChannel ~= nil then onChannel(synthChannel) end
 
