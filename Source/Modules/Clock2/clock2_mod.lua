@@ -135,10 +135,22 @@ function Clock2Mod:evaporate(onDetachConnected)
 	print("Clock2Mod evaporate removing cables")
 	self.component:stop()
 	--first detach cables
-	if self.component:connected() then
-		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
-		self.component:unplug()
-		self.outCable:evaporate()
+	if self.component:aConnected() then
+		onDetachConnected(self.outACable:getEndModId(), self.outACable:getCableId())
+		self.component:unplugA()
+		self.outACable:evaporate()
+	end
+	
+	if self.component:bConnected() then
+		onDetachConnected(self.outBCable:getEndModId(), self.outBCable:getCableId())
+		self.component:unplugB()
+		self.outBCable:evaporate()
+	end
+	
+	if self.component:cConnected() then
+		onDetachConnected(self.outCCable:getEndModId(), self.outCCable:getCableId())
+		self.component:unplugC()
+		self.outCCable:evaporate()
 	end
 	
 	--then remove sprites

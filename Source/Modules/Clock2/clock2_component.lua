@@ -61,8 +61,16 @@ function Clock2Component:cConnected()
 	return self.outSocketC:connected()
 end
 
-function Clock2Component:unplug()
+function Clock2Component:unplugA()
 	self.outSocketA:setCable(nil)
+end
+
+function Clock2Component:unplugB()
+	self.outSocketB:setCable(nil)
+end
+
+function Clock2Component:unplugC()
+	self.outSocketC:setCable(nil)
 end
 
 -- There's a bug with playdate.timer

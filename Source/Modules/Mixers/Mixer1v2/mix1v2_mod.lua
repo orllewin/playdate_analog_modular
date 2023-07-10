@@ -107,7 +107,6 @@ function Mix1v2Mod:evaporate(onDetachConnected)
 		self.inCable = nil
 	end
 
-	self.volumeEncoder:evaporate()
 	self:remove()
 end
 

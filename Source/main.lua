@@ -114,10 +114,9 @@ function load()
 	local files = playdate.file.listFiles()
 	for f=1, #files do
 		local file = files[f]	
-		if endswith(file, ".orlam") then
-			--self.audioFiles[f] = file
+		print("Load: inspecting file: " .. file)
+		if endswith(file, ".orlam") and not startswith(file, "Intro") then
 			local patchFile = {
-				--todo - maybe get json and use the proper name the user entered instead of mangling the filename:
 				label="".. replace(file, ".orlam", ""),
 				file=file
 			}
@@ -129,6 +128,25 @@ function load()
 	for f=1,#patchFiles do
 		print("file " .. f ..": " .. patchFiles[f].label)
 	end
+	
+	local dividerMenuItem = {
+		label="--------------",
+		file=nil
+	}
+	table.insert(patchFiles, dividerMenuItem)
+	
+	--Now add built-in patches:
+	local intro1Patch = {
+		--todo - maybe get json and use the proper name the user entered instead of mangling the filename:
+		label="Introduction 1",
+		file="Introduction_1.orlam"
+	}
+	table.insert(patchFiles, intro1Patch)
+	local intro2Patch = {
+		label="Introduction 2",
+		file="Introduction_2.orlam"
+	}
+	table.insert(patchFiles, intro2Patch)
 	
 	local loadPatchMenu = ModuleMenu(patchFiles, 320, 60, 150, 110)
 	loadPatchMenu:show(function(selected, index) 

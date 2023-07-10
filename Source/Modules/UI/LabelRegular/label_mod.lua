@@ -3,25 +3,23 @@
 ]]
 
 import 'Modules/mod_utils.lua'
-import 'Modules/ClockDoubler/clock_doubler_component'
-import 'Modules/Sprites/bang_sprite'
 import 'Modules/mod_about_popup'
 import 'Modules/module_menu'
 
-class('LargeLabelMod').extends(playdate.graphics.sprite)
+class('LabelMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
-local maxLabelWidth = 160
+local maxLabelWidth = 120
 local maxLabelHeight = 200
 local moduleWidth = 80
 local moduleHeight = 20
 
-local modType = "LargeLabelMod"
+local modType = "LabelMod"
 local modSubtype = "other"
 
-function LargeLabelMod:init(xx, yy, modId)
-	LargeLabelMod.super.init(self)
+function LabelMod:init(xx, yy, modId)
+	LabelMod.super.init(self)
 	
 	if modId == nil then
 		self.modId = modType .. playdate.getSecondsSinceEpoch()
@@ -32,7 +30,7 @@ function LargeLabelMod:init(xx, yy, modId)
 	self.modType = modType
 	self.modSubtype = modSubtype
 	
-	self.label = "A"
+	self.label = "All patches start with a Clock. Tap A to open the module menu and browse available modules. Go to Clock Signal > Clock. Choose a spot on the canvas and tap A to drop it."
 	
 	local labelImage = gfx.imageWithText(self.label, maxLabelWidth, maxLabelHeight)
 	local labelW, labelH = labelImage:getSize()
@@ -45,21 +43,20 @@ function LargeLabelMod:init(xx, yy, modId)
 	self:add()
 end
 
-function LargeLabelMod:setLabel(label)
+function LabelMod:setLabel(label)
 	self:redraw(label)
 end
 
-function LargeLabelMod:redraw(label)
+function LabelMod:redraw(label)
 	self.label = label
 	
-	--playdate.graphics.imageWithText(text, maxWidth, maxHeight, [backgroundColor, [leadingAdjustment, [truncationString, [alignment, [font]]]]])
-	local labelImage = gfx.imageWithText(self.label, maxLabelWidth, maxLabelHeight, playdate.graphics.kColorClear, nil, nil, nil, gBigFont)
+	local labelImage = gfx.imageWithText(self.label, maxLabelWidth, maxLabelHeight)
 	local labelW, labelH = labelImage:getSize()
 	
 	self.moduleWidth = labelW + 20
 	self.moduleHeight = labelH + 20
 	
-	local backgroundImage = generateModBackgroundWithShadow(self.moduleWidth,	self.moduleHeight)
+	local backgroundImage = generateModBackground(self.moduleWidth,	self.moduleHeight)
 	local bgW, bgH = backgroundImage:getSize()
 	gfx.pushContext(backgroundImage)
 	labelImage:draw((bgW-labelW)/2, (bgH - labelH)/2)
@@ -68,11 +65,11 @@ function LargeLabelMod:redraw(label)
 	self:setImage(backgroundImage)
 end
 
-function LargeLabelMod:type()
+function LabelMod:type()
 	return modType
 end
 
-function LargeLabelMod:handleModClick(tX, tY, listener)
+function LabelMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
@@ -82,7 +79,7 @@ function LargeLabelMod:handleModClick(tX, tY, listener)
 	local contextMenu = ModuleMenu(actions)
 	contextMenu:show(function(action) 
 		if action == "About" then
-			local aboutPopup = ModAboutPopup("An on-screen label with a large typeface.")
+			local aboutPopup = ModAboutPopup("An on-screen label.")
 			aboutPopup:show()
 		elseif action == "Edit" then
 			self.textInputScreen = TextInputScreen(self.label)
@@ -100,11 +97,11 @@ function LargeLabelMod:handleModClick(tX, tY, listener)
 	end)
 end
 
-function LargeLabelMod:evaporate(onDetachConnected)
+function LabelMod:evaporate(onDetachConnected)
 	self:remove()
 end
 
-function LargeLabelMod:collision(x, y)
+function LabelMod:collision(x, y)
 	if x > self.x - (self.moduleWidth/2) and x < self.x + (self.moduleWidth/2) and y > self.y - (self.moduleHeight/2) and y < self.y + (self.moduleHeight/2) then
 		return true
 	else
@@ -112,11 +109,11 @@ function LargeLabelMod:collision(x, y)
 	end
 end
 
-function LargeLabelMod.ghostModule()
+function LabelMod.ghostModule()
 	return buildGhostModule(100, 40)
 end
 
-function LargeLabelMod:toState()
+function LabelMod:toState()
 	local modState = {}
 	modState.modId = self.modId
 	modState.type = self:type()
@@ -128,6 +125,6 @@ function LargeLabelMod:toState()
 	return modState
 end
 
-function LargeLabelMod:fromState(modState)
+function LabelMod:fromState(modState)
 	self:setLabel(modState.label)
 end

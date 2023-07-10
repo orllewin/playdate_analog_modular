@@ -114,12 +114,16 @@ function getMenuModList()
 			category = "Synths",
 			mods = {
 				{
-					label = "Max Synth",
+					label = "Standard Synth",
 					type = "SynthMod"
 				},
 				{
 					label = "Micro Synth",
 					type = "MicroSynthMod"
+				},
+				{
+					label = "Noise Box",
+					type = "NoiseBoxMod"
 				},
 				{
 					label = "Simplex Sine",
@@ -214,6 +218,10 @@ function getMenuModList()
 			category = "Utilities",
 			mods = {
 				{
+					label = "Button",
+					type = "ButtonMod"
+				},
+				{
 					label = "Print/Log",
 					type = "PrintMod"
 				},
@@ -230,7 +238,7 @@ function getMenuModList()
 					type = "LargeLabelMod"
 				},
 				{
-					label = "Arrow Label",
+					label = "Label Arrow",
 					type = "ArrowMod"
 				}
 			}
@@ -239,6 +247,20 @@ function getMenuModList()
 end
 
 function generateModBackground(w, h)
+	local gfx <const> = playdate.graphics
+	local backgroundImage = gfx.image.new(w, h)
+	gfx.pushContext(backgroundImage)
+	gfx.setLineWidth(1)
+	playdate.graphics.setColor(playdate.graphics.kColorWhite)
+	gfx.fillRoundRect(1, 1, w-2, h-2, gCornerRad)
+	playdate.graphics.setColor(playdate.graphics.kColorBlack)
+	gfx.drawRoundRect(1, 1, w-2, h-2, gCornerRad)	
+	gfx.popContext()
+	
+	return backgroundImage
+end
+
+function generateModBackgroundBold(w, h)
 	local gfx <const> = playdate.graphics
 	local backgroundImage = gfx.image.new(w, h)
 	gfx.pushContext(backgroundImage)
@@ -253,22 +275,22 @@ function generateModBackground(w, h)
 	return backgroundImage
 end
 
-function generateHalftoneRoundedRect(w, h, o)
+function generateButtonModBackground(w, h)
 	local gfx <const> = playdate.graphics
-	local blackImage = gfx.image.new(w, h)
-	gfx.pushContext(blackImage)
-		playdate.graphics.setColor(playdate.graphics.kColorBlack)
-		gfx.fillRoundRect(1, 1, w, h, gCornerRad)
+	local backgroundImage = gfx.image.new(w + 6, h + 6)
+	gfx.pushContext(backgroundImage)
+	gfx.setLineWidth(1)
+	playdate.graphics.setColor(playdate.graphics.kColorWhite)
+	gfx.fillRoundRect(1, 1, w + 6 -2, h + 6 -2, gCornerRad)
+	playdate.graphics.setColor(playdate.graphics.kColorBlack)
+	gfx.drawRoundRect(1, 1, w + 6-2, h + 6-2, gCornerRad)	
+	
+	gfx.setLineWidth(1)
+	gfx.drawRoundRect(4, 4, w -2, h -2, gCornerRad)	
 	gfx.popContext()
 	
-	local halftoneImage = gfx.image.new(w, h)
-	gfx.pushContext(halftoneImage)
-	blackImage:drawFaded(1, 1, o, playdate.graphics.image.kDitherTypeDiagonalLine)
-	gfx.popContext()
-	
-	return halftoneImage
+	return backgroundImage
 end
-
 
 function generateModBackgroundWithShadow(w, h)
 	local gfx <const> = playdate.graphics

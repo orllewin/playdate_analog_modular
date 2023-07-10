@@ -80,6 +80,10 @@ function ModuleManager:loadPatch(path, onLoaded)
 			mod = SimplexSineMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
 					self:addToAudioManager(modId, channel)
 			end)
+		elseif patchMod.type == "NoiseBoxMod" then
+			mod = NoiseBoxMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
+					self:addToAudioManager(modId, channel)
+			end)
 		elseif patchMod.type == "StochasticSquareMod" then
 			mod = StochasticSquareMod(patchMod.x, patchMod.y, patchMod.modId, function(modId, channel)
 					self:addToAudioManager(modId, channel)
@@ -256,6 +260,10 @@ function ModuleManager:loadPatch(path, onLoaded)
 				local mod = ArrowMod(patchMod.x, patchMod.y, patchMod.modId)
 				if mod.fromState ~= nil then mod:fromState(patchMod) end
 				self:addNew(mod)
+			elseif patchMod.type == "ButtonMod" then
+				local mod = ButtonMod(patchMod.x, patchMod.y, patchMod.modId)
+				if mod.fromState ~= nil then mod:fromState(patchMod) end
+				self:addNew(mod)
 			end
 		end
 	end
@@ -301,9 +309,11 @@ function ModuleManager:loadPatch(path, onLoaded)
 	globalXDrawOffset = patch.globalX
 	globalYDrawOffset = patch.globalY
 	
-	local xLocation = (-1 * globalXDrawOffset) + 200
-	local yLocation = (-1 * globalYDrawOffset) + 120
-	self:move(xLocation, yLocation)
+	if globalXDrawOffset ~= nil and globalYDrawOffset ~= nil then
+		local xLocation = (-1 * globalXDrawOffset) + 200
+		local yLocation = (-1 * globalYDrawOffset) + 120
+		self:move(xLocation, yLocation)
+	end
 	
 	if onLoaded ~= nil then onLoaded() end
 end
@@ -492,6 +502,8 @@ function ModuleManager:getGhostSprite(type)
 		return SynthMod.ghostModule()
 	elseif name == "MicroSynthMod" then
 		return MicroSynthMod.ghostModule()
+	elseif name == "NoiseBoxMod" then
+		return NoiseBoxMod.ghostModule()
 	elseif name == "StochasticSquareMod" then
 		return StochasticSquareMod.ghostModule()
 	elseif name == "StochasticTriMod" then
@@ -568,6 +580,8 @@ function ModuleManager:getGhostSprite(type)
 		return LargeLabelMod.ghostModule()
 	elseif name == "ArrowMod" then
 		return ArrowMod.ghostModule()
+	elseif name == "ButtonMod" then
+		return ButtonMod.ghostModule()
 	end
 end
 
@@ -593,6 +607,11 @@ if name == "SimplexSineMod" then
 		return
 	elseif name == "MicroSynthMod" then
 		self:addNew(MicroSynthMod(x, y, nil, function(modId, channel) 
+			self:addToAudioManager(modId, channel)
+		end))
+		return
+	elseif name == "NoiseBoxMod" then
+		self:addNew(NoiseBoxMod(x, y, nil, function(modId, channel) 
 			self:addToAudioManager(modId, channel)
 		end))
 		return
@@ -690,6 +709,8 @@ if name == "SimplexSineMod" then
 		self:addNew(largeLabelMod)
 	elseif name == "ArrowMod" then
 		self:addNew(ArrowMod(x, y))
+	elseif name == "ButtonMod" then
+		self:addNew(ButtonMod(x, y))
 	end
 end
 

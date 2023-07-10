@@ -20,9 +20,6 @@ import 'Modules/ClockDelay/clock_delay_mod'
 import 'Modules/ClockDivider/clock_divider_mod'
 import 'Modules/ClockDoubler/clock_doubler_mod'
 import 'Modules/DrumMachine/drum_mod'
-import 'Modules/Labels/Regular/label_mod'
-import 'Modules/Labels/Large/large_label_mod'
-import 'Modules/Labels/Arrow/arrow_mod'
 
 import 'Modules/MidiGen/midi_gen_mod'
 import 'Modules/Mixers/Mixer1/mix1_mod'
@@ -42,6 +39,7 @@ import 'Modules/SwitchSPDT/switch_spdt_mod'
 
 --Synths
 import 'Modules/MicroSynth/micro_synth_mod'
+import 'Modules/Synths/NoiseBox/noise_box_mod'
 import 'Modules/Synths/Sine/simplex_sine_mod'
 import 'Modules/Synths/StochasticTriangle/stochastic_triangle_mod'
 import 'Modules/Synths/StochasticSquare/stochastic_square_mod'
@@ -55,6 +53,12 @@ import 'Modules/Effects/Lowpass/lowpass_mod'
 import 'Modules/Effects/OnePoleFilter/one_pole_filter_mod'
 import 'Modules/Effects/Overdrive/overdrive_mod'
 import 'Modules/Effects/RingModulator/ring_modulator_mod'
+
+--UI
+import 'Modules/UI/LabelRegular/label_mod'
+import 'Modules/UI/LabelLarge/large_label_mod'
+import 'Modules/UI/Button/button_mod'
+import 'Modules/UI/Arrow/arrow_mod'
 
 
 import 'CoracleViews/rotary_encoder'
@@ -119,6 +123,10 @@ function ModularScreen:new()
 end
 
 function ModularScreen:loadPatch(path)
+	if path == nil then
+		print("Can't load nil patch")
+		return
+	end
 	print("Load Patch: " .. path)
 	local newDialog = ModalDialog("Discard unsaved changes")
 	newDialog:show(function(confirm) 
@@ -216,7 +224,8 @@ function ModularScreen:push()
 							self.mode = modeGhostModule
 						else
 							-- just add for now
-							self.modules:addNewAt(moduleName, xLocation, yLocation)
+							print("No ghost - adding: " .. module.type)
+							self.modules:addNewAt(module.type, xLocation, yLocation)
 							self.mode = modeStandard
 						end
 						gScrollLock = false
@@ -224,7 +233,7 @@ function ModularScreen:push()
 				end
 			elseif self.mode == modeGhostModule then
 				print("GHOST MOD TYPE " .. self.ghostModuleType)
-				if self.ghostModuleType == "LabelMod" or self.ghostModuleType == "LargeLabelMod" then
+				if self.ghostModuleType == "LabelMod" or self.ghostModuleType == "LargeLabelMod" or self.ghostModuleType == "ButtonMod" then
 					self.textInputScreen = TextInputScreen()
 					gModularRunning = false
 					self.textInputScreen:push("Enter label:", function(name)
@@ -260,10 +269,14 @@ end
 
 function ModularScreen:handleModClick(x, y)
 	local module, moduleIndex = self.modules:moduleAt(x, y)
-	if module.handleModClick ~= nil then
+	if module.type == "ButtonMod" then
+		local destination = module:getDestination()
+		print("Destination: " .. destination)
+	elseif module.handleModClick ~= nil then
 		module:handleModClick(x, y, function(action) 
-				
-				if action == "Remove" then
+				if action == "nav" then
+					print("modular screen - get nav from mod and navigate")
+				elseif action == "Remove" then
 					--todo modal confirmation
 					if module.evaporate ~= nil then
 						module:evaporate(function(moduleId, cableId)  

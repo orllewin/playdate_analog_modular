@@ -1,0 +1,45 @@
+{
+	"cables": [
+	],
+	"globalX":797,
+	"globalY":0,
+	"modules": [
+		{
+			"label":"Welcome to Modular Play",
+			"modId":"LargeLabelMod742244981",
+			"type":"LargeLabelMod",
+			"x":-720,
+			"y":40
+		},
+		{
+			"label":"Tip: hold down B to move more quickly around the patch space",
+			"modId":"LabelMod742299300",
+			"type":"LabelMod",
+			"x":-470,
+			"y":40
+		},
+		{
+			"label":"Use the direction buttons to move around a patch, tap the button to continue",
+			"modId":"LabelMod742299321",
+			"type":"LabelMod",
+			"x":-470,
+			"y":135
+		},
+		{
+			"direction":7,
+			"modId":"ArrowMod742299741",
+			"type":"ArrowMod",
+			"x":-546,
+			"y":165
+		},
+		{
+			"label":"Start Tutorial",
+			"modId":"ButtonMod742298907",
+			"type":"ButtonMod",
+			"navTarget": "Introduction_2.orlam",
+			"x":-600,
+			"y":200
+		}
+	],
+	"name":"Introduction 1"
+}

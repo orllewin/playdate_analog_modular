@@ -146,4 +146,5 @@ end
 
 function ArrowMod:fromState(modState)
 	self.direction = modState.direction
+	self:updateImage()
 end
