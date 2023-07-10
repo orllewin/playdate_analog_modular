@@ -13,8 +13,8 @@ class('DelayMod').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 
-local moduleWidth = 105
-local moduleHeight = 96
+local moduleWidth = 85
+local moduleHeight = 120
 
 local modType = "DelayMod"
 local modSubtype = "audio_effect"
@@ -35,13 +35,16 @@ function DelayMod:init(xx, yy, modId)
 	local bgW, bgH = backgroundImage:getSize()
 	
 	gfx.pushContext(backgroundImage)
-	gfx.drawTextAligned("Delay", bgW/2, 19, kTextAlignment.center)
 	
-	local mixImage = gfx.image.new("Images/mix")
-	mixImage:draw(bgW/2 + 28, bgH/2 + 10)
+	gfx.drawLine((bgW/2) - (moduleWidth/2) + 7, 60, (bgW/2) + (moduleWidth/2) - 7, 60)
+	gfx.drawTextAligned("Delay", bgW/2, 68, kTextAlignment.center)
 	
-	gSocketInImage:draw(20, 20)
-	gSocketOutImage:draw(bgW - 40, 20)
+	gMixImage:draw(bgW - 38, 20)
+	
+	gSideSocketLeft:draw(10, 25)
+	gSideSocketRight:draw(97, 25)
+	
+	generateHalftoneRoundedRect(71, 43, 0.3):draw(20, 83)
 	
 	gfx.popContext()
 	
@@ -51,17 +54,18 @@ function DelayMod:init(xx, yy, modId)
 	
 	self.delayComponent = DelayComponent()
 
-	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, yy + 32, function(value) 
+	local encoderY = yy - 30
+	self.mixEncoder = RotaryEncoder(xx + (moduleWidth/2) - 18, encoderY, function(value) 
 		self.delayComponent:setMix(value)
 	end)
 	self.mixEncoder:setValue(0.5)
 
-	self.feedbackEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, yy + 32, function(value) 
+	self.feedbackEncoder = RotaryEncoder(xx - (moduleWidth/2) + 18, encoderY, function(value) 
 		self.delayComponent:setFeedback(value)
 	end)
 	self.feedbackEncoder:setValue(0.5)
 	
-	self.tapDelayEncoder = RotaryEncoder(xx, yy + 32, function(value) 
+	self.tapDelayEncoder = RotaryEncoder(xx, encoderY, function(value) 
 		self.delayComponent:setTapDelay(value)
 	end)
 	self.tapDelayEncoder:setValue(0.25)
@@ -72,8 +76,8 @@ function DelayMod:init(xx, yy, modId)
 		self.tapDelayEncoder
 	}
 
-	self.socketInVector = Vector(xx - (moduleWidth/2) + 16, yy - (moduleHeight/2) + 24)
-	self.socketOutVector = Vector	(xx + (moduleWidth/2) - 16, yy - (moduleHeight/2) + 24)
+	self.socketInVector = Vector(xx - (moduleWidth/2)-2, yy - (moduleHeight/2) + 24)
+	self.socketOutVector = Vector	(xx + (moduleWidth/2)+2, yy - (moduleHeight/2) + 24)
 
 end
 

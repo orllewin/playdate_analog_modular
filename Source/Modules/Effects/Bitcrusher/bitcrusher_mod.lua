@@ -40,16 +40,11 @@ function BitcrusherMod:init(xx, yy, modId)
 	gfx.drawTextAligned("Krush", bgW/2, 68, kTextAlignment.center)
 	
 	gMixImage:draw(bgW - 38, 20)
-	
-	
-	
-	
-	
+
 	gSideSocketLeft:draw(10, 25)
 	gSideSocketRight:draw(97, 25)
 	
 	generateHalftoneRoundedRect(71, 43, 0.3):draw(20, 83)
-
 	
 	gfx.popContext()
 	
@@ -198,15 +193,15 @@ end
 
 function BitcrusherMod:evaporate(onDetachConnected)
 	--first detach cables
-	if self.delayComponent:outConnected() then
+	if self.component:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
-		self.delayComponent:unplugOut()
+		self.component:unplugOut()
 		self.outCable:evaporate()
 	end
 	
-	if self.delayComponent:inConnected() then
+	if self.component:inConnected() then
 		onDetachConnected(self.inCable:getEndModId(), self.inCable:getCableId())
-		self.delayComponent:unplugIn()
+		self.component:unplugIn()
 		self.inCable:evaporate()
 	end
 	
