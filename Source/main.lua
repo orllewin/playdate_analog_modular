@@ -150,13 +150,19 @@ function load()
 	}
 	table.insert(patchFiles, intro2Patch)
 	
+	local intro3Patch = {
+		label="Introduction 3",
+		file="_Introduction_3.orlam"
+	}
+	table.insert(patchFiles, intro3Patch)
+	
 	local bedtimePatch = {
 		label="Bedtime noise",
 		file="_Bedtime.orlam"
 	}
 	table.insert(patchFiles, bedtimePatch)
 	
-	local loadPatchMenu = ModuleMenu(patchFiles, 320, 60, 150, 110)
+	local loadPatchMenu = ModuleMenu(patchFiles, 320, 60, 150, 122)
 	loadPatchMenu:show(function(selected, index) 
 		if modularScreen:isShowing() then	modularScreen:loadPatch(patchFiles[index].file) end
 	end, 1)	

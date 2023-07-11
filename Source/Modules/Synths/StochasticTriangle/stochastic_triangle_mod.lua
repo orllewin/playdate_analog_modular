@@ -118,7 +118,7 @@ function StochasticTriMod:handleModClick(tX, tY, listener)
 	contextMenu:show(function(action, index) 
 		self.menuIndex = index
 		if action == "About" then
-			local aboutPopup = ModAboutPopup("todo")
+			local aboutPopup = ModAboutPopup("A special synth that only needs a clock input. Internally the module includes the same features as Clock Delay, Blackhole, random number, number to midi, a triangle wave synth, and a delay.")
 			aboutPopup:show()
 		elseif action == "Pitch Up" then
 			self.component:pitchUp()

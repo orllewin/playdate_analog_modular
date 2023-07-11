@@ -9,7 +9,7 @@ class('ModuleMenu').extends(playdate.graphics.sprite)
 
 local gfx <const> = playdate.graphics
 local width = 180
-local height = 122
+local height = 132
 
 function ModuleMenu:init(actions, xx, yy, w, h)
 	ModuleMenu.super.init(self)

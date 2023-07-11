@@ -90,6 +90,7 @@
 			"label":"Next >",
 			"modId":"ButtonMod742298907",
 			"type":"ButtonMod",
+			"navTarget": "_Introduction_3.orlam",
 			"x":-360,
 			"y":25
 		}

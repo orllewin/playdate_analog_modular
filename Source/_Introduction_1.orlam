@@ -23,22 +23,22 @@
 			"modId":"LabelMod742299321",
 			"type":"LabelMod",
 			"x":-470,
-			"y":135
+			"y":155
 		},
 		{
 			"direction":7,
 			"modId":"ArrowMod742299741",
 			"type":"ArrowMod",
 			"x":-546,
-			"y":165
+			"y":185
 		},
 		{
 			"label":"Start Tutorial",
 			"modId":"ButtonMod742298907",
 			"type":"ButtonMod",
-			"navTarget": "Introduction_2.orlam",
+			"navTarget": "_Introduction_2.orlam",
 			"x":-600,
-			"y":200
+			"y":220
 		}
 	],
 	"name":"Introduction 1"

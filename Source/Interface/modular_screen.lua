@@ -122,21 +122,28 @@ function ModularScreen:new()
 	end)
 end
 
-function ModularScreen:loadPatch(path)
+function ModularScreen:loadPatch(path, overrideCheck)
 	if path == nil then
 		print("Can't load nil patch")
 		return
 	end
-	print("Load Patch: " .. path)
-	local newDialog = ModalDialog("Discard unsaved changes")
-	newDialog:show(function(confirm) 
-		if confirm == true then
-			gPatchPath = path
+	if overrideCheck ~= nil and overrideCheck == true then
+		gPatchPath = path
 		self.modules:loadPatch(path, function() 
 			self:move()
 		end)
-		end
-	end)
+	else
+		local newDialog = ModalDialog("Discard unsaved changes")
+		newDialog:show(function(confirm) 
+			if confirm == true then
+				gPatchPath = path
+				self.modules:loadPatch(path, function() 
+					self:move()
+				end)
+			end
+		end)
+	end
+	
 end
 
 function ModularScreen:saveCurrentPatch()
@@ -276,6 +283,14 @@ function ModularScreen:handleModClick(x, y)
 		module:handleModClick(x, y, function(action) 
 				if action == "nav" then
 					print("modular screen - get nav from mod and navigate")
+					if module.getNavTarget ~= nil then 
+						local navTarget = module:getNavTarget()
+						if navTarget ~= nil then
+							self:loadPatch(navTarget, true)
+						else
+							print("Nav target is NIL")
+						end
+					end
 				elseif action == "Remove" then
 					--todo modal confirmation
 					if module.evaporate ~= nil then

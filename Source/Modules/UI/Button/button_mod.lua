@@ -71,6 +71,10 @@ function ButtonMod:type()
 	return modType
 end
 
+function ButtonMod:getNavTarget()
+	return self.navTarget
+end
+
 function ButtonMod:handleModClick(tX, tY, listener)
 	
 	
@@ -78,9 +82,6 @@ function ButtonMod:handleModClick(tX, tY, listener)
 	playdate.timer.performAfterDelay(150, function() 
 		self:moveBy(0, -2)
 		if listener ~= nil then listener("nav") end
-		
-		print("ButtonMod - todo get nav target")
-		--todo callback and nav
 	end)
 	-- self.menuListener = listener
 	-- local actions = {
