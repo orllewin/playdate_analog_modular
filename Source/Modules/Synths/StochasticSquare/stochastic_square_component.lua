@@ -25,6 +25,8 @@ function StochasticSquareComponent:init(onChannel)
 	self.delayMS = 250
 	self.didDelay = false
 	
+	self.expiring = false
+	
 	--blackhole
 	self.gravity = 0.50
 	self.notes = self.midi:CMajor()
@@ -57,10 +59,17 @@ function StochasticSquareComponent:init(onChannel)
 
 	self.inSocket = Socket("stochastic_tri_module", socket_receive, function(event) 
 		--self.synth:playMIDINote(math.floor(event:getValue()))
+		if self.expiring then return end
 		self:maybeDelay(event)
 	end)
 		
 	self.outSocket = Socket("synth_module", socket_send)
+end
+
+function StochasticSquareComponent:stopAll()
+	self.expiring = true
+	self.synth:noteOff()
+	self.synthChannel:remove()
 end
 
 function StochasticSquareComponent:pitchUp()

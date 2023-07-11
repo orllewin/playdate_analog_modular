@@ -150,6 +150,8 @@ function StochasticSquareMod:evaporate(onDetachConnected)
 		self.inCable:evaporate()
 	end
 	
+	self.component:stopAll()
+	
 	--then remove sprites
 	playdate.graphics.sprite.removeSprites({self.waveformSprite})
 	self:remove()

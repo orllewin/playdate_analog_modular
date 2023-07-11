@@ -25,6 +25,8 @@ function StochasticTriangleComponent:init(onChannel)
 	self.delayMS = 250
 	self.didDelay = false
 	
+	self.expiring = false
+	
 	--blackhole
 	self.gravity = 0.50
 	self.notes = self.midi:CMajor()
@@ -42,25 +44,32 @@ function StochasticTriangleComponent:init(onChannel)
 	self.synth:setSustain(0.75)
 	self.synth:setRelease(1.1)
 	self.synth:setEnvelopeCurvature(1.0)
-	local synthChannel = playdate.sound.channel.new()
-	synthChannel:addSource(self.synth)
-	synthChannel:setVolume(gDefaultVolume)
+	self.synthChannel = playdate.sound.channel.new()
+	self.synthChannel:addSource(self.synth)
+	self.synthChannel:setVolume(gDefaultVolume)
 	
 	local maxSeconds = 2.0
 	self.filter = playdate.sound.delayline.new(maxSeconds)
 	self.filter:setFeedback(0.5)
 	self.tap = self.filter:addTap(0.5)
-	synthChannel:addEffect(self.filter)
+	self.synthChannel:addEffect(self.filter)
 	
 	
-	if onChannel ~= nil then onChannel(synthChannel) end
+	if onChannel ~= nil then onChannel(self.synthChannel) end
 
 	self.inSocket = Socket("stochastic_tri_module", socket_receive, function(event) 
 		--self.synth:playMIDINote(math.floor(event:getValue()))
+		if self.expiring then return end
 		self:maybeDelay(event)
 	end)
 		
 	self.outSocket = Socket("synth_module", socket_send)
+end
+
+function StochasticTriangleComponent:stopAll()
+	self.expiring = true
+	self.synth:noteOff()
+	self.synthChannel:remove()
 end
 
 function StochasticTriangleComponent:pitchUp()

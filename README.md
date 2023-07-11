@@ -15,6 +15,7 @@ Overview and status of each module. The tasks are:
 * Socket full handling - prevent a bug where you can add additional cables to an already full module
 * Prevent attaching cable to self - you can add an out cable to an in socket on most modules, the mechanism is in place to prevent it (check `modId` at one cable end is not the same), just needs implementing in every mod.
 * State management - to/from methods to save and load modules from saved patches.
+* Audio stopping when deleting modules, modules `evaporate` method should stop all audio
 * Remove volume encoder - some synths/drum machines may have a volume encoder, this needs removing so volume is only set in the output mixers.
 
 All audio modules (synths, drum machines, effects, mixers/output) need some extra dev for audio routing. Chaining effects, adding modules out of the logical order (effect to output before synth to effect for example), removing effects mod, etc etc.
