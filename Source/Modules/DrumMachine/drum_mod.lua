@@ -368,6 +368,18 @@ function DrumMod:evaporate(onDetachConnected)
 		self.outCable:evaporate()
 	end
 	
+	self.drummer:stopAll()
+	
+	for i=#self.samplePlayers,1,-1 do
+		local source = self.samplePlayers[i]
+		source:stop()
+		self.channel:removeSource(source)
+		self.samplePlayers[i] = nil
+	end
+	
+	self.channel:remove()
+	self.samplePlayers = nil
+	
 	--then remove sprites
 	playdate.graphics.sprite.removeSprites({self.stepSprite})
 

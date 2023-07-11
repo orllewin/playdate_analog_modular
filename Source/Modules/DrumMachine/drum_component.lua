@@ -9,12 +9,15 @@ function DrumComponent:init(listener)
 	
 	self.listener = listener
 	
+	self.expiring = false
+	
 	self.values = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}--todo unused, but crashes without it, see below...
 	self.step = 1
 
 	self.outSocket = Socket("drum_component_out", socket_send)
 
 	self.inSocket = Socket("sequence_component_in", socket_receive, function(event) 
+		if self.expiring == true then return end
 		self.outSocket:emit(Event(self.values[self.step]))-- todo wtf is this, old stale code?
 		
 		if self.listener ~= nil then
@@ -27,6 +30,10 @@ function DrumComponent:init(listener)
 			self.step = 1
 		end
 	end)
+end
+
+function DrumComponent:stopAll()
+	self.expiring = true
 end
 
 function DrumComponent:getStep()
