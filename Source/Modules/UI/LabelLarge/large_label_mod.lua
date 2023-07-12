@@ -59,7 +59,7 @@ function LargeLabelMod:redraw(label)
 	self.moduleWidth = labelW + 20
 	self.moduleHeight = labelH + 20
 	
-	local backgroundImage = generateModBackgroundBold(self.moduleWidth,	self.moduleHeight)
+	local backgroundImage = generateModBackgroundNoBorder(self.moduleWidth,	self.moduleHeight)
 	local bgW, bgH = backgroundImage:getSize()
 	gfx.pushContext(backgroundImage)
 	labelImage:drawFaded((bgW-labelW)/2, (bgH - labelH)/2, 0.5, gfx.image.kDitherTypeBayer4x4)

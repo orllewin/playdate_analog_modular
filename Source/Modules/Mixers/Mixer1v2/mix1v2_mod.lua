@@ -109,7 +109,7 @@ function Mix1v2Mod:setChannel(channel)
 		print("Mix1v2Mod:setChannel() CHANNEL EXISTS!")
 	end
 	self.channel = channel
-	self.channel:setVolume(0.7)
+	self.channel:setVolume(0.8)
 end
 
 function Mix1v2Mod:evaporate(onDetachConnected)

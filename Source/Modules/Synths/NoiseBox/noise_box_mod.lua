@@ -99,8 +99,6 @@ function NoiseBoxMod:handleModClick(tX, tY, listener)
 	self.menuListener = listener
 	local actions = {
 		{label = "About"},
-		{label = "Pitch Up"},
-		{label = "Pitch Down"},
 		{label = "Remove"}
 	}
 	local contextMenu = ModuleMenu(actions)
@@ -133,12 +131,8 @@ function NoiseBoxMod:evaporate(onDetachConnected)
 		self.outCable:evaporate()
 	end
 	
-	if self.component:inConnected() then
-		onDetachConnected(self.inCable:getEndModId(), self.inCable:getCableId())
-		self.component:unplugIn()
-		self.inCable:evaporate()
-	end
-	
+	self.component:stopAll()
+		
 	--then remove sprites
 	playdate.graphics.sprite.removeSprites({self.waveformSprite})
 	self:remove()

@@ -41,6 +41,7 @@
 			"label":"Next >",
 			"modId":"ButtonMod742335632",
 			"type":"ButtonMod",
+			"navTarget": "_Introduction_4.orlam",
 			"x":-419,
 			"y":242
 		}

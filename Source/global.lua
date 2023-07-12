@@ -24,3 +24,5 @@ gSideSocketBottom = nil
 gMixImage = nil
 
 gBigFont = nil
+
+gStartPatch = "_Introduction_1.orlam"

@@ -167,7 +167,7 @@ function ModularScreen:deletePatch(patch)
 end
 
 --https://sdk.play.date/inside-playdate/#_querying_buttons_directly
-function ModularScreen:push()
+function ModularScreen:push(patchPath)
 	self.inputHandler = {
 		
 		cranked = function(change, acceleratedChange)
@@ -262,6 +262,10 @@ function ModularScreen:push()
 	}
 	playdate.inputHandlers.push(self.inputHandler)
 	self.showing = true
+	
+	if patchPath ~= nil then
+		self:loadPatch(patchPath, true)
+	end
 end
 
 function ModularScreen:checkReticleLocation()

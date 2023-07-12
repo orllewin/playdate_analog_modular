@@ -277,6 +277,18 @@ function generateHalftoneRoundedRect(w, h, o)
 	return halftoneImage
 end
 
+function generateModBackgroundNoBorder(w, h)
+	local gfx <const> = playdate.graphics
+	local backgroundImage = gfx.image.new(w, h)
+	gfx.pushContext(backgroundImage)
+	playdate.graphics.setColor(playdate.graphics.kColorWhite)
+	gfx.fillRoundRect(1, 1, w-2, h-2, gCornerRad)
+	gfx.setLineWidth(1)
+	gfx.popContext()
+	
+	return backgroundImage
+end
+
 function generateModBackgroundBold(w, h)
 	local gfx <const> = playdate.graphics
 	local backgroundImage = gfx.image.new(w, h)

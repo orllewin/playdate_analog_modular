@@ -14,7 +14,7 @@ import 'Core/event'
 import 'Core/socket'
 
 -- Components
-import 'Components/delay_component'
+--import 'Components/delay_component'
 import 'Interface/modular_screen'
 import 'Interface/text_input_screen'
 
@@ -25,7 +25,7 @@ playdate.graphics.setFont(font)
 
 local textInputScreen = nil
 local modularScreen = ModularScreen()
-modularScreen:push()
+
 
 local inverted = false
 local menu = playdate.getSystemMenu()
@@ -156,6 +156,18 @@ function load()
 	}
 	table.insert(patchFiles, intro3Patch)
 	
+	local intro4Patch = {
+		label="Introduction 4",
+		file="_Introduction_4.orlam"
+	}
+	table.insert(patchFiles, intro4Patch)
+	
+	local intro5Patch = {
+		label="Introduction 5",
+		file="_Introduction_5.orlam"
+	}
+	table.insert(patchFiles, intro5Patch)
+	
 	local bedtimePatch = {
 		label="Bedtime noise",
 		file="_Bedtime.orlam"
@@ -236,9 +248,19 @@ end)
 
 if playdate.datastore.read("prefs") == nil then
 	--first run, show tutorial
+	modularScreen:push(gStartPatch)
 else
-	
+	modularScreen:push(gStartPatch)
 end
+
+import 'intro'
+local intro = Intro()
+local showIntro = true
+local introTime = true
+
+playdate.timer.performAfterDelay(3500, function() 
+	introTime = false
+end)
 
 function playdate.update()	
 	playdate.timer.updateTimers()
@@ -252,5 +274,9 @@ function playdate.update()
 		if textInputScreen:isShowing() == false then
 			if modularScreen ~= nil and modularScreen:isShowing() then	modularScreen:draw() end
 		end
+	end
+	
+	if showIntro and introTime then 
+		intro:update()
 	end
 end
