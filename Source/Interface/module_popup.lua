@@ -18,8 +18,16 @@ function ModulePopup:init()
 	self:moveTo(295, 175)
 end
 
-function ModulePopup:show(onSelect, selectedIndex)
+function ModulePopup:show(onSelect, selectedIndex, scale)
 	self:add()
+	
+	if scale ~= nil then
+		if scale == 1 then
+			self:moveTo(295, 175)
+		elseif scale == 2 then
+			self:moveTo(100, 60)
+		end
+	end
 	
 	self.mods = getMenuModList()
 	

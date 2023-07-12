@@ -164,7 +164,7 @@ end
 
 function StochasticSquareComponent:setOutCable(cable)
 	--todo - link to a channel in a speaker module?
-	--self.outSocket:setCable(cable)
+	self.outSocket:setCable(cable)
 end
 
 function StochasticSquareComponent:unplugIn()

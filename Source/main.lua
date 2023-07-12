@@ -246,6 +246,16 @@ local invertMenuItem, error = menu:addMenuItem("Invert screen", function()
 		playdate.display.setInverted(inverted)
 end)
 
+local scaleMenuItem, error = menu:addMenuItem("Scale screen", function()
+		if playdate.display.getScale() == 1 then
+			playdate.display.setScale(2)
+		else
+			playdate.display.setScale(1)
+		end
+		
+		modularScreen:scaleChanged()
+end)
+
 if playdate.datastore.read("prefs") == nil then
 	--first run, show tutorial
 	modularScreen:push(gStartPatch)

@@ -24,7 +24,15 @@ function ModuleMenu:init(actions, xx, yy, w, h)
 		height = h
 	end
 	
-	local backgroundImage = generateModBackgroundWithShadow(width, height)	
+	self.ww = width
+	self.hh = height
+	
+	if playdate.display.getScale() == 2 then
+		self.ww = 200
+		self.hh = 120
+	end
+	
+	local backgroundImage = generateModBackgroundWithShadow(self.ww, self.hh)	
 	local bgW, bgH = backgroundImage:getSize()	
 	self:setIgnoresDrawOffset(true)
 	self:setImage(backgroundImage)
@@ -32,7 +40,11 @@ function ModuleMenu:init(actions, xx, yy, w, h)
 	if xx ~= nil and yy ~= nil then
 		self:moveTo(xx, yy)
 	else
-		self:moveTo(305, 175)
+		if playdate.display.getScale() == 1 then
+			self:moveTo(305, 175)
+		else
+			self:moveTo(100, 60)
+		end
 	end
 	
 	self:setZIndex(gModuleMenuZ)
@@ -44,7 +56,7 @@ function ModuleMenu:show(onAction, selectedIndex)
 	
 	gScrollLock = true
 	
-	self.actionList = TextList(self.actions, self.x - width/2 + 8, self.y - height/2 + 8, width - 16, height-2, 18, nil, function(index)
+	self.actionList = TextList(self.actions, self.x - self.ww/2 + 8, self.y - self.hh/2 + 8, self.ww - 16, self.hh-2, 18, nil, function(index)
 		self:dismiss()
 		local selectedAction = self.actions[index].label
 		onAction(selectedAction, index)

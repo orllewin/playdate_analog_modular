@@ -85,6 +85,8 @@ function ModularScreen:init(value)
 	
 	self.mode = modeStandard
 	
+	self.scale = 1
+	
 	self.modules = ModuleManager()
 	
 	self.ghostSprite = nil--used when adding new modules
@@ -172,6 +174,7 @@ function ModularScreen:push(patchPath)
 		
 		cranked = function(change, acceleratedChange)
 			self.scrollhandled = false
+			self.didScale = false
 			if playdate.buttonIsPressed(playdate.kButtonLeft) or playdate.buttonIsPressed(playdate.kButtonRight) then
 				globalXDrawOffset += change
 				self.scrollhandled = true
@@ -180,13 +183,31 @@ function ModularScreen:push(patchPath)
 				globalYDrawOffset += change
 				self.scrollhandled = true
 			end
+			if playdate.buttonIsPressed(playdate.kButtonB) then
+				if change > 0 and	playdate.display.getScale() ~= 1  then
+					playdate.display.setScale(1)
+					self:scaleChanged()
+				elseif change < 0  and	playdate.display.getScale() ~= 2 then
+					playdate.display.setScale(2)
+					self:scaleChanged()
+				end
+				
+				self.didScale = true
+				self.scrollhandled = true
+			end
 			
 			if self.scrollhandled == false then
 				local xLocation = (-1 * globalXDrawOffset) + 200
 				local yLocation = (-1 * globalYDrawOffset) + 120
+				if self.scale == 2 then
+					xLocation = (-1 * globalXDrawOffset) + 100
+					yLocation = (-1 * globalYDrawOffset) + 60
+				end
 				self.modules:handleCrankTurn(xLocation, yLocation, change)
 			else
-				self:move()
+				if self.didScale == false then
+					self:move()
+				end
 			end
 		end,
 		
@@ -203,6 +224,12 @@ function ModularScreen:push(patchPath)
 			else
 				local xLocation = (-1 * globalXDrawOffset) + 200
 				local yLocation = (-1 * globalYDrawOffset) + 120
+				
+				if self.scale == 2 then
+					xLocation = (-1 * globalXDrawOffset) + 100
+					yLocation = (-1 * globalYDrawOffset) + 60
+				end
+				
 				if self.modules:collides(xLocation, yLocation) then
 					self.modules:handleCableAt(xLocation, yLocation)
 				else
@@ -215,6 +242,11 @@ function ModularScreen:push(patchPath)
 			local xLocation = (-1 * globalXDrawOffset) + 200
 			local yLocation = (-1 * globalYDrawOffset) + 120
 			
+			if self.scale == 2 then
+				xLocation = (-1 * globalXDrawOffset) + 100
+				yLocation = (-1 * globalYDrawOffset) + 60
+			end
+			
 			if self.mode == modeStandard then
 				if self.modules:collides(xLocation, yLocation) then
 					self:handleModClick(xLocation, yLocation)
@@ -226,7 +258,12 @@ function ModularScreen:push(patchPath)
 						self.ghostSprite = self.modules:getGhostSprite(module.type)
 						if self.ghostSprite ~= nil then
 							self.ghostSprite:setIgnoresDrawOffset(true)
-							self.ghostSprite:moveTo(200, 120)
+							if self.scale == 1 then
+								self.ghostSprite:moveTo(200, 120)
+							elseif self.scale == 2 then
+								self.ghostSprite:moveTo(100, 60)
+							end
+							
 							self.ghostSprite:add()
 							self.mode = modeGhostModule
 						else
@@ -236,7 +273,7 @@ function ModularScreen:push(patchPath)
 							self.mode = modeStandard
 						end
 						gScrollLock = false
-					end, 1)
+					end, 1, self.scale)
 				end
 			elseif self.mode == modeGhostModule then
 				print("GHOST MOD TYPE " .. self.ghostModuleType)
@@ -265,6 +302,22 @@ function ModularScreen:push(patchPath)
 	
 	if patchPath ~= nil then
 		self:loadPatch(patchPath, true)
+	end
+end
+
+function ModularScreen:scaleChanged()
+	if playdate.display.getScale()  == 1 then
+		self.reticle:moveTo(200, 120)
+		self.scale = 1
+		globalXDrawOffset += 100
+		globalYDrawOffset += 60
+		self:move()
+	else
+		self.reticle:moveTo(100, 60)
+		self.scale = 2
+		globalXDrawOffset -= 100
+		globalYDrawOffset -= 60
+		self:move()
 	end
 end
 
@@ -339,7 +392,20 @@ function ModularScreen:move()
 	gfx.setDrawOffset(globalXDrawOffset, globalYDrawOffset)
 	local xLocation = (-1 * globalXDrawOffset) + 200
 	local yLocation = (-1 * globalYDrawOffset) + 120
+	if self.scale == 2 then
+		xLocation = (-1 * globalXDrawOffset) + 100
+		yLocation = (-1 * globalYDrawOffset) + 60
+	end
 	self.modules:move(xLocation, yLocation)
+	-- if self.scale == 1 then
+	-- 	local xLocation = (-1 * globalXDrawOffset) + 200
+	-- 	local yLocation = (-1 * globalYDrawOffset) + 120
+	-- 	self.modules:move(xLocation, yLocation)
+	-- elseif self.scale == 2 then
+	-- 	local xLocation = (-1 * globalXDrawOffset) + 100
+	-- 	local yLocation = (-1 * globalYDrawOffset) + 60
+	-- 	self.modules:move(xLocation, yLocation)
+	-- end
 end
 
 function ModularScreen:pop()
