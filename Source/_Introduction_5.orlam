@@ -32,6 +32,13 @@
 			"x":-720,
 			"y":53
 		},
+		{
+			"label":"Tip: All modules have an 'About' menu option with a brief description of how they function.",
+			"modId":"LabelMod742490257",
+			"type":"LabelMod",
+			"x":-721,
+			"y":168
+		},
 		 {
 			"direction":8,
 			"modId":"ArrowMod742463324",
