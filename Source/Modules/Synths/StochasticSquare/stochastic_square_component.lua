@@ -28,7 +28,7 @@ function StochasticSquareComponent:init(onChannel)
 	self.expiring = false
 	
 	--blackhole
-	self.gravity = 0.50
+	self.gravity = 0.75
 	self.notes = self.midi:CMajor()
 	
 	self.normalisedMin = 0.175

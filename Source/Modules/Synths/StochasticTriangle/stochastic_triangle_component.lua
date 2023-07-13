@@ -16,7 +16,7 @@ local mode1_64 = 7
 function StochasticTriangleComponent:init(onChannel)
 	StochasticTriangleComponent.super.init(self)
 	
-	self.midi = Midi()
+	self.midi = Midi()	
 	
 	--clock delay
 	self.bpm = -1
@@ -28,7 +28,7 @@ function StochasticTriangleComponent:init(onChannel)
 	self.expiring = false
 	
 	--blackhole
-	self.gravity = 0.50
+	self.gravity = 0.75
 	self.notes = self.midi:CMajor()
 	
 	self.normalisedMin = 0.175

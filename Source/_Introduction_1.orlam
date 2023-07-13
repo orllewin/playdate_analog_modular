@@ -12,7 +12,7 @@
 			"y":40
 		},
 		{
-			"label":"Tip: hold down B to move more quickly around the patch space",
+			"label":"Tip: hold down (B) to move more quickly around the patch space",
 			"modId":"LabelMod742299300",
 			"type":"LabelMod",
 			"x":-470,

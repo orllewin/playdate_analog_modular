@@ -5,7 +5,7 @@
 	"globalY":-46,
 	"modules": [
 		 {
-			"label":"1. Let's build that noise patch from scratch: Tap A in empty space to open the module menu, navigate synths > NoiseBox then drop the module by tapping A again.",
+			"label":"1. Let's build that noise patch from scratch: Tap (A) in empty space to open the module menu, go to synths > NoiseBox then drop the module by tapping (A) again.",
 			"modId":"LabelMod742402531",
 			"type":"LabelMod",
 			"x":-597,
@@ -19,7 +19,7 @@
 			"y":235
 		},
 		{
-			"label":"3. Now connect a patch cable: tap the NoiseBox with B, then move the cable to the speaker and tap B again.",
+			"label":"3. Now connect a patch cable: tap the NoiseBox with (B), then move the cable to the speaker and tap (B) again.",
 			"modId":"LabelMod742402533",
 			"type":"LabelMod",
 			"x":-457,

@@ -72,7 +72,7 @@ function Mix1v2Mod:turn(x, y, change)
 end
 
 function Mix1v2Mod:setInCable(patchCable)
-	patchCable:setEnd(self.inVector.x, self.inVector.y)
+	patchCable:setEnd(self.inVector.x, self.inVector.y, self.modId)
 	self.inCable = patchCable
 	self.hasCable = true
 end

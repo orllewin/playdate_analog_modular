@@ -145,7 +145,7 @@ function StochasticSquareMod:evaporate(onDetachConnected)
 	end
 	
 	if self.component:inConnected() then
-		onDetachConnected(self.inCable:getEndModId(), self.inCable:getCableId())
+		onDetachConnected(self.inCable:getStartModId(), self.inCable:getCableId())
 		self.component:unplugIn()
 		self.inCable:evaporate()
 	end

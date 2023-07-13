@@ -19,7 +19,7 @@
 			"y":44
 		},
 		 {
-			"label":"open the menu to toggle display colours and manage your patches",
+			"label":"open the menu to toggle display colours, scale the display, and manage your patches",
 			"modId":"LabelMod742463163",
 			"type":"LabelMod",
 			"x":-489,

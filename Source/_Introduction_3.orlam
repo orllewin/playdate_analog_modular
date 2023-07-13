@@ -24,7 +24,7 @@
 			"y":216
 		},
 		 {
-			"label":"Let's patch a cable: tap the left module with B then move the cable to the right module and press B again.",
+			"label":"Let's patch a cable: tap the left module with (B) then move the cable to the right module and press (B) again.",
 			"modId":"LabelMod742335576",
 			"type":"LabelMod",
 			"x":-704,
