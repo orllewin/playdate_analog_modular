@@ -1,9 +1,9 @@
-name=Analog Modular
+name=Modular Play
 author=Orllewin
 description=A simple modular synth playground.
-bundleID=orllewin.playdate.analog_modular
+bundleID=orllewin.playdate.modularplay
 version=1.0.0
 buildNumber=1
 imagePath=Images/card.png
 pdxversion=20000
-buildtime=742575469
+buildtime=742576838

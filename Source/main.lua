@@ -268,8 +268,15 @@ local intro = Intro()
 local showIntro = true
 local introTime = true
 
+if showIntro then
+	local identPlayer = playdate.sound.fileplayer.new("Audio/ident")
+	identPlayer:setVolume(0.5)
+	identPlayer:play()
+end
+
 playdate.timer.performAfterDelay(3500, function() 
 	introTime = false
+	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeCopy)
 end)
 
 function playdate.update()	

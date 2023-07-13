@@ -51,21 +51,8 @@ end
 
 function LargeLabelMod:redraw(label)
 	self.label = label
-	
-	--playdate.graphics.imageWithText(text, maxWidth, maxHeight, [backgroundColor, [leadingAdjustment, [truncationString, [alignment, [font]]]]])
-	local labelImage = gfx.imageWithText(self.label, maxLabelWidth, maxLabelHeight, playdate.graphics.kColorClear, nil, nil, nil, gBigFont)
-	local labelW, labelH = labelImage:getSize()
-	
-	self.moduleWidth = labelW + 20
-	self.moduleHeight = labelH + 20
-	
-	local backgroundImage = generateModBackgroundNoBorder(self.moduleWidth,	self.moduleHeight)
-	local bgW, bgH = backgroundImage:getSize()
-	gfx.pushContext(backgroundImage)
-	labelImage:drawFaded((bgW-labelW)/2, (bgH - labelH)/2, 0.5, gfx.image.kDitherTypeBayer4x4)
-	gfx.popContext()
-	
-	self:setImage(backgroundImage)
+	local labelImage = gfx.imageWithText(self.label, maxLabelWidth, maxLabelHeight, playdate.graphics.kColorClear, nil, nil, nil, gBigFont)	
+	self:setImage(labelImage)
 end
 
 function LargeLabelMod:type()

@@ -1,0 +1,38 @@
+{
+	"cables": [
+	],
+	"globalX":669,
+	"globalY":-46,
+	"modules": [
+		 {
+			"label":"1. Let's build that noise patch from scratch: Tap (A) in empty space to open the module menu, go to synths > NoiseBox then drop the module by tapping (A) again.",
+			"modId":"LabelMod742402531",
+			"type":"LabelMod",
+			"x":-597,
+			"y":120
+		},
+		{
+			"label":"2. Repeat the process and add a sound output to the right of the NoiseBox: Output > Mix Output x1 V2.    ",
+			"modId":"LabelMod742402532",
+			"type":"LabelMod",
+			"x":-597,
+			"y":235
+		},
+		{
+			"label":"3. Now connect a patch cable: tap the NoiseBox with (B), then move the cable to the speaker and tap (B) again.",
+			"modId":"LabelMod742402533",
+			"type":"LabelMod",
+			"x":-457,
+			"y":97
+		},
+		{
+			"label":"Next >",
+			"modId":"ButtonMod742298933",
+			"type":"ButtonMod",
+			"navTarget": "_Introduction_5.orlam",
+			"x":-310,
+			"y":69
+		}
+	],
+	"name":"Introduction 4"
+}
