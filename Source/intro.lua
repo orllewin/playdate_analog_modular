@@ -19,20 +19,20 @@ local cos <const> = math.cos
 function Intro:init()
 	Intro.super.init(self)
 	
-	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillWhite)
+	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillBlack)
 end
 
 function Intro:update()
 	local xLocation = (-1 * globalXDrawOffset) + 400
 	local yLocation = (-1 * globalYDrawOffset) + 240
 	
-	gfx.setColor(gfx.kColorBlack)
+	gfx.setColor(gfx.kColorWhite)
 	gfx.fillRect(xLocation-400, yLocation-240, 400, 240)
 	cameraZ -= 0.3
 
 	t += 0.08
 	
-	gfx.setColor(gfx.kColorWhite)
+	gfx.setColor(gfx.kColorBlack)
 	gBigFont:drawTextAligned("ORLLEWIN", xLocation - 200, yLocation - 130, kTextAlignment.center)
 	for i = 40, 0, -1  do
 	

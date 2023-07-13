@@ -12,6 +12,8 @@
 			"startY":148
 		}
 	],
+	"isDark": true,
+	"scale":2,
 	"globalX":748,
 	"globalY":-36,
 	"modules": [

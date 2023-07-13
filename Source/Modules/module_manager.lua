@@ -64,6 +64,25 @@ function ModuleManager:loadPatch(path, onLoaded)
 	
 	print("Patch:\n" .. json.encodePretty(patch))
 	
+	local isDark = patch.isDark
+	if isDark ~= nil then
+		playdate.display.setInverted(isDark)
+	end
+	
+	local didScale = false
+	local scale = patch.scale
+	if scale ~= nil then
+		if playdate.display.getScale() ~= scale then
+			playdate.display.setScale(scale)
+			didScale = true
+		end
+	else
+		if playdate.display.getScale() ~= 1 then
+			playdate.display.setScale(1)
+			didScale = true
+		end
+	end
+	
 	gPatchName = patch.name
 
 	local patchModules = patch.modules
@@ -315,7 +334,7 @@ function ModuleManager:loadPatch(path, onLoaded)
 		self:move(xLocation, yLocation)
 	end
 	
-	if onLoaded ~= nil then onLoaded() end
+	if onLoaded ~= nil then onLoaded(didScale) end
 end
 
 function ModuleManager:saveCurrent()

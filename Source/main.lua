@@ -267,6 +267,7 @@ import 'intro'
 local intro = Intro()
 local showIntro = true
 local introTime = true
+local fadeInTime = false
 
 if showIntro then
 	local identPlayer = playdate.sound.fileplayer.new("Audio/ident")
@@ -274,10 +275,20 @@ if showIntro then
 	identPlayer:play()
 end
 
+local duration = 1500
+local animator = nil
+local blackImage = playdate.graphics.image.new(400, 240, playdate.graphics.kColorWhite)
+local fadetoImage = nil
+
+
+
 playdate.timer.performAfterDelay(3500, function() 
 	introTime = false
 	playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeCopy)
+	fadeInTime = true
+	animator = playdate.graphics.animator.new(duration, 100,0)
 end)
+
 
 function playdate.update()	
 	playdate.timer.updateTimers()
@@ -295,5 +306,13 @@ function playdate.update()
 	
 	if showIntro and introTime then 
 		intro:update()
+	end
+	
+	if fadeInTime then
+		local xx = (-1 * globalXDrawOffset) 
+		local yy = (-1 * globalYDrawOffset) 
+		alpha = animator:currentValue()
+		blackImage:drawFaded(xx, yy, alpha/100.0, playdate.graphics.image.kDitherTypeBayer8x8)
+		if alpha == 0 then fadeInTime = false end
 	end
 end

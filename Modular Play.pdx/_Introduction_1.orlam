@@ -1,6 +1,7 @@
 {
 	"cables": [
 	],
+	"isDark": true,
 	"globalX":797,
 	"globalY":0,
 	"modules": [

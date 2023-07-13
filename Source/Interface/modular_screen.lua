@@ -131,16 +131,18 @@ function ModularScreen:loadPatch(path, overrideCheck)
 	end
 	if overrideCheck ~= nil and overrideCheck == true then
 		gPatchPath = path
-		self.modules:loadPatch(path, function() 
+		self.modules:loadPatch(path, function(didScale) 
 			self:move()
+			if didScale then self:scaleChanged() end
 		end)
 	else
 		local newDialog = ModalDialog("Discard unsaved changes")
 		newDialog:show(function(confirm) 
 			if confirm == true then
 				gPatchPath = path
-				self.modules:loadPatch(path, function() 
+				self.modules:loadPatch(path, function(didScale) 
 					self:move()
+					if didScale then self:scaleChanged() end
 				end)
 			end
 		end)
