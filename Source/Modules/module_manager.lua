@@ -456,10 +456,16 @@ function ModuleManager:handleCableAt(x, y)
 					if module.setChannel ~= nil then module:setChannel(channel) end
 				elseif self.cableStartModule.modSubtype == "audio_effect" then 
 					local hostModId = self.cableStartModule:getHostAudioModId()
-					print("... found audio_effect: " .. self.cableStartModule.modId .. ", origin audio gen mod: " .. hostModId)
-					local channel = self.audioManager:getChannel(hostModId)
-					reifiedCable:setStartAudioModId(hostModId)
-					if module.setChannel ~= nil then module:setChannel(channel) end
+					print("... found audio_effect: " .. self.cableStartModule.modId)
+					if hostModId ~= nil then
+						print("... origin audio gen mod: " .. hostModId)
+						local channel = self.audioManager:getChannel(hostModId)
+						reifiedCable:setStartAudioModId(hostModId)
+						if module.setChannel ~= nil then module:setChannel(channel) end
+					else
+						print("... No origin audio host available")
+					end
+					
 				else
 					print("... found OTHER")
 					reifiedCable:setStartModId(self.cableStartModule.modId)

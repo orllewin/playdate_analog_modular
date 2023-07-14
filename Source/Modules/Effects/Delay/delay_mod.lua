@@ -209,8 +209,8 @@ function DelayMod:evaporate(onDetachConnected)
 	--then remove sprites
 	playdate.graphics.sprite.removeSprites({self.cutoffFreqLabelSprite})
 	self.mixEncoder:evaporate()
-	self.feedbackEncoderValue:evaporate()
-	self.tapDelayEncoderValue:evaporate()
+	self.feedbackEncoder:evaporate()
+	self.tapDelayEncoder:evaporate()
 	self.mixEncoder = nil
 	self.feedbackEncoderValue = nil
 	self.tapDelayEncoderValue = nil

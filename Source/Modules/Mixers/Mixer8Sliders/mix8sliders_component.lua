@@ -20,21 +20,45 @@ end
 
 function Mixer8SlidersComponent:trySetVolume(index, value)
 	if index == 1 then
-		if self:in1Connected() then self:getChannel(1):setVolume(value) end
+		if self:in1Connected() then 
+			local channel = self:getChannel(1)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 2 then
-		if self:in2Connected() then self:getChannel(2):setVolume(value) end
+		if self:in2Connected() then 
+			local channel = self:getChannel(2)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 3 then
-		if self:in3Connected() then self:getChannel(3):setVolume(value) end
+		if self:in3Connected() then 
+			local channel = self:getChannel(3)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 4 then
-		if self:in4Connected() then self:getChannel(4):setVolume(value) end
+		if self:in4Connected() then 
+			local channel = self:getChannel(4)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 5 then
-		if self:in5Connected() then self:getChannel(5):setVolume(value) end
+		if self:in4Connected() then 
+			local channel = self:getChannel(4)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 6 then
-		if self:in6Connected() then self:getChannel(6):setVolume(value) end
+		if self:in4Connected() then 
+			local channel = self:getChannel(4)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 7 then
-		if self:in7Connected() then self:getChannel(7):setVolume(value) end
+		if self:in4Connected() then 
+			local channel = self:getChannel(4)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 8 then
-		if self:in8Connected() then self:getChannel(8):setVolume(value) end
+		if self:in4Connected() then 
+			local channel = self:getChannel(4)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	end
 end
 

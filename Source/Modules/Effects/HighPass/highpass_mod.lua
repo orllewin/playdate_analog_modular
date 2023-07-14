@@ -188,26 +188,27 @@ function HighpassMod:setChannel(channel)
 end
 
 function HighpassMod:removeChannel(channel)
-	self.delayComponent:removeChannel(channel)
+	self.component:removeChannel(channel)
 end
 
 function HighpassMod:evaporate(onDetachConnected)
 	--first detach cables
-	if self.delayComponent:outConnected() then
+	if self.component:outConnected() then
 		onDetachConnected(self.outCable:getEndModId(), self.outCable:getCableId())
-		self.delayComponent:unplugOut()
+		self.component:unplugOut()
 		self.outCable:evaporate()
 	end
 	
-	if self.delayComponent:inConnected() then
+	if self.component:inConnected() then
 		onDetachConnected(self.inCable:getEndModId(), self.inCable:getCableId())
-		self.delayComponent:unplugIn()
+		self.component:unplugIn()
 		self.inCable:evaporate()
 	end
 	
 	--then remove sprites
 	self.mixEncoder:evaporate()
-	self.frequencyEncoder:evaporate()
+	self.freqEncoder:evaporate()
+	self.resonanceEncoder:evaporate()
 	playdate.graphics.sprite.removeSprites({self.cutoffFreqLabelSprite})
 	self:remove()
 end

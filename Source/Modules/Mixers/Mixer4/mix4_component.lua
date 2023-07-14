@@ -16,13 +16,25 @@ end
 
 function Mixer4Component:trySetVolume(index, value)
 	if index == 1 then
-		if self:in1Connected() then self:getChannel(1):setVolume(value) end
+		if self:in1Connected() then 
+			local channel = self:getChannel(1)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 2 then
-		if self:in2Connected() then self:getChannel(2):setVolume(value) end
+		if self:in2Connected() then 
+			local channel = self:getChannel(2)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 3 then
-		if self:in3Connected() then self:getChannel(3):setVolume(value) end
+		if self:in3Connected() then 
+			local channel = self:getChannel(3)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	elseif index == 4 then
-		if self:in4Connected() then self:getChannel(4):setVolume(value) end
+		if self:in4Connected() then 
+			local channel = self:getChannel(4)
+			if channel ~= nil then channel:setVolume(value) end
+		end
 	end
 end
 

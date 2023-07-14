@@ -25,4 +25,4 @@ gMixImage = nil
 
 gBigFont = nil
 
-gStartPatch = "_Introduction_1.orlam"
+gStartPatch = "_Empty_Dark.orlam"
