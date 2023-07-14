@@ -68,7 +68,7 @@ function Clock2Mod:setOutCable(patchCable)
 		self.outBCable = patchCable
 		patchCable:setStart(self.socketOutBVector.x, self.socketOutBVector.y, self.modId)
 		self.component:setOutBCable(patchCable:getCable())
-	elseif self.component:bConnected() ~= true then
+	elseif self.component:cConnected() ~= true then
 		self.outCCable = patchCable
 		patchCable:setStart(self.socketOutCVector.x, self.socketOutCVector.y, self.modId)
 		self.component:setOutCCable(patchCable:getCable())

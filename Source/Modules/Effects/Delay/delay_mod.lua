@@ -121,6 +121,7 @@ end
 function DelayMod:setOutCable(patchCable)
 	self.outCable = patchCable
 	patchCable:setStart(self.socketOutVector.x, self.socketOutVector.y, self.modId)
+	patchCable:setHostAudioModId(self.hostAudioModId)
 	self.delayComponent:setOutCable(patchCable:getCable())
 end
 

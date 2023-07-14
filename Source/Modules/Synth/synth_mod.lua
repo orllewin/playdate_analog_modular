@@ -153,23 +153,18 @@ function SynthMod:init(xx, yy, modId, onInit)
 	
 	
 	--ADSR
-	
-	self.attackInSocket = SmallSocketSprite(adsrCol1X, adsrSocketY, socket_in)
 	self.attackEncoder = RotaryEncoder(adsrCol1X, adsrEncoderY, function(value) 
 		self.synthComponent:setAttack(value)
 	end)
 	
-	self.decayInSocket = SmallSocketSprite(adsrCol2X, adsrSocketY, socket_in)
 	self.decayEncoder = RotaryEncoder(adsrCol2X, adsrEncoderY, function(value) 
 		self.synthComponent:setDecay(value)
 	end)
 	
-	self.sustainInSocket = SmallSocketSprite(adsrCol3X, adsrSocketY, socket_in)
 	self.sustainEncoder = RotaryEncoder(adsrCol3X, adsrEncoderY, function(value) 
 		self.synthComponent:setSustain(value)
 	end)
 	
-	self.releaseInSocket = SmallSocketSprite(adsrCol4X, adsrSocketY, socket_in)
 	self.releaseEncoder = RotaryEncoder(adsrCol4X, adsrEncoderY, function(value) 
 		self.synthComponent:setRelease(value)
 	end)
@@ -177,11 +172,7 @@ function SynthMod:init(xx, yy, modId, onInit)
 	self.envelopeCurveEncoder = RotaryEncoder(adsrCol1X, adsrEncoderY + 42, function(value) 
 		self.synthComponent:setEnvelopeCurve(value)
 	end)
-	
-	self.volumeEncoder = RotaryEncoder(adsrCol2X, adsrEncoderY + 42, function(value) 
-		self.synthComponent:setVolume(value)
-	end)
-	
+		
 self.encoders = {
 	self.waveformEncoder,
 	self.param1Encoder,
@@ -191,17 +182,12 @@ self.encoders = {
 	self.sustainEncoder,
 	self.releaseEncoder,
 	self.envelopeCurveEncoder,
-	self.volumeEncoder
 }
 
 self.insocketSprites = {
 	self.inSocketSprite,
 	self.param1InSocket,
 	self.param2InSocket,
-	-- self.releaseInSocket,
-	-- self.sustainInSocket,
-	-- self.decayInSocket,
-	-- self.attackInSocket,
 	self.outSocketSprite
 }
 
@@ -387,7 +373,6 @@ function SynthMod:toState()
 	modState.sustainEncoderValue = self.sustainEncoder:getValue()
 	modState.releaseEncoderValue = self.releaseEncoder:getValue()
 	modState.envelopeCurveEncoderValue = self.envelopeCurveEncoder:getValue()
-	modState.volumeEncoderValue = self.volumeEncoder:getValue()
 	return modState
 end
 
@@ -400,5 +385,4 @@ function SynthMod:fromState(modState)
 	self.sustainEncoder:setValue(modState.sustainEncoderValue)
 	self.releaseEncoder:setValue(modState.releaseEncoderValue)
 	self.envelopeCurveEncoder:setValue(modState.envelopeCurveEncoderValue)
-	self.volumeEncoder:setValue(modState.volumeEncoderValue)
 end

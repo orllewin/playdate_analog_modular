@@ -223,13 +223,15 @@ function LowpassMod:toState()
 	modState.x = self.x
 	modState.y = self.y
 	
-	modState.normalisedTempoDiv = self.mixEncoder:getValue()
-	modState.normalisedProbability = self.frequencyEncoder:getValue()
+	modState.mixEncoder = self.mixEncoder:getValue()
+	modState.freqEncoder = self.freqEncoder:getValue()
+	modState.resonanceEncoder = self.resonanceEncoder:getValue()
 	
 	return modState
 end
 
 function LowpassMod:fromState(modState)
-	self.mixEncoder:setValue(modState.normalisedTempoDiv)
-	self.frequencyEncoder:setValue(modState.normalisedProbability)
+	self.mixEncoder:setValue(modState.mixEncoder)
+	self.freqEncoder:setValue(modState.freqEncoder)
+	self.resonanceEncoder:setValue(modState.resonanceEncoder)
 end

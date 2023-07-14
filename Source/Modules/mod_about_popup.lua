@@ -13,9 +13,24 @@ local height = 230
 function ModAboutPopup:init(aboutText)
 	ModAboutPopup.super.init(self)
 	
-	self.aboutSprite = playdate.graphics.sprite.spriteWithText(string.upper(aboutText), width - 12, height - 12, playdate.graphics.kColorWhite, 3, "...", kTextAlignment.left)
-	self.aboutSprite:setIgnoresDrawOffset(true)	
-	self.aboutSprite:moveTo(100,  120)
+	local w = width
+	local h = height
+	
+	if playdate.display.getScale() == 1 then
+		self.aboutSprite = playdate.graphics.sprite.spriteWithText(string.upper(aboutText), width - 12, height - 12, playdate.graphics.kColorWhite, 3, "...", kTextAlignment.left)
+		self.aboutSprite:setIgnoresDrawOffset(true)	
+		self.aboutSprite:moveTo(100,  120)
+	elseif playdate.display.getScale() == 2 then
+		w = 200
+		h = 120	
+		self.aboutSprite = playdate.graphics.sprite.spriteWithText(string.upper(aboutText), w , h, playdate.graphics.kColorWhite, 3, "...", kTextAlignment.left)
+		self.aboutSprite:moveTo(100,  60)
+		self.aboutSprite:setIgnoresDrawOffset(true)	
+	end
+	
+
+	
+	
 	self.aboutSprite:setZIndex(gModuleMenuZ + 1)
 	
 	local textW, textH = self.aboutSprite:getSize()
@@ -25,7 +40,11 @@ function ModAboutPopup:init(aboutText)
 	
 	self:setIgnoresDrawOffset(true)
 	self:setImage(backgroundImage)
-	self:moveTo(100, (height/2) + 5)
+	if playdate.display.getScale() == 1 then
+		self:moveTo(100, (height/2) + 5)
+	elseif playdate.display.getScale() == 2 then
+		self:moveTo(100,  60)
+	end
 	self:setZIndex(gModuleMenuZ)
 	
 	self.aboutPopupInputHandler = {

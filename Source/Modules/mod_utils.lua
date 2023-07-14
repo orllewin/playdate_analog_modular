@@ -114,7 +114,7 @@ function getMenuModList()
 			category = "Synths",
 			mods = {
 				{
-					label = "Standard Synth",
+					label = "ORL Synth",
 					type = "SynthMod"
 				},
 				{
